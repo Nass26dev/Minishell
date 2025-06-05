@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/05 11:34:19 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/05 12:49:52 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
-SRCS = src/main.c \
+SRCS =	src/main.c \
 		src/loop.c \
+		src/exec.c \
 		
 MAKEDIR = make
 OBJDIR = make/objs
@@ -24,7 +25,8 @@ DEPDIR = make/deps
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
 
-HEADER = include/minishell.h \
+HEADER =	include/minishell.h \
+			include/minishell_exec.h
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m
@@ -53,6 +55,16 @@ $(OBJDIR)/%.o: src/%.c $(HEADER)
 	@echo "$(MESSAGE_COLOR_GREEN)Compilation of $@ done! ✅$(MESSAGE_RESET)"
 
 -include $(DEPS)
+
+For debug
+valgrind:
+	valgrind --leak-check=yes --show-leak-kinds=all --suppressions=.valgrind_suppress.txt -s ./minishell
+
+valgrind-full:
+	valgrind --suppressions=.valgrind_suppress.txt --leak-check=full --track-fds=yes --trace-children=yes --show-leak-kinds=all --track-origins=yes ./minishell
+
+valgrind-log:
+	valgrind --leak-check=full --track-origins=yes --suppressions=.valgrind_suppress.txt --log-file=valgrind-out.txt ./minishell
 
 clean:
 	@if [ -d $(MAKEDIR) ] || [ -f $(NAME) ]; then \

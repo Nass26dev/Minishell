@@ -1,0 +1,9 @@
+*.a
+*.o
+*.d
+*.out
+minishell
+*.json
+bin/
+.vscode
+old_parsing
