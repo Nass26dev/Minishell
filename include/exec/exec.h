@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/05 16:30:21 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 17:07:12 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ int	exec_node(t_exec *exec);
 int	execute(t_ast *ast, t_shell *shell);
 
 /*exec_cmd.c*/
-int	exec_command(t_exec *exec);
+int	exec_cmd(t_exec *exec);
+
+/*exec_redir.c*/
+int	exec_redir(t_exec *exec);
+
+/*exec_pipe.c*/
+int	exec_pipe(t_exec *exec);
+
+/*exec_operator.c*/
+int	exec_operator(t_exec *exec);
 
 #endif

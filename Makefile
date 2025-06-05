@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/05 16:44:34 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/05 17:10:46 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,12 @@ SRCS =	src/main.c \
 		src/parsing/parser/parser.c \
 		src/parsing/line.c \
 		src/exec/exec.c \
-		src/exec/exec_cmd/exec_cmd.c \
 		src/exec/builtin/builtin.c \
+		src/exec/exec_cmd/exec_cmd.c \
+		src/exec/exec_redir/exec_redir.c \
+		src/exec/exec_pipe/exec_pipe.c \
+		src/exec/exec_operator/exec_operator.c \
+
 		
 MAKEDIR = make
 OBJDIR = make/objs
@@ -31,9 +35,12 @@ SUBOBJDIR = make/objs/parsing \
 			make/objs/parsing/error_checker \
 			make/objs/parsing/lexer \
 			make/objs/parsing/parser \
-			make/objs/exec/exec_cmd \
 			make/objs/exec/builtin \
-			
+			make/objs/exec/exec_cmd \
+			make/objs/exec/exec_redir \
+			make/objs/exec/exec_pipe \
+			make/objs/exec/exec_operator \
+
 DEPDIR = make/deps
 SUBDEPDIR = make/deps/parsing \
 			make/deps/exec \
@@ -42,7 +49,9 @@ SUBDEPDIR = make/deps/parsing \
 			make/deps/parsing/parser \
 			make/deps/exec/exec_cmd \
 			make/deps/exec/builtin \
-			
+			make/deps/exec/exec_redir \
+			make/deps/exec/exec_pipe \
+			make/deps/exec/exec_operator \
 
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)

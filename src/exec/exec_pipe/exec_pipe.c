@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/05 17:05:41 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
+/*   Updated: 2025/06/05 17:09:12 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "exec.h"
 
-int	exec_cmd(t_exec *exec)
+int	exec_pipe(t_exec *exec)
 {
 	(void) exec;
-	return (0);
+	return(0);
 }

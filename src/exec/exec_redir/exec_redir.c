@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/05 17:05:41 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
+/*   Updated: 2025/06/05 17:04:59 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "exec.h"
 
-int	exec_cmd(t_exec *exec)
+int	exec_redir(t_exec *exec)
 {
 	(void) exec;
 	return (0);
