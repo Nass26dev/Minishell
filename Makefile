@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/05 13:00:30 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/05 13:29:32 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SUBDEPDIR = make/deps/parsing \
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
 
-HEADER = include/minishell.h \
+HEADER =	include/minishell.h \
+			include/parsing/parsing.h \
+			include/exec/exec.h
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m
@@ -61,7 +63,7 @@ $(NAME): $(OBJS)
 $(OBJDIR)/%.o: src/%.c $(HEADER)
 	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
 	@mkdir -p $(OBJDIR) $(DEPDIR) $(SUBOBJDIR) $(SUBDEPDIR)
-	@$(CC) $(CFLAGS) -Iinclude -c $< -o $@
+	@$(CC) $(CFLAGS) -Iinclude -Iinclude/parsing -Iinclude/exec -c $< -o $@
 	@mv -f $(OBJDIR)/$*.d $(DEPDIR)/$*.d
 	@$(eval COMPILED := 1)
 	@echo "$(MESSAGE_COLOR_GREEN)Compilation of $@ done! ✅$(MESSAGE_RESET)"
