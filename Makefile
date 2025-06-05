@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/05 13:29:32 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/05 14:56:24 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ SRCS = src/main.c \
 		src/parsing/loop.c \
 		src/parsing/error_checker/error_checker.c \
 		src/parsing/lexer/lexer.c \
+		src/parsing/lexer/read.c \
 		src/parsing/parser/parser.c \
-		src/parsing/line.c
+		src/parsing/input.c
 		
 MAKEDIR = make
 OBJDIR = make/objs
