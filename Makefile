@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/05 11:34:19 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/05 13:00:30 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,25 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/main.c \
-		src/loop.c \
+		src/parsing/loop.c \
+		src/parsing/error_checker/error_checker.c \
+		src/parsing/lexer/lexer.c \
+		src/parsing/parser/parser.c \
+		src/parsing/line.c
 		
 MAKEDIR = make
 OBJDIR = make/objs
+SUBOBJDIR = make/objs/parsing \
+			make/objs/exec \
+			make/objs/parsing/error_checker \
+			make/objs/parsing/lexer \
+			make/objs/parsing/parser
 DEPDIR = make/deps
+SUBDEPDIR = make/deps/parsing \
+			make/deps/exec \
+			make/deps/parsing/error_checker \
+			make/deps/parsing/lexer \
+			make/deps/parsing/parser
 
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
@@ -41,12 +55,12 @@ all: $(NAME)
 	fi
 	
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -lreadline -o $(NAME)
 	@$(eval COMPILED := 1)
 
 $(OBJDIR)/%.o: src/%.c $(HEADER)
 	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
-	@mkdir -p $(OBJDIR) $(DEPDIR)
+	@mkdir -p $(OBJDIR) $(DEPDIR) $(SUBOBJDIR) $(SUBDEPDIR)
 	@$(CC) $(CFLAGS) -Iinclude -c $< -o $@
 	@mv -f $(OBJDIR)/$*.d $(DEPDIR)/$*.d
 	@$(eval COMPILED := 1)

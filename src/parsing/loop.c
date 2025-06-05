@@ -6,11 +6,12 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/05 11:38:57 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/05 12:52:37 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
+#include "../../include/parsing/parsing.h"
 
 void minishell_loop(void)
 {
