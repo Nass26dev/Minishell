@@ -1,9 +1,4 @@
-*.a
-*.o
-*.d
-*.out
+old_parsing/
+make
 minishell
-*.json
-bin/
 .vscode
-old_parsing

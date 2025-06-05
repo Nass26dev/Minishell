@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/05 12:05:49 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 15:51:09 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ typedef struct s_shell
 	int			status;
 }	t_shell;
 
-typedef struct s_data
-{
-	
-}			t_data;
-
 typedef enum e_tag
 {
 	AST_CMD,
@@ -48,6 +43,7 @@ typedef enum e_tag
 	AST_HEREDOC,
 	AST_APPEND,
 	AST_PARENTHESIS,
+	AST_SEPARATOR,
 }	t_tag;
 
 typedef struct s_ast
@@ -57,12 +53,5 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;
-
-// loop.c
-void minishell_loop(void);
-// line.c
-char *get_line_and_add_to_historical(t_data *data);
-// error_checker.c
-void error_checker(t_data *data);
 
 #endif

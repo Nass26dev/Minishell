@@ -1,43 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_exec.h                                   :+:      :+:    :+:   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 11:58:13 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/05 12:30:52 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
+/*   Updated: 2025/06/05 16:40:09 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_EXEC_H
-#define MINISHELL_EXEC_H
+#include "minishell.h"
+#include "exec.h"
 
-# include <minishell.h>
-
-typedef struct s_exec
+int	exec_command(t_exec *exec)
 {
-	int				pid;
-	t_ast			*root;
-	t_ast			*current;
-	t_shell			*shell;
-	int				infd;
-	int				outfd;
-}	t_exec;
-
-typedef enum e_builtin
-{
-	CD,
-	ECHO,
-	ENV,
-	EXIT,
-	EXPORT,
-	PWD,
-	UNSET,
-}	t_builtin;
-
-/*exec.c*/
-int	exec_node(t_exec *exec);
-int	execute(t_ast *ast, t_shell *shell);
-
-#endif
+	(void) exec;
+	return (0);
+}

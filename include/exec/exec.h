@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/05 15:42:12 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
+/*   Updated: 2025/06/05 16:30:21 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
-#include "exec.h"
+#ifndef EXEC_H
+#define EXEC_H
 
-void minishell_loop(void)
+# include "minishell.h"
+
+typedef struct s_exec
 {
-	static t_data data;
-	t_shell	*shell;
-	t_ast	*ast;
+	int				pid;
+	t_ast			*root;
+	t_ast			*current;
+	t_shell			*shell;
+	int				infd;
+	int				outfd;
+}	t_exec;
 
-	get_line_and_add_to_historical(&data);
-	lexer(&data);
-	error_checker(&data);
-	parser(&data);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
-}
+/*exec.c*/
+int	exec_node(t_exec *exec);
+int	execute(t_ast *ast, t_shell *shell);
+
+/*exec_cmd.c*/
+int	exec_command(t_exec *exec);
+
+#endif

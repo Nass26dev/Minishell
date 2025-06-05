@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/05 15:42:12 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/06/05 15:51:17 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
-#include "exec.h"
+#ifndef PARSING_H
+#define PARSING_H
 
-void minishell_loop(void)
+typedef struct s_data
 {
-	static t_data data;
-	t_shell	*shell;
-	t_ast	*ast;
+	
+}			t_data;
 
-	get_line_and_add_to_historical(&data);
-	lexer(&data);
-	error_checker(&data);
-	parser(&data);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
-}
+// loop.c
+void minishell_loop(void);
+// line.c
+char *get_line_and_add_to_historical(t_data *data);
+// error_checker.c
+void error_checker(t_data *data);
+// lexer.c
+void lexer(t_data *data);
+// parser.c
+void parser(t_data *data);
+
+#endif

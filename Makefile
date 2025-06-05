@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/05 12:49:52 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/05 16:44:34 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,18 +15,42 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS =	src/main.c \
-		src/loop.c \
-		src/exec.c \
+		src/parsing/loop.c \
+		src/parsing/error_checker/error_checker.c \
+		src/parsing/lexer/lexer.c \
+		src/parsing/parser/parser.c \
+		src/parsing/line.c \
+		src/exec/exec.c \
+		src/exec/exec_cmd/exec_cmd.c \
+		src/exec/builtin/builtin.c \
 		
 MAKEDIR = make
 OBJDIR = make/objs
+SUBOBJDIR = make/objs/parsing \
+			make/objs/exec \
+			make/objs/parsing/error_checker \
+			make/objs/parsing/lexer \
+			make/objs/parsing/parser \
+			make/objs/exec/exec_cmd \
+			make/objs/exec/builtin \
+			
 DEPDIR = make/deps
+SUBDEPDIR = make/deps/parsing \
+			make/deps/exec \
+			make/deps/parsing/error_checker \
+			make/deps/parsing/lexer \
+			make/deps/parsing/parser \
+			make/deps/exec/exec_cmd \
+			make/deps/exec/builtin \
+			
 
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
 
 HEADER =	include/minishell.h \
-			include/minishell_exec.h
+			include/parsing/parsing.h \
+			include/exec/exec.h \
+			include/exec/builtin.h
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m
@@ -43,20 +67,20 @@ all: $(NAME)
 	fi
 	
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -lreadline -o $(NAME)
 	@$(eval COMPILED := 1)
 
 $(OBJDIR)/%.o: src/%.c $(HEADER)
 	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
-	@mkdir -p $(OBJDIR) $(DEPDIR)
-	@$(CC) $(CFLAGS) -Iinclude -c $< -o $@
+	@mkdir -p $(OBJDIR) $(DEPDIR) $(SUBOBJDIR) $(SUBDEPDIR)
+	@$(CC) $(CFLAGS) -Iinclude -Iinclude/parsing -Iinclude/exec -c $< -o $@
 	@mv -f $(OBJDIR)/$*.d $(DEPDIR)/$*.d
 	@$(eval COMPILED := 1)
 	@echo "$(MESSAGE_COLOR_GREEN)Compilation of $@ done! ✅$(MESSAGE_RESET)"
 
 -include $(DEPS)
 
-For debug
+#For debug
 valgrind:
 	valgrind --leak-check=yes --show-leak-kinds=all --suppressions=.valgrind_suppress.txt -s ./minishell
 
