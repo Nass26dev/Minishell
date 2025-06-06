@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 17:20:56 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 00:35:33 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_token
 {
 	t_tag tag;
 	char *value;
+	bool space;
 	struct s_token *next;
 }			t_token;
 
@@ -44,6 +45,14 @@ typedef struct s_data
 	t_token *tokens;
 	bool error;
 }			t_data;
+
+typedef struct s_expand
+{
+	char *varname;
+	char *varvalue;
+	char *beforevar;
+	char *aftervar;	
+}			t_expand;
 
 // loop.c
 void minishell_loop(void);
@@ -70,13 +79,22 @@ int extract_word(t_data *data, const char *input, int i);
 t_token *create_token(char *value, t_tag tag);
 void add_token(t_token **head, t_token *new);
 void free_tokens(t_token **head);
+void set_space_to_token(t_token **head);
 // utils.c
 char *ft_strndup(const char *src, size_t n);
 bool ft_isspace(char c);
 bool is_operator(char c);
 char	*ft_strdup(char *src);
 int ft_isalnum(int c);
+char	*ft_strjoin(char const *s1, char const *s2);
 size_t ft_strlen(const char *str);
+// expand.c
+void expander(t_data *data);
+// expand_utils.c
+char *recup_beforevar(char *input);
+char *recup_varname(char *input);
+char *recup_aftervar(char *input);
+char *recup_varvalue(char *varname);
 
 #endif
 

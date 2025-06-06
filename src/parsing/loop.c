@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:41:37 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 00:53:04 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@ void minishell_loop(void)
 		return ;
 	}
 
+	free(input);
+	expander(&data);
+	
 	t_token *tmp;
 	tmp = data.tokens;
 	while (tmp)
 	{
-		printf("value : %s, tag = %d\n", tmp->value, tmp->tag);
+		printf("value : %s, tag = %d, space = %d\n", tmp->value, tmp->tag, tmp->space);
 		tmp = tmp->next;
 	}
-	
-	// expand();
+	// concatenate
 	// error_checker(&data);
 	// parser(&data);
 	free_tokens(&data.tokens);

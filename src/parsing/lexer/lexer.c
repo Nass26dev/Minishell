@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:46:07 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 00:33:42 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void lexer(t_data *data, char *input)
 		if (data->error == true)
 			return ;
 		if (ft_isspace(input[i]))
+		{
+			set_space_to_token(&data->tokens);
 			i++;
+		}
 		else if (is_operator(input[i]))
 			i += extract_operator(data, input, i);
 		else if (input[i] == '\'' || input[i] == '"')
@@ -31,6 +34,5 @@ void lexer(t_data *data, char *input)
 			i += extract_variable(data, input, i);
 		else
 			i += extract_word(data, input, i);
-		
 	}
 }

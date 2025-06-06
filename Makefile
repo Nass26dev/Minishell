@@ -6,7 +6,7 @@
 #    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/06 17:14:30 by nass             ###   ########.fr        #
+#    Updated: 2025/06/06 23:27:41 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRCS = src/main.c \
 		src/parsing/lexer/extract_utils.c \
 		src/parsing/lexer/token.c \
 		src/parsing/parser/parser.c \
+		src/parsing/expand/expand.c \
+		src/parsing/expand/expand_utils.c
 		
 MAKEDIR = make
 OBJDIR = make/objs
@@ -31,13 +33,15 @@ SUBOBJDIR = make/objs/parsing \
 			make/objs/exec \
 			make/objs/parsing/error_checker \
 			make/objs/parsing/lexer \
-			make/objs/parsing/parser
+			make/objs/parsing/parser \
+			make/objs/parsing/expand
 DEPDIR = make/deps
 SUBDEPDIR = make/deps/parsing \
 			make/deps/exec \
 			make/deps/parsing/error_checker \
 			make/deps/parsing/lexer \
-			make/deps/parsing/parser
+			make/deps/parsing/parser \
+			make/deps/parsing/expand 
 
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)

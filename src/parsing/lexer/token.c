@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:55:03 by nass              #+#    #+#             */
-/*   Updated: 2025/06/06 17:21:44 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 00:34:59 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_token *create_token(char *value, t_tag tag)
     new = malloc(sizeof(t_token));
     new->value = ft_strdup(value);
     new->tag = tag;
+    new->space = false;
     new->next = NULL;
     return (new);
 }
@@ -53,4 +54,14 @@ void add_token(t_token **head, t_token *new)
             tmp = tmp->next;
         tmp->next = new;
     }
+}
+
+void set_space_to_token(t_token **head)
+{
+    t_token *last;
+
+    last = *head;
+    while (last->next)
+        last = last->next;
+    last->space = true;
 }
