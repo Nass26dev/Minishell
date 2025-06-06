@@ -2,3 +2,6 @@ old_parsing/
 make
 minishell
 .vscode
+*.a
+*.o
+*.d

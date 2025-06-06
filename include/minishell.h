@@ -6,12 +6,16 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 16:20:54 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 18:39:34 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
+
+# ifndef _GNU_SOURCE
+#  define _GNU_SOURCE
+# endif
 
 # include "stdio.h"
 # include "stdlib.h"
@@ -19,6 +23,9 @@
 # include <limits.h>
 # include <unistd.h>
 # include "libft.h"
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct s_vector
 {
@@ -54,5 +61,12 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;
+
+// loop.c
+void minishell_loop(void);
+
+/*signal.c*/
+void	handle_sigint(int sig);
+void	setup_interactive_signals(void);
 
 #endif

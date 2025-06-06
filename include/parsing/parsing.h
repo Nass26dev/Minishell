@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/05 15:51:17 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 17:36:55 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ typedef struct s_data
 	
 }			t_data;
 
-// loop.c
-void minishell_loop(void);
 // line.c
 char *get_line_and_add_to_historical(t_data *data);
 // error_checker.c
