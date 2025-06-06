@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/05 17:07:12 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 15:12:56 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,11 @@ int	exec_pipe(t_exec *exec);
 
 /*exec_operator.c*/
 int	exec_operator(t_exec *exec);
+
+/*exec_parenthesis.c*/
+int	exec_parenthesis(t_exec *exec);
+
+/*exec_separator.c*/
+int	exec_separator(t_exec *exec);
 
 #endif
