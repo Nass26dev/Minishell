@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/05 14:56:24 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/06 17:14:30 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,14 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/main.c \
 		src/parsing/loop.c \
+		src/parsing/input.c \
+		src/parsing/utils.c \
 		src/parsing/error_checker/error_checker.c \
 		src/parsing/lexer/lexer.c \
-		src/parsing/lexer/read.c \
+		src/parsing/lexer/extract.c \
+		src/parsing/lexer/extract_utils.c \
+		src/parsing/lexer/token.c \
 		src/parsing/parser/parser.c \
-		src/parsing/input.c
 		
 MAKEDIR = make
 OBJDIR = make/objs

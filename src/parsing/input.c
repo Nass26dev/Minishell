@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:10 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/05 15:14:49 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:06:09 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-#include "../../include/parsing/parsing.h"
+#include "parsing.h"
 
 void get_input_and_add_to_historical(t_data *data, char **input)
 {	

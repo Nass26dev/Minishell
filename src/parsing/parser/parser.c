@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/05 12:59:49 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:06:16 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
-#include "../../../include/parsing/parsing.h"
+#include "parsing.h"
 
 void parser(t_data *data)
 {
