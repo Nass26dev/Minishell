@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:32:54 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/12 14:22:11 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:59:44 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
-#include "exec.h"
+#include "libft.h"
 
-void minishell_loop(void)
+char	*ft_strdup(const char *s)
 {
-	static t_data data;
-	t_ast	*ast;
-	t_shell	*shell;
+	int		i;
+	char	*dest;
 
-	get_line_and_add_to_historical(&data);
-	lexer(&data);
-	error_checker(&data);
-	parser(&data);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
+	i = 0;
+	dest = malloc(sizeof(char) * ft_strlen(s) + 1);
+	if (!dest)
+		return (0);
+	while (s[i])
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

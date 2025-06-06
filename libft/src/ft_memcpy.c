@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:32:54 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/13 12:17:47 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:58:37 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
-#include "exec.h"
+#include "libft.h"
 
-void minishell_loop(void)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	static t_data data;
-	t_ast	*ast;
-	t_shell	*shell;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			i;
 
-	get_line_and_add_to_historical(&data);
-	lexer(&data);
-	error_checker(&data);
-	parser(&data);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
+	if (!dest && !src)
+		return (NULL);
+	d = (unsigned char *) dest;
+	s = (unsigned char *) src;
+	i = 0;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (d);
 }

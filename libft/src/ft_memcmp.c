@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:32:54 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/13 16:43:46 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:58:31 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
-#include "exec.h"
+#include "libft.h"
 
-void minishell_loop(void)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	static t_data data;
-	t_ast	*ast;
-	t_shell	*shell;
+	unsigned char	*src1;
+	unsigned char	*src2;
+	size_t			i;
 
-	get_line_and_add_to_historical(&data);
-	lexer(&data);
-	error_checker(&data);
-	parser(&data);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
+	if (n == 0)
+		return (0);
+	src1 = (unsigned char *) s1;
+	src2 = (unsigned char *) s2;
+	i = 0;
+	while ((src1[i] == src2[i]) && i + 1 < n)
+		i++;
+	return (src1[i] - src2[i]);
 }

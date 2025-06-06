@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:32:54 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/12 15:32:17 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:58:49 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
-#include "exec.h"
+#include "libft.h"
 
-void minishell_loop(void)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	static t_data data;
-	t_ast	*ast;
-	t_shell	*shell;
+	size_t			i;
+	unsigned char	ch;
+	unsigned char	*dest;
 
-	get_line_and_add_to_historical(&data);
-	lexer(&data);
-	error_checker(&data);
-	parser(&data);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
+	i = 0;
+	dest = (unsigned char *)s;
+	ch = (unsigned char)c;
+	while (i < n)
+	{
+		dest[i] = ch;
+		i++;
+	}
+	return (s);
 }

@@ -1,31 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:32:54 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/13 18:13:58 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:59:12 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
-#include "exec.h"
+#include "libft.h"
 
-void minishell_loop(void)
+static void	ft_write_nb(int a, int fd)
 {
-	static t_data data;
-	t_ast	*ast;
-	t_shell	*shell;
+	char	b;
 
-	get_line_and_add_to_historical(&data);
-	lexer(&data);
-	error_checker(&data);
-	parser(&data);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
+	b = a % 10 + 48;
+	write(fd, &b, 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	unsigned int	nb;
+
+	if (n < 0)
+	{
+		nb = n * -1;
+		write (fd, "-", 1);
+	}
+	else
+		nb = n;
+	if (nb <= 9)
+	{
+		ft_write_nb(nb, fd);
+	}
+	else
+	{
+		ft_putnbr_fd(nb / 10, fd);
+		ft_putnbr_fd(nb % 10, fd);
+	}
 }

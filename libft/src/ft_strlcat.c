@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:32:54 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/07 15:26:31 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 19:00:07 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
-#include "exec.h"
+#include "libft.h"
 
-void minishell_loop(void)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	static t_data data;
-	t_ast	*ast;
-	t_shell	*shell;
+	size_t	len_s;
+	size_t	len_d;
+	size_t	i;
+	size_t	j;
 
-	get_line_and_add_to_historical(&data);
-	lexer(&data);
-	error_checker(&data);
-	parser(&data);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
+	i = 0;
+	len_s = ft_strlen(src);
+	len_d = ft_strlen (dst);
+	j = 0;
+	while (dst[j])
+		j++;
+	if (size <= len_d)
+		return (len_s + size);
+	while (src[i] && (i < size - len_d - 1))
+	{
+		dst[j] = src[i];
+		j++;
+		i++;
+	}
+	dst[j] = '\0';
+	return (len_s + len_d);
 }
