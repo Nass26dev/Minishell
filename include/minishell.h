@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/05 15:51:09 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 16:20:54 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "stdbool.h"
 # include <limits.h>
 # include <unistd.h>
+# include "libft.h"
 
 typedef struct s_vector
 {

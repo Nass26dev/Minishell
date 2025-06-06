@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:21 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/13 16:43:46 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:58:31 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
+#include "libft.h"
 
-int	exec_cmd(t_exec *exec)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
-	{
-		// close_fds(exec);
-		printf("command not found\n");
-		return (127);
-	}
-	//exec cmd
-	return (0);
+	unsigned char	*src1;
+	unsigned char	*src2;
+	size_t			i;
+
+	if (n == 0)
+		return (0);
+	src1 = (unsigned char *) s1;
+	src2 = (unsigned char *) s2;
+	i = 0;
+	while ((src1[i] == src2[i]) && i + 1 < n)
+		i++;
+	return (src1[i] - src2[i]);
 }

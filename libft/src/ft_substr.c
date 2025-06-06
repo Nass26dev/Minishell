@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:21 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/13 18:08:30 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 19:00:32 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
+#include "libft.h"
 
-int	exec_cmd(t_exec *exec)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
+	char	*dest;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	if (ft_strlen(s) < start)
+		len = 0;
+	if (ft_strlen(s) - start < len)
+		len = ft_strlen(s) - start;
+	dest = malloc(sizeof(char) * len + 1);
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while (i < len)
 	{
-		// close_fds(exec);
-		printf("command not found\n");
-		return (127);
+		dest[i] = s[start + i];
+		i++;
 	}
-	//exec cmd
-	return (0);
+	dest[i] = '\0';
+	return (dest);
 }

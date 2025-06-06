@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 15:12:56 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 15:49:22 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #define EXEC_H
 
 # include "minishell.h"
+
+// # define FAIL_EXEC 126
+// # define CMD_NOT_FOUND 127
+// # define FAIL_FORK 128 + errno
 
 typedef struct s_exec
 {

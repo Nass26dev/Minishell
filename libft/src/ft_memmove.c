@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:21 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/13 12:25:42 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:58:43 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
+#include "libft.h"
 
-int	exec_cmd(t_exec *exec)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
+	unsigned char	*d;
+	unsigned char	*s;
+
+	if (!dest && !src)
+		return (NULL);
+	d = (unsigned char *) dest;
+	s = (unsigned char *) src;
+	if (s < d && d < s + n)
 	{
-		// close_fds(exec);
-		printf("command not found\n");
-		return (127);
+		while (n--)
+			d[n] = s[n];
 	}
-	//exec cmd
-	return (0);
+	else
+		ft_memcpy(d, s, n);
+	return (d);
 }

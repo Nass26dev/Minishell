@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:21 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/13 15:52:46 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:58:24 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
+#include "libft.h"
 
-int	exec_cmd(t_exec *exec)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
+	unsigned char	*src;
+	size_t			i;
+
+	src = (unsigned char *) s;
+	i = 0;
+	while (i < n)
 	{
-		// close_fds(exec);
-		printf("command not found\n");
-		return (127);
+		if (src[i] == (unsigned char) c)
+			return (src + i);
+		i++;
 	}
-	//exec cmd
 	return (0);
 }

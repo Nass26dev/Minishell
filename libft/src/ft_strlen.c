@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:21 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/04 15:36:00 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 19:01:18 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
+#include "libft.h"
 
-int	exec_cmd(t_exec *exec)
+size_t	ft_strlen(const char *s)
 {
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
-	{
-		// close_fds(exec);
-		printf("command not found\n");
-		return (127);
-	}
-	//exec cmd
-	return (0);
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

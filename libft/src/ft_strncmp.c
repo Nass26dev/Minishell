@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:21 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/09 17:03:08 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 19:00:58 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
+#include "libft.h"
 
-int	exec_cmd(t_exec *exec)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
-	{
-		// close_fds(exec);
-		printf("command not found\n");
-		return (127);
-	}
-	//exec cmd
-	return (0);
+	size_t			i;
+
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (s1[i] && (s1[i] == s2[i]) && i + 1 < n)
+		i++;
+	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
 }

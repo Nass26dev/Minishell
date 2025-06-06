@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:21 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/21 13:01:22 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:57:20 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
+#include "libft.h"
 
-int	exec_cmd(t_exec *exec)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
+	t_list	*i;
+	t_list	*tmp;
+
+	if (!lst || !del)
+		return ;
+	i = *lst;
+	while (i)
 	{
-		// close_fds(exec);
-		printf("command not found\n");
-		return (127);
+		tmp = i->next;
+		del(i->content);
+		free(i);
+		i = tmp;
 	}
-	//exec cmd
-	return (0);
+	*lst = NULL;
 }

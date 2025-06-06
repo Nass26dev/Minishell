@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:21 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2024/11/12 15:32:17 by eelissal          #+#    #+#             */
+/*   Updated: 2024/11/23 18:58:49 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
+#include "libft.h"
 
-int	exec_cmd(t_exec *exec)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
+	size_t			i;
+	unsigned char	ch;
+	unsigned char	*dest;
+
+	i = 0;
+	dest = (unsigned char *)s;
+	ch = (unsigned char)c;
+	while (i < n)
 	{
-		// close_fds(exec);
-		printf("command not found\n");
-		return (127);
+		dest[i] = ch;
+		i++;
 	}
-	//exec cmd
-	return (0);
+	return (s);
 }
