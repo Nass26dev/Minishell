@@ -3,13 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/07 16:14:12 by nass             ###   ########.fr        #
+#    Updated: 2025/06/07 18:59:10 by codespace        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = minishell
 
@@ -32,12 +31,16 @@ SRCS =	src/main.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \
+		src/exec/exec_cmd/find_cmd_path.c \
 		src/exec/exec_redir/exec_redir.c \
 		src/exec/exec_pipe/exec_pipe.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/exec_parenthesis/exec_parenthesis.c \
 		src/exec/exec_separator/exec_separator.c \
-		src/signals/signal.c
+		src/signal.c \
+		src/env.c \
+		src/vector.c \
+		src/clean.c \
 		
 MAKEDIR = make
 OBJDIR = make/objs
@@ -55,7 +58,6 @@ SUBOBJDIR = make/objs/parsing \
 			make/objs/exec/exec_operator \
 			make/objs/exec/exec_parenthesis \
 			make/objs/exec/exec_separator \
-			make/objs/signals \
 
 DEPDIR = make/deps
 SUBDEPDIR = make/deps/parsing \
@@ -71,7 +73,6 @@ SUBDEPDIR = make/deps/parsing \
 			make/deps/exec/exec_operator \
 			make/deps/exec/exec_parenthesis \
 			make/deps/exec/exec_separator \
-			make/deps/signals \
 
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
@@ -79,7 +80,9 @@ DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
 HEADER =	include/minishell.h \
 			include/parsing/parsing.h \
 			include/exec/exec.h \
-			include/exec/builtin.h
+			include/exec/builtin.h \
+			include/vector.h \
+			include/env.h \
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a

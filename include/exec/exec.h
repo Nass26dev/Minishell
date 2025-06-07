@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 15:49:22 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/07 18:54:08 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define EXEC_H
 
 # include "minishell.h"
+# include <sys/stat.h>
+# include <sys/wait.h>
 
 // # define FAIL_EXEC 126
 // # define CMD_NOT_FOUND 127
@@ -35,6 +37,9 @@ int	execute(t_ast *ast, t_shell *shell);
 
 /*exec_cmd.c*/
 int	exec_cmd(t_exec *exec);
+
+/*find_cmd_path.c*/
+char	*find_cmd_path(char *cmd_name, t_vector *env);
 
 /*exec_redir.c*/
 int	exec_redir(t_exec *exec);

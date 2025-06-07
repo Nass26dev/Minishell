@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 16:16:28 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 18:47:05 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,17 @@
 #  define _GNU_SOURCE
 # endif
 
-# include "stdio.h"
-# include "stdlib.h"
-# include "stdbool.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdbool.h>
 # include <limits.h>
 # include <unistd.h>
 # include "libft.h"
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-typedef struct s_vector
-{
-	char	**data;
-	int		count;
-	int		capacity;
-}	t_vector;
-
-typedef struct s_shell
-{
-	t_vector	*env;
-	int			status;
-}	t_shell;
+# include <errno.h>
+# include "env.h"
 
 typedef enum e_tag
 {
@@ -68,7 +57,10 @@ void minishell_loop(void);
 /*signal.c*/
 void	handle_sigint(int sig);
 void	setup_interactive_signals(void);
-# include <readline/readline.h>
-# include <readline/history.h>
+void	setup_child_signals(void);
+
+/*clean.c*/
+void	free_args(char **args);
+void	free_ast(t_ast *ast);
 
 #endif
