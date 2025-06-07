@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 16:29:14 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 16:35:38 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ void minishell_loop(void)
 	error_checker(&data);
 	// parser(&data);
 	free_tokens(&data.tokens);
-	ast = NULL;
-	shell = NULL;
-	if (ast)
-		execute(ast, shell);
 	ast = NULL;
 	shell = NULL;
 	if (ast)
