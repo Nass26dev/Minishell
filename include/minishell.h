@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 18:39:34 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/07 16:16:28 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ void minishell_loop(void);
 /*signal.c*/
 void	handle_sigint(int sig);
 void	setup_interactive_signals(void);
+# include <readline/readline.h>
+# include <readline/history.h>
 
 #endif

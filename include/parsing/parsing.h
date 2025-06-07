@@ -6,14 +6,14 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 00:35:33 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 16:16:57 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 #define PARSING_H
 
-#include "../minishell.h"
+#include "minishell.h"
 
 #define PROMPT "\033[0;35mMinishell$\033[0m "
 
@@ -75,6 +75,7 @@ int extract_variable(t_data *data, const char *input, int i);
 int extract_word(t_data *data, const char *input, int i);
 // token.c
 t_token *create_token(char *value, t_type tag);
+t_token *create_token(char *value, t_type tag);
 void add_token(t_token **head, t_token *new);
 void free_tokens(t_token **head);
 void set_space_to_token(t_token **head);
@@ -83,6 +84,7 @@ char *ft_strndup(const char *src, size_t n);
 bool ft_isspace(char c);
 bool is_operator(char c);
 int ft_isalnum(int c);
+char	*ft_strjoin(char const *s1, char const *s2);
 // expand.c
 void expander(t_data *data);
 // expand_utils.c
@@ -90,5 +92,7 @@ char *recup_beforevar(char *input);
 char *recup_varname(char *input);
 char *recup_aftervar(char *input);
 char *recup_varvalue(char *varname);
+// concatenation.c
+void concatenation(t_data *data);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 13:53:26 by eelissal          #+#    #+#              #
-#    Updated: 2025/06/06 16:26:16 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/07 16:17:40 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,16 +86,19 @@ all:		$(NAME)
 $(BIN)/%.o:	$(SRC)/%.c $(HEADERS) Makefile
 			@mkdir -p $(dir $@);
 			@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+			@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME):	$(OBJS)
+			@ar rcs $@ $?
 			@ar rcs $@ $?
 
 clean:
 			@$(RM) $(OBJS)
+			@$(RM) $(OBJS)
 
 fclean:		clean
 			@$(RM) $(NAME)
-			find $(BIN) -type d -empty -delete
+			@if [ -d bin ]; then find bin -type d -empty -delete; fi
 
 re:			fclean all
 

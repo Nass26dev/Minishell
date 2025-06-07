@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:08:54 by nass              #+#    #+#             */
-/*   Updated: 2025/06/06 23:38:32 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 16:33:08 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,3 @@ char *ft_strndup(const char *src, size_t n)
     return dup;
 }
 
-int ft_isalnum(int c)
-{
-    if ((c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
-		return (1);
-	return (0);
-}

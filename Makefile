@@ -6,20 +6,21 @@
 #    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/06 23:27:41 by nass             ###   ########.fr        #
+#    Updated: 2025/06/07 16:14:12 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+
 NAME = minishell
 
-MAKEFLAGS = --no-print-directory
+MAKEFLAGS += --no-print-directory
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS =	src/main.c \
 		src/parsing/loop.c \
 		src/parsing/input.c \
 		src/parsing/utils.c \
-		src/parsing/error_checker/error_checker.c \
+		src/parsing/error/error.c \
 		src/parsing/lexer/lexer.c \
 		src/parsing/lexer/extract.c \
 		src/parsing/lexer/extract_utils.c \
@@ -27,6 +28,7 @@ SRCS =	src/main.c \
 		src/parsing/parser/parser.c \
 		src/parsing/expand/expand.c \
 		src/parsing/expand/expand_utils.c \
+		src/parsing/expand/concatenation.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \
@@ -41,9 +43,10 @@ MAKEDIR = make
 OBJDIR = make/objs
 SUBOBJDIR = make/objs/parsing \
 			make/objs/exec \
-			make/objs/parsing/error_checker \
+			make/objs/parsing/error \
 			make/objs/parsing/lexer \
 			make/objs/parsing/parser \
+			make/objs/parsing/expand \
 			make/objs/parsing/expand \
 			make/objs/exec/builtin \
 			make/objs/exec/exec_cmd \
@@ -57,10 +60,10 @@ SUBOBJDIR = make/objs/parsing \
 DEPDIR = make/deps
 SUBDEPDIR = make/deps/parsing \
 			make/deps/exec \
-			make/deps/parsing/error_checker \
+			make/deps/parsing/error \
 			make/deps/parsing/lexer \
 			make/deps/parsing/parser \
-			make/deps/parsing/expand  \
+			make/deps/parsing/expand \
 			make/deps/exec/exec_cmd \
 			make/deps/exec/builtin \
 			make/deps/exec/exec_redir \
@@ -69,7 +72,6 @@ SUBDEPDIR = make/deps/parsing \
 			make/deps/exec/exec_parenthesis \
 			make/deps/exec/exec_separator \
 			make/deps/signals \
-
 
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
