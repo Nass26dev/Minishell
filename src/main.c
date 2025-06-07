@@ -26,6 +26,6 @@ int main(int argc, char **argv, char **envp)
 	setup_interactive_signals();
 	while (1)
 		minishell_loop();
-	return (0);
 	//free shell
+	return (0);
 }

@@ -3,23 +3,30 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/06 18:03:06 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/06 23:27:41 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
+MAKEFLAGS = --no-print-directory
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS =	src/main.c \
 		src/parsing/loop.c \
+		src/parsing/input.c \
+		src/parsing/utils.c \
 		src/parsing/error_checker/error_checker.c \
 		src/parsing/lexer/lexer.c \
+		src/parsing/lexer/extract.c \
+		src/parsing/lexer/extract_utils.c \
+		src/parsing/lexer/token.c \
 		src/parsing/parser/parser.c \
-		src/parsing/line.c \
+		src/parsing/expand/expand.c \
+		src/parsing/expand/expand_utils.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \
@@ -37,6 +44,7 @@ SUBOBJDIR = make/objs/parsing \
 			make/objs/parsing/error_checker \
 			make/objs/parsing/lexer \
 			make/objs/parsing/parser \
+			make/objs/parsing/expand \
 			make/objs/exec/builtin \
 			make/objs/exec/exec_cmd \
 			make/objs/exec/exec_redir \
@@ -52,6 +60,7 @@ SUBDEPDIR = make/deps/parsing \
 			make/deps/parsing/error_checker \
 			make/deps/parsing/lexer \
 			make/deps/parsing/parser \
+			make/deps/parsing/expand  \
 			make/deps/exec/exec_cmd \
 			make/deps/exec/builtin \
 			make/deps/exec/exec_redir \

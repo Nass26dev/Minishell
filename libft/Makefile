@@ -85,16 +85,16 @@ all:		$(NAME)
 
 $(BIN)/%.o:	$(SRC)/%.c $(HEADERS) Makefile
 			@mkdir -p $(dir $@);
-			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+			@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME):	$(OBJS)
-			ar rcs $@ $?
+			@ar rcs $@ $?
 
 clean:
-			$(RM) $(OBJS)
+			@$(RM) $(OBJS)
 
 fclean:		clean
-			$(RM) $(NAME)
+			@$(RM) $(NAME)
 			find $(BIN) -type d -empty -delete
 
 re:			fclean all
