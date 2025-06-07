@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 15:09:33 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/07 21:04:12 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int	exec_node(t_exec *exec)
 	if (!exec->current)
 		return (0);
 	ret = 0;
-	if (exec->current->tag == AST_SEPARATOR)
-		ret = exec_separator(exec);
-	else if (exec->current->tag == AST_PARENTHESIS)
+	if (exec->current->tag == AST_PARENTHESIS)
 		ret = exec_parenthesis(exec);
 	else if (exec->current->tag == AST_AND || exec->current->tag == AST_OR)
 		ret = exec_operator(exec);

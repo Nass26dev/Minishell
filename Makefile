@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/07 20:51:58 by codespace        ###   ########lyon.fr    #
+#    Updated: 2025/06/07 21:04:11 by codespace        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ SRCS =	src/main.c \
 		src/exec/exec_pipe/exec_pipe.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/exec_parenthesis/exec_parenthesis.c \
-		src/exec/exec_separator/exec_separator.c \
 		src/signal.c \
 		src/env.c \
 		src/vector.c \
@@ -58,7 +57,6 @@ SUBOBJDIR = make/objs/parsing \
 			make/objs/exec/exec_pipe \
 			make/objs/exec/exec_operator \
 			make/objs/exec/exec_parenthesis \
-			make/objs/exec/exec_separator \
 
 DEPDIR = make/deps
 SUBDEPDIR = make/deps/parsing \
@@ -73,7 +71,6 @@ SUBDEPDIR = make/deps/parsing \
 			make/deps/exec/exec_pipe \
 			make/deps/exec/exec_operator \
 			make/deps/exec/exec_parenthesis \
-			make/deps/exec/exec_separator \
 
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
