@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 12:14:34 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 16:16:57 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int extract_quoted_string(t_data *data, char *input, int i);
 int extract_variable(t_data *data, const char *input, int i);
 int extract_word(t_data *data, const char *input, int i);
 // token.c
+t_token *create_token(char *value, t_type tag);
 t_token *create_token(char *value, t_type tag);
 void add_token(t_token **head, t_token *new);
 void free_tokens(t_token **head);

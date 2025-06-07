@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:55:02 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 01:10:47 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 16:14:03 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int main(int argc, char **argv, char **envp)
 	setup_interactive_signals();
 	while (1)
 		minishell_loop();
-	return (0);
 	//free shell
+	return (0);
 }

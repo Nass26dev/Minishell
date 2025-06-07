@@ -6,7 +6,7 @@
 #    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/07 15:41:11 by nass             ###   ########.fr        #
+#    Updated: 2025/06/07 16:14:12 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SUBOBJDIR = make/objs/parsing \
 			make/objs/parsing/error \
 			make/objs/parsing/lexer \
 			make/objs/parsing/parser \
+			make/objs/parsing/expand \
 			make/objs/parsing/expand \
 			make/objs/exec/builtin \
 			make/objs/exec/exec_cmd \

@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 16:01:18 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 16:18:14 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void minishell_loop(void)
 	t_ast	*ast;
 	t_shell	*shell;
 
+
 	get_input_and_add_to_historical(&data, &input);
 	lexer(&data, input);
 	if (data.error == true)
@@ -27,7 +28,6 @@ void minishell_loop(void)
 		data.error = false;
 		return ;
 	}
-
 	free(input);
 	expander(&data);
 	
@@ -52,6 +52,10 @@ void minishell_loop(void)
 	error_checker(&data);
 	// parser(&data);
 	free_tokens(&data.tokens);
+	ast = NULL;
+	shell = NULL;
+	if (ast)
+		execute(ast, shell);
 	ast = NULL;
 	shell = NULL;
 	if (ast)
