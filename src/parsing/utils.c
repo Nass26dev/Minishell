@@ -6,27 +6,11 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:08:54 by nass              #+#    #+#             */
-/*   Updated: 2025/06/06 23:38:32 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 01:20:57 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-char	*ft_strdup(char *src)
-{
-	char	*str;
-	int	i;
-
-	str = malloc(((ft_strlen(src) + 1) * sizeof(char)));
-	if (!str)
-		return (NULL);
-
-	i = -1;
-	while (src[++i])
-		str[i] = src[i];
-	str[i] = 0;
-	return (str);
-}
 
 bool ft_isspace(char c)
 {
@@ -85,14 +69,6 @@ int ft_isalnum(int c)
 		|| (c >= '0' && c <= '9'))
 		return (1);
 	return (0);
-}
-
-size_t ft_strlen(const char *str)
-{
-    size_t len = 0;
-    while (str && str[len])
-        len++;
-    return len;
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)

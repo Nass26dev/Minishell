@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:55:03 by nass              #+#    #+#             */
-/*   Updated: 2025/06/07 00:34:59 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 01:20:31 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void free_tokens(t_token **head)
     *head = NULL;
 }
 
-t_token *create_token(char *value, t_tag tag)
+t_token *create_token(char *value, t_type tag)
 {
     t_token *new;
 
