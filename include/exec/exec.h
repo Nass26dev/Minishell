@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/07 20:04:42 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/07 20:36:43 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ char	*find_cmd_path(char *cmd_name, t_vector *env);
 
 /*exec_redir.c*/
 int	exec_redir(t_exec *exec);
+
+/*heredoc.c*/
+int	handle_heredoc(t_exec *exec);
 
 /*exec_pipe.c*/
 int	exec_pipe(t_exec *exec);

@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/07 18:59:10 by codespace        ###   ########lyon.fr    #
+#    Updated: 2025/06/07 20:51:58 by codespace        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS =	src/main.c \
 		src/exec/exec_cmd/exec_cmd.c \
 		src/exec/exec_cmd/find_cmd_path.c \
 		src/exec/exec_redir/exec_redir.c \
+		src/exec/exec_redir/heredoc.c \
 		src/exec/exec_pipe/exec_pipe.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/exec_parenthesis/exec_parenthesis.c \
