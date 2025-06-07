@@ -12,11 +12,14 @@
 
 #include "parsing.h"
 
-void get_input_and_add_to_historical(t_data *data, char **input)
+void get_input_and_add_to_historical(char **input)
 {	
-	(void)data;
-	*input = NULL;
 	*input = readline(PROMPT);
+	if (*input == NULL)
+{
+        printf("exit\n");
+        exit(0);
+    }
 	if (*input && *input[0] != 0)
 		add_history(*input);
 }

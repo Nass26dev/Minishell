@@ -20,7 +20,7 @@ void minishell_loop(void)
 	t_ast	*ast;
 	t_shell	*shell;
 
-	get_input_and_add_to_historical(&data, &input);
+	get_input_and_add_to_historical(&input);
 	lexer(&data, input);
 	if (data.error == true)
 	{
