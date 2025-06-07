@@ -6,7 +6,7 @@
 #    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/07 16:14:12 by nass             ###   ########.fr        #
+#    Updated: 2025/06/07 19:57:01 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS =	src/main.c \
 		src/parsing/expand/expand.c \
 		src/parsing/expand/expand_utils.c \
 		src/parsing/expand/concatenation.c \
+		src/parsing/expand/redir_value.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \
