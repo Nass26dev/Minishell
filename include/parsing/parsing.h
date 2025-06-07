@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 16:16:57 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 20:08:45 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ typedef struct s_expand
 
 // line.c
 void get_input_and_add_to_historical(char **input);
-// error_checker.c
+// error.c
 void error_checker(t_data *data);
 void syntax_error(t_data *data, char *error);
+void print_correct_error(t_type tag);
 // lexer.c
 void lexer(t_data *data, char *input);
 // parser.c
@@ -94,5 +95,7 @@ char *recup_aftervar(char *input);
 char *recup_varvalue(char *varname);
 // concatenation.c
 void concatenation(t_data *data);
+// redir_value
+void change_redir_value(t_data *data);
 
 #endif

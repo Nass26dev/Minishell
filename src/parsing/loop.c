@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 16:35:38 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 20:00:55 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,20 @@ void minishell_loop(void)
 	}
 	free(input);
 	expander(&data);
+	if (data.error == true)
+	{
+		data.error = false;
+		return ;
+	}
 	
-	printf("avant concatenation :\n");
+	error_checker(&data);
+	if (data.error == true)
+	{
+		data.error = false;
+		return ;
+	}
+	
+	printf("apres concatenation :\n");
 	t_token *tmp;
 	tmp = data.tokens;
 	while (tmp)
@@ -39,16 +51,6 @@ void minishell_loop(void)
 		tmp = tmp->next;
 	}
 	
-	concatenation(&data);
-	
-	printf("apres concatenation :\n");
-	tmp = data.tokens;
-	while (tmp)
-	{
-		printf("value : %s, tag = %d, space = %d\n", tmp->value, tmp->tag, tmp->space);
-		tmp = tmp->next;
-	}
-	error_checker(&data);
 	// parser(&data);
 	free_tokens(&data.tokens);
 	ast = NULL;
