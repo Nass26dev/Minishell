@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/07 18:56:44 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/07 20:05:58 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	handle_child_process(t_exec *exec, char *cmd)
 	free_shell(exec->shell);
 	if (exec->root)
 		free_ast(exec->root);
-	exit(126);
+	exit(FAIL_EXEC);
 }
 
 static int	handle_parent_process(t_exec *exec, pid_t pid)
@@ -74,25 +74,25 @@ int	exec_cmd(t_exec *exec)
 	{
 		close_fds(exec);
 		printf("command not found\n");
-		return (127);
+		return (CMD_NOT_FOUND);
 	}
 	cmd = find_cmd_path(exec->current->cmd->data[0], exec->shell->env);
 	if (!cmd)
 	{
 		close_fds(exec);
 		printf("%s: command not found\n", exec->current->cmd->data[0]);
-		return (127);
+		return (CMD_NOT_FOUND);
 	}
 	if (is_directory(cmd) != 0)
 	{
 		strerror(errno); // printf("%s: is a directory\n", exec->current->cmd->data[0]);
 		free(cmd);
 		//close_fds(exec); ???
-		return (126);
+		return (FAIL_EXEC);
 	}
 	pid = fork();
 	if (pid == -1)
-		return (128 + errno);
+		return (FAIL_FORK);
 	if (pid == 0)
 		handle_child_process(exec, cmd);
 	ret = handle_parent_process(exec, pid);

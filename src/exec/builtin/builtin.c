@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 15:43:10 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/07 19:53:39 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
 #include "builtin.h"
 
 int	is_builtin(t_exec *exec)
