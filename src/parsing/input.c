@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:10 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/06 17:06:09 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 16:21:55 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void get_input_and_add_to_historical(char **input)
 {	
 	*input = readline(PROMPT);
 	if (*input == NULL)
-{
+	{
         printf("exit\n");
         exit(0);
     }
