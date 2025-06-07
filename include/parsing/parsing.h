@@ -55,7 +55,7 @@ typedef struct s_expand
 }			t_expand;
 
 // line.c
-void get_input_and_add_to_historical(t_data *data, char **input);
+void get_input_and_add_to_historical(char **input);
 // error_checker.c
 void error_checker(t_data *data);
 void syntax_error(t_data *data, char *error);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:58:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 16:18:14 by nass             ###   ########.fr       */
+/*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/06/07 16:24:02 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void minishell_loop(void)
 	t_ast	*ast;
 	t_shell	*shell;
 
-
-	get_input_and_add_to_historical(&data, &input);
+	get_input_and_add_to_historical(&input);
 	lexer(&data, input);
 	if (data.error == true)
 	{
