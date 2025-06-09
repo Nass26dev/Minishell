@@ -1,5 +1,30 @@
 #include "exec.h"
 
+int	is_directory(const char *path)
+{
+	struct stat	buffer;
+
+	if (stat(path, &buffer) != 0)
+		return (0);
+	return (S_ISDIR(buffer.st_mode));
+}
+
+// void	is_directory(char *cmd, t_exec *exec)
+// {
+// 	const char	*path;
+// 	struct stat	buffer;
+
+// 	*path = (const*) cmd;
+// 	if (stat(path, &buffer) == 0)
+// 	{
+// 		strerror(S_ISDIR(buffer.st_mode));
+// 		//printf("%s: is a directory\n", exec->current->cmd->data[0]);
+// 		free(cmd);
+// 		close_fds(exec);
+// 		exit (FAIL_EXEC);
+// 	}
+// }
+
 static char	*find_executable_path(char *cmd_name, char **path_dirs)
 {
 	char	*cmd_path;
