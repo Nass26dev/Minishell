@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:55:02 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 18:16:17 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/09 18:59:27 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int main(int argc, char **argv, char **envp)
 	setup_interactive_signals();
 	while (1)
 		minishell_loop();
-	//free shell
+	free_shell(&shell);
 	return (0);
 }

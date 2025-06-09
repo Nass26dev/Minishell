@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/07 21:04:11 by codespace        ###   ########lyon.fr    #
+#    Updated: 2025/06/09 19:00:14 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRCS =	src/main.c \
 		src/env.c \
 		src/vector.c \
 		src/clean.c \
-		
+
 MAKEDIR = make
 OBJDIR = make/objs
 SUBOBJDIR = make/objs/parsing \

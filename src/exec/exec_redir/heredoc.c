@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/09 18:56:33 by eelissal          #+#    #+#             */
+/*   Updated: 2025/06/09 18:56:34 by eelissal         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 #include <fcntl.h>
 
@@ -61,8 +73,8 @@ static void	readline_heredoc(t_exec *exec, int *fd)
 			free(line);
 			break ;
 		}
-        (void) fd;
-        // heredoc expansion
+		(void) fd;
+		// TODO heredoc expansion
 		free(line);
 	}
 }
