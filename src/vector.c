@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:59:45 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:59:46 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 18:54:42 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ t_vector	*vector_create(int initial_capacity)
 	t_vector	*vector;
 	int			i;
 
-	vector = malloc(sizeof(t_vector *));
+	vector = malloc(sizeof(t_vector));
 	if (!vector)
 		return (NULL);
-	vector->data = malloc(sizeof(char **) * initial_capacity);
+	vector->data = malloc(sizeof(char *) * initial_capacity);
 	if (!vector->data)
 	{
 		free(vector);
@@ -42,7 +42,7 @@ static bool vector_resize(t_vector *vector)
 	char	**new_data;
 	int		i;
 
-	new_data = malloc(sizeof(char **) * (vector->capacity * 2));
+	new_data = malloc(sizeof(char *) * (vector->capacity * 2));
 	if (!new_data)
 		return (false);
 	i = 0;

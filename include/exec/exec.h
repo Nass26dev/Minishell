@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:46:15 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 17:06:35 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		execute(t_ast *ast, t_shell *shell);
 
 /*exec_cmd.c*/
 int		exec_cmd(t_exec *exec);
-void	is_extern_cmd(t_exec *exec, char *cmd);
+void	is_extern_cmd(t_exec *exec, char **cmd);
 void	exec_extern_cmd(t_exec *exec, char *cmd);
 int		cmd_is_valid(t_exec *exec);
 void	dup_fds(t_exec *exec);

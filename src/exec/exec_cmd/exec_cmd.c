@@ -6,81 +6,63 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:46:15 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 18:37:34 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
 
-void	close_fds(t_exec *exec)
+static int	waitpid_process(t_exec *exec, int pid)
 {
-	if (exec->infd != STDIN_FILENO)
-		close(exec->infd);
-	if (exec->outfd != STDOUT_FILENO)
-		close(exec->outfd);
-}
-
-void	dup_fds(t_exec *exec)
-{
-	if (exec->infd != STDIN_FILENO)
-		dup2(exec->infd, STDIN_FILENO);
-	if (exec->outfd != STDOUT_FILENO)
-		dup2(exec->outfd, STDOUT_FILENO);
-	close_fds(exec);
+	waitpid(pid, &exec->shell->status, 0);
+	if (WIFEXITED(exec->shell->status))
+		return (WEXITSTATUS(exec->shell->status));
+	else if (WIFSIGNALED(exec->shell->status))
+		return (128 + WTERMSIG(exec->shell->status));
+	return (exec->shell->status);
 }
 
 void	exec_extern_cmd(t_exec *exec, char *cmd)
 {
 	execve(cmd, exec->current->cmd->data, exec->shell->env->data);
 	strerror(errno);
-	//close_fds(exec); //TODO voir si utile
+	// close_fds(exec); //TODO voir si utile
 	free(cmd);
-	free_shell(exec->shell);
 	if (exec->root)
 		free_ast(exec->root);
+	if (exec->shell)
+		free_shell(exec->shell);
 	exit(FAIL_EXEC);
 }
 
-void	is_extern_cmd(t_exec *exec, char *cmd)
+void	is_extern_cmd(t_exec *exec, char **cmd)
 {
-	cmd = find_cmd_path(exec->current->cmd->data[0], exec->shell->env);
-	if (!cmd)
+	*cmd = find_cmd_path(exec->current->cmd->data[0], exec->shell->env);
+	if (!(*cmd))
 	{
 		close_fds(exec); //TODO voir si utile
 		printf("%s: command not found\n", exec->current->cmd->data[0]);
 		free_exec(exec); //TODO to be checked
 		exit (CMD_NOT_FOUND);
 	}
-	if (is_directory(cmd) != 0)
+	if (is_directory(*cmd) != 0)
 	{
 		close_fds(exec); //TODO voir si utile
 		printf("%s: is a directory\n", exec->current->cmd->data[0]);
 		free_exec(exec); //TODO to be checked
-		free(cmd);
+		free(*cmd);
 		exit (FAIL_EXEC);
 	}
 }
 
 static void	handle_child_process(t_exec *exec)
 {
-	char	cmd;
+	char	*cmd;
 
 	is_extern_cmd(exec, &cmd);
 	dup_fds(exec);
-	exec_extern_cmd(exec, &cmd);
-}
-
-int	cmd_is_valid(t_exec *exec)
-{
-	if (!exec->current->cmd || !exec->current->cmd->data
-		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
-	{
-		close_fds(exec);
-		printf("command not found\n");
-		return (CMD_NOT_FOUND);
-	}
-	return (0);
+	exec_extern_cmd(exec, cmd);
 }
 
 int	exec_cmd(t_exec *exec)
@@ -104,12 +86,7 @@ int	exec_cmd(t_exec *exec)
 		close_fds(exec);
 		exec->infd = STDIN_FILENO;
 		exec->outfd = STDOUT_FILENO;
-		waitpid(pid, &exec->shell->status, 0);
-		if (WIFEXITED(exec->shell->status))
-			return (WEXITSTATUS(exec->shell->status));
-		else if (WIFSIGNALED(exec->shell->status))
-			return (128 + WTERMSIG(exec->shell->status));
-		return (exec->shell->status);
+		ret = waitpid_process(exec, pid);
 	}
 	return (ret);
 }

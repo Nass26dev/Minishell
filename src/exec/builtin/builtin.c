@@ -6,10 +6,11 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:41:19 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 17:10:14 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include "builtin.h"
 
 int	is_builtin(t_exec *exec)
@@ -19,7 +20,7 @@ int	is_builtin(t_exec *exec)
 	int			i;
 	size_t		len;
 	char		*cmd;
-	
+
 	i = 0;
 	cmd = exec->current->cmd->data[0];
 	while (builtin[i])
@@ -40,6 +41,7 @@ int	exec_builtin(t_exec *exec, int builtin)
 	int			ret;
 
 	ret = -1;
+	(void) exec;
 	dup_fds(exec);
 	close_fds(exec); //TODO to be checked again > maybe need -1 set up for both fds and restore fds after builtin exec
 	if (builtin == CD)

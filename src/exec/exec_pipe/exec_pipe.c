@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:50:03 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 18:41:58 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,30 @@ static void	dup_outfds(t_exec *exec, int pipefd[2])
 
 static void	handle_pipe_process(t_exec *exec, int pipefd[2], bool left)
 {
-	char	cmd;
+	char	*cmd;
 	int		ret;
 
+	if (left == true)
+		exec->current = exec->current->left;
+	else
+		exec->current = exec->current->right;
 	ret = cmd_is_valid(exec);
 	if (ret != 0)
+	{
+		free_exec(exec);
 		exit (ret);
+	}
 	if (left == true)
-	{
 		dup_outfds(exec, pipefd);
-		exec->current = exec->current->left;
-	}
 	else
-	{
 		dup_infds(exec, pipefd);
-		exec->current = exec->current->right;
-	}
 	ret = is_builtin(exec);
 	if (ret >= 0 && ret < 7)
 		exit(exec_builtin(exec, ret));
 	else
 	{
 		is_extern_cmd(exec, &cmd);
-		exec_extern_cmd(exec, &cmd);
+		exec_extern_cmd(exec, cmd);
 	}
 }
 

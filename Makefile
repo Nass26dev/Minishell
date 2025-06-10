@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/09 19:00:14 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/10 17:10:31 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS =	src/main.c \
 		src/exec/builtin/builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \
 		src/exec/exec_cmd/find_cmd_path.c \
+		src/exec/exec_cmd/exec_cmd_utils.c \
 		src/exec/exec_redir/exec_redir.c \
 		src/exec/exec_redir/heredoc.c \
 		src/exec/exec_pipe/exec_pipe.c \
