@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/10 17:10:14 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 14:17:18 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	exec_builtin(t_exec *exec, int builtin)
 	int			ret;
 
 	ret = -1;
-	(void) exec;
 	dup_fds(exec);
 	close_fds(exec); //TODO to be checked again > maybe need -1 set up for both fds and restore fds after builtin exec
 	if (builtin == CD)
@@ -49,7 +48,7 @@ int	exec_builtin(t_exec *exec, int builtin)
 	else if (builtin == ECHO)
 		printf("exec echo\n");//ret = exec_echo(exec->current->cmd->data);
 	else if (builtin == ENV)
-		printf("exec env\n");//ret = exec_env(shell, exec);
+		ret = exec_env(exec);
 	else if (builtin == EXIT)
 		printf("exec exit\n");//ret = exec_exit(shell, exec);
 	else if (builtin == EXPORT)
