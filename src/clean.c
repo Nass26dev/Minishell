@@ -1,19 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_separator.c                                   :+:      :+:    :+:   */
+/*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/06 15:11:49 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 15:12:01 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2025/06/09 18:58:04 by eelissal          #+#    #+#             */
+/*   Updated: 2025/06/09 18:58:05 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
-int	exec_separator(t_exec *exec)
+void	free_args(char **args)
 {
-	(void) exec;
-	return (0);
+	int	i;
+
+	i = 0;
+	if (!args)
+		return ;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
+}
+
+void	free_ast(t_ast *ast)
+{
+	if (!ast)
+		return ;
+	if (ast->cmd)
+		free_vector(ast->cmd);
+	if (ast->left)
+		free_ast(ast->left);
+	if (ast->right)
+		free_ast(ast->right);
+	free(ast);
 }

@@ -3,19 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/07 19:57:01 by nass             ###   ########.fr        #
+#    Updated: 2025/06/11 13:59:30 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = minishell
 
 MAKEFLAGS += --no-print-directory
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP
+CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
 SRCS =	src/main.c \
 		src/parsing/loop.c \
 		src/parsing/input.c \
@@ -33,13 +32,18 @@ SRCS =	src/main.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \
+		src/exec/exec_cmd/find_cmd_path.c \
+		src/exec/exec_cmd/exec_cmd_utils.c \
 		src/exec/exec_redir/exec_redir.c \
+		src/exec/exec_redir/heredoc.c \
 		src/exec/exec_pipe/exec_pipe.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/exec_parenthesis/exec_parenthesis.c \
-		src/exec/exec_separator/exec_separator.c \
-		src/signals/signal.c
-		
+		src/signal.c \
+		src/env.c \
+		src/vector.c \
+		src/clean.c \
+
 MAKEDIR = make
 OBJDIR = make/objs
 SUBOBJDIR = make/objs/parsing \
@@ -55,8 +59,6 @@ SUBOBJDIR = make/objs/parsing \
 			make/objs/exec/exec_pipe \
 			make/objs/exec/exec_operator \
 			make/objs/exec/exec_parenthesis \
-			make/objs/exec/exec_separator \
-			make/objs/signals \
 
 DEPDIR = make/deps
 SUBDEPDIR = make/deps/parsing \
@@ -71,8 +73,6 @@ SUBDEPDIR = make/deps/parsing \
 			make/deps/exec/exec_pipe \
 			make/deps/exec/exec_operator \
 			make/deps/exec/exec_parenthesis \
-			make/deps/exec/exec_separator \
-			make/deps/signals \
 
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
@@ -80,7 +80,9 @@ DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
 HEADER =	include/minishell.h \
 			include/parsing/parsing.h \
 			include/exec/exec.h \
-			include/exec/builtin.h
+			include/exec/builtin.h \
+			include/vector.h \
+			include/env.h \
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a

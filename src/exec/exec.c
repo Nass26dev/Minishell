@@ -6,13 +6,20 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 15:09:33 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/09 18:02:04 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "exec.h"
 #include "builtin.h"
+
+void	free_exec(t_exec *exec)
+{
+	if (exec->shell)
+		free_shell(exec->shell);
+	if (exec->root)
+		free_ast(exec->root);
+}
 
 int	exec_node(t_exec *exec)
 {
@@ -21,9 +28,7 @@ int	exec_node(t_exec *exec)
 	if (!exec->current)
 		return (0);
 	ret = 0;
-	if (exec->current->tag == AST_SEPARATOR)
-		ret = exec_separator(exec);
-	else if (exec->current->tag == AST_PARENTHESIS)
+	if (exec->current->tag == AST_PARENTHESIS)
 		ret = exec_parenthesis(exec);
 	else if (exec->current->tag == AST_AND || exec->current->tag == AST_OR)
 		ret = exec_operator(exec);
@@ -52,15 +57,6 @@ int	execute(t_ast *ast, t_shell *shell)
 	int		ret;
 
 	init_exec(&exec, ast, shell);
-	if (exec.root->tag == AST_CMD)
-	{
-		ret = is_builtin(&exec);
-		if (ret >= 0 && ret < 7)
-			ret = exec_builtin(&exec, ret, shell);
-		else
-			ret = exec_cmd(&exec);
-	}
-	else
-		ret = exec_node(&exec);
+	ret = exec_node(&exec);
 	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:55:02 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 16:14:03 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/11 09:45:52 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,27 @@
 
 int main(int argc, char **argv, char **envp)
 {
-	// t_shell	shell;
+	t_shell	shell;
 
 	(void) argv;
-	//check si un seul argc: il ne doit pas y avoir d'autres arg après ./minishell
-	(void) argc;
-	//init shell
-	(void) envp;
-	// if (init_shell(&shell, envp) == false)
-		// return (1);
+	if (argc != 1)
+	{
+		ft_putstr_fd("minishell: no arguments allowed\n", STDERR_FILENO);
+		return (1);
+	}
+	if (init_shell(&shell, envp) == false)
+	{
+		ft_putstr_fd("minishell: failed env initialization\n", STDERR_FILENO);
+		return (1);
+	}
 	setup_interactive_signals();
 	while (1)
-		minishell_loop();
-	//free shell
+		if (minishell_loop() == 1)
+		{
+			printf("exit\n");
+			free_shell(&shell);
+			exit(0);
+		}
+	free_shell(&shell);
 	return (0);
 }
