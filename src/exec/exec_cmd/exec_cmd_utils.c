@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 19:04:20 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 14:26:42 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,13 @@ int	cmd_is_valid(t_exec *exec)
 		return (CMD_NOT_FOUND);
 	}
 	return (0);
+}
+
+int	return_process(t_exec *exec)
+{
+	if (WIFEXITED(exec->shell->status))
+		return (WEXITSTATUS(exec->shell->status));
+	else if (WIFSIGNALED(exec->shell->status))
+		return (128 + WTERMSIG(exec->shell->status));
+	return (exec->shell->status);
 }
