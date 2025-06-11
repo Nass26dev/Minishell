@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:55:03 by nass              #+#    #+#             */
-/*   Updated: 2025/06/07 20:58:10 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/11 15:06:48 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,14 @@ void set_space_to_token(t_token **head)
     while (last->next)
         last = last->next;
     last->space = true;
+}
+
+t_token *find_last_node(t_token *head)
+{
+    t_token *current;
+    
+    current = head;
+    while (current->next)
+        current = current->next;
+    return (current);
 }

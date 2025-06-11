@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/09 17:55:24 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/11 15:10:17 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 #include "minishell.h"
 
 #define PROMPT "\033[0;35mMinishell$\033[0m "
-
-typedef enum e_type
-{
-	TOKEN_SINGLE_QUOTE,
-	TOKEN_DOUBLE_QUOTE,
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_APPEND,
-	TOKEN_HEREDOC,
-	TOKEN_OR,
-	TOKEN_AND,
-	TOKEN_VARIABLE
-}			t_type;
 
 typedef struct s_token
 {
@@ -43,6 +28,8 @@ typedef struct s_token
 typedef struct s_data
 {
 	t_token *tokens;
+	t_ast	*ast;
+	t_shell	*shell;
 	bool error;
 }			t_data;
 
@@ -55,15 +42,17 @@ typedef struct s_expand
 }			t_expand;
 
 // line.c
-void get_input_and_add_to_historical(char **input);
-// error.c
+int get_input_and_add_to_historical(char **input);
+// error_checker.c
 void error_checker(t_data *data);
 void syntax_error(t_data *data, char *error);
 void print_correct_error(t_type tag);
 // lexer.c
 void lexer(t_data *data, char *input);
 // parser.c
-void parser(t_data *data, t_ast **ast);
+t_ast *parser(t_data *data, t_token *start, t_token *end);
+// ast.c
+t_ast *create_ast_node(t_type type, char *value);
 // case_utils.c
 int redir_in_heredoc(t_data *data, const char *input, int i);
 int redir_out_append(t_data *data, const char *input, int i);
@@ -79,6 +68,7 @@ t_token *create_token(char *value, t_type tag);
 void add_token(t_token **head, t_token *new);
 void free_tokens(t_token **head);
 void set_space_to_token(t_token **head);
+t_token *find_last_node(t_token *head);
 // utils.c
 char *ft_strndup(const char *src, size_t n);
 bool ft_isspace(char c);

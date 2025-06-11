@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 13:53:26 by eelissal          #+#    #+#              #
-#    Updated: 2025/06/07 16:17:40 by nass             ###   ########.fr        #
+#    Updated: 2025/06/07 20:51:36 by codespace        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRCS := ft_atoi.c \
 		ft_strlcpy.c \
 		ft_strlen.c \
 		ft_strmapi.c \
+		ft_strcmp.c \
 		ft_strncmp.c \
 		ft_strnstr.c \
 		ft_strrchr.c \
@@ -86,14 +87,11 @@ all:		$(NAME)
 $(BIN)/%.o:	$(SRC)/%.c $(HEADERS) Makefile
 			@mkdir -p $(dir $@);
 			@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-			@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME):	$(OBJS)
 			@ar rcs $@ $?
-			@ar rcs $@ $?
 
 clean:
-			@$(RM) $(OBJS)
 			@$(RM) $(OBJS)
 
 fclean:		clean
