@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:30:55 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/05 16:36:18 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/09 16:08:15 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ typedef enum e_builtin
 
 /*builtin.c*/
 int	is_builtin(t_exec *exec);
-int	exec_builtin(t_exec *exec, int ret, t_shell *shell);
+int	exec_builtin(t_exec *exec, int ret);
 
 #endif

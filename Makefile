@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/11 09:11:37 by codespace        ###   ########lyon.fr    #
+#    Updated: 2025/06/11 09:45:10 by codespace        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS =	src/main.c \
 		src/exec/builtin/builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \
 		src/exec/exec_cmd/find_cmd_path.c \
+		src/exec/exec_cmd/exec_cmd_utils.c \
 		src/exec/exec_redir/exec_redir.c \
 		src/exec/exec_redir/heredoc.c \
 		src/exec/exec_pipe/exec_pipe.c \
@@ -41,7 +42,7 @@ SRCS =	src/main.c \
 		src/env.c \
 		src/vector.c \
 		src/clean.c \
-		
+
 MAKEDIR = make
 OBJDIR = make/objs
 SUBOBJDIR = make/objs/parsing \

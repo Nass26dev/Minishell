@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/07 19:53:39 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 17:10:14 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include "builtin.h"
 
 int	is_builtin(t_exec *exec)
@@ -19,7 +20,7 @@ int	is_builtin(t_exec *exec)
 	int			i;
 	size_t		len;
 	char		*cmd;
-	
+
 	i = 0;
 	cmd = exec->current->cmd->data[0];
 	while (builtin[i])
@@ -35,14 +36,14 @@ int	is_builtin(t_exec *exec)
 	return (-1);
 }
 
-int	exec_builtin(t_exec *exec, int builtin, t_shell *shell)
+int	exec_builtin(t_exec *exec, int builtin)
 {
 	int			ret;
 
-	ret = 0;
+	ret = -1;
 	(void) exec;
-	(void) shell;
-	// ret = -1;
+	dup_fds(exec);
+	close_fds(exec); //TODO to be checked again > maybe need -1 set up for both fds and restore fds after builtin exec
 	if (builtin == CD)
 		printf("exec cd\n");//ret = exec_cd(shell, exec->current->cmd->data);
 	else if (builtin == ECHO)

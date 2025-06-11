@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/07 20:44:17 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/09 18:56:08 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	handle_redir_in(t_exec *exec)
 	if (fd == -1)
 	{
 		printf("%s: %s\n", exec->current->cmd->data[0], strerror(errno));
-		return (1); //to check again
+		return (1); //TODO to check again
 	}
 	if (exec->infd != STDIN_FILENO)
 		close(exec->infd);
@@ -38,7 +38,7 @@ static int	handle_redir_out(t_exec *exec)
 	if (fd == -1)
 	{
 		printf("%s: %s\n", exec->current->cmd->data[0], strerror(errno));
-		return (1); //to check again
+		return (1); //TODO to check again
 	}
 	if (exec->outfd != STDOUT_FILENO)
 		close(exec->outfd);
@@ -55,7 +55,7 @@ static int	handle_append(t_exec *exec)
 	if (fd == -1)
 	{
 		printf("%s: %s\n", exec->current->cmd->data[0], strerror(errno));
-		return (128 + errno); //to check again
+		return (128 + errno); //TODO to check again
 	}
 	if (exec->outfd != STDOUT_FILENO)
 		close(exec->outfd);
