@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 18:47:05 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 09:25:45 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_ast
 }	t_ast;
 
 // loop.c
-void minishell_loop(void);
+int minishell_loop(void);
 
 /*signal.c*/
 void	handle_sigint(int sig);

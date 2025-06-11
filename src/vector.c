@@ -5,7 +5,7 @@ t_vector	*vector_create(int initial_capacity)
 	t_vector	*vector;
 	int			i;
 
-	vector = malloc(sizeof(t_vector *));
+	vector = malloc(sizeof(t_vector));
 	if (!vector)
 		return (NULL);
 	vector->data = malloc(sizeof(char **) * initial_capacity);

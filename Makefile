@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/07 21:04:11 by codespace        ###   ########lyon.fr    #
+#    Updated: 2025/06/11 09:11:37 by codespace        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 MAKEFLAGS += --no-print-directory
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP
+CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
 SRCS =	src/main.c \
 		src/parsing/loop.c \
 		src/parsing/input.c \

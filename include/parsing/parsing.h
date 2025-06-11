@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 16:16:57 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/11 09:22:19 by codespace        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_expand
 }			t_expand;
 
 // line.c
-void get_input_and_add_to_historical(char **input);
+int get_input_and_add_to_historical(char **input);
 // error_checker.c
 void error_checker(t_data *data);
 void syntax_error(t_data *data, char *error);
