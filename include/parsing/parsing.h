@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 20:08:45 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/09 17:55:24 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void print_correct_error(t_type tag);
 // lexer.c
 void lexer(t_data *data, char *input);
 // parser.c
-void parser(t_data *data);
+void parser(t_data *data, t_ast **ast);
 // case_utils.c
 int redir_in_heredoc(t_data *data, const char *input, int i);
 int redir_out_append(t_data *data, const char *input, int i);
@@ -76,7 +76,6 @@ int extract_variable(t_data *data, const char *input, int i);
 int extract_word(t_data *data, const char *input, int i);
 // token.c
 t_token *create_token(char *value, t_type tag);
-t_token *create_token(char *value, t_type tag);
 void add_token(t_token **head, t_token *new);
 void free_tokens(t_token **head);
 void set_space_to_token(t_token **head);
@@ -84,8 +83,6 @@ void set_space_to_token(t_token **head);
 char *ft_strndup(const char *src, size_t n);
 bool ft_isspace(char c);
 bool is_operator(char c);
-int ft_isalnum(int c);
-char	*ft_strjoin(char const *s1, char const *s2);
 // expand.c
 void expander(t_data *data);
 // expand_utils.c

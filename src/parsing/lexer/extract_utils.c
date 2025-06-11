@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:40:19 by nass              #+#    #+#             */
-/*   Updated: 2025/06/07 19:49:20 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 21:03:14 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int ampersand(t_data *data, char *input, int i)
         ret = 2;
     }
     else
-    {
-        free(input);
         syntax_error(data, "syntax error near unexpected token « & »");
-    }
     return (ret);
 }
 
