@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/11 09:45:10 by codespace        ###   ########lyon.fr    #
+#    Updated: 2025/06/11 13:59:30 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS =	src/main.c \
 		src/parsing/expand/expand.c \
 		src/parsing/expand/expand_utils.c \
 		src/parsing/expand/concatenation.c \
+		src/parsing/expand/redir_value.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \

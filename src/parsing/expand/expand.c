@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/07 00:11:32 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/07 19:56:24 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,6 @@ void expander(t_data *data)
         }
         tmp = tmp->next;
     }
+    concatenation(data);
+	change_redir_value(data);
 }

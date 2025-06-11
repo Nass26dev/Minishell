@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/11 09:38:29 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 14:01:05 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ int minishell_loop(void)
 	}
 	free(input);
 	expander(&data);
+	if (data.error == true)
+	{
+		data.error = false;
+		return (0);
+	}
+	
+	error_checker(&data);
+	if (data.error == true)
+	{
+		data.error = false;
+		return (0);
+	}
 	
 	// printf("avant concatenation :\n");
 	// t_token *tmp;
