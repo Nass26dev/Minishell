@@ -6,13 +6,13 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/09 17:57:58 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/11 13:12:34 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void parser(t_data *data, t_ast **ast)
+void parser(t_data *data)
 {
 	
 }
