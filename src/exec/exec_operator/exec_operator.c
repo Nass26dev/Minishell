@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:07:55 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 13:19:00 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:49:32 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	exec_operator(t_exec *exec)
 {
 	t_ast	*node;
 	int		ret;
-	
+
 	ret = 1;
 	node = exec->current;
 	exec->current = node->left;

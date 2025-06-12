@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:35:07 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:42:33 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	handle_append(t_exec *exec)
 int	exec_redir(t_exec *exec)
 {
 	int	ret;
-	
+
 	if (exec->current->tag == AST_REDIR_IN)
 		ret = handle_redir_in(exec);
 	else if (exec->current->tag == AST_HEREDOC)

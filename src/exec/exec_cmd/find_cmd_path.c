@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:57:11 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:57:12 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:50:27 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_directory(const char *path)
 // 	}
 // }
 
-static char	*find_executable_path(char *cmd_name, char **path_dirs)
+static char	*find_executable_path(char *cmd, char **path_dirs)
 {
 	char	*cmd_path;
 	int		i;
@@ -46,7 +46,7 @@ static char	*find_executable_path(char *cmd_name, char **path_dirs)
 	while (path_dirs[i])
 	{
 		cmd_path = malloc(sizeof(char) * ft_strlen(path_dirs[i])
-			+ ft_strlen(cmd_name) + 2);
+				+ ft_strlen(cmd) + 2);
 		if (!cmd_path)
 		{
 			free_args(path_dirs);
@@ -54,7 +54,7 @@ static char	*find_executable_path(char *cmd_name, char **path_dirs)
 		}
 		ft_strlcpy(cmd_path, path_dirs[(i)], ft_strlen(path_dirs[(i)]) + 1);
 		ft_strlcat(cmd_path, "/", ft_strlen(cmd_path) + 2);
-		ft_strlcat(cmd_path, cmd_name, ft_strlen(cmd_path) + ft_strlen(cmd_name) + 1);
+		ft_strlcat(cmd_path, cmd, ft_strlen(cmd_path) + ft_strlen(cmd) + 1);
 		if (access(cmd_path, F_OK | X_OK) != 0)
 		{
 			free(cmd_path);

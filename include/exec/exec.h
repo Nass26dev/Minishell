@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:36:53 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:48:16 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ int		handle_heredoc(t_exec *exec);
 
 /*exec_pipe.c*/
 int		exec_pipe(t_exec *exec);
+
+/*exec_pipe_redirs.c*/
+void	handle_redirections(t_exec *exec, int pipefd[2], int fd);
+t_exec	*exec_redir_pipe(t_exec *exec);
 
 /*exec_operator.c*/
 int		exec_operator(t_exec *exec);

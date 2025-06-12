@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/11 14:15:01 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/12 15:48:54 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS =	src/main.c \
 		src/exec/exec_redir/exec_redir.c \
 		src/exec/exec_redir/heredoc.c \
 		src/exec/exec_pipe/exec_pipe.c \
+		src/exec/exec_pipe/exec_pipe_redirs.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/exec_parenthesis/exec_parenthesis.c \
 		src/signal.c \
