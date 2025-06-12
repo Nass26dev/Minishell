@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:46:34 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:53:58 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 {
 	int	ret;
 
-	while (exec->current->tag >= AST_REDIR_IN
-		&& exec->current->tag <= AST_APPEND)
+	while (exec->current->tag >= REDIR_IN
+		&& exec->current->tag <= APPEND)
 		exec = exec_redir_pipe(exec);
 	pid[fd] = fork();
 	if (pid[fd] == -1)
@@ -59,9 +59,9 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 	if (pid[fd] == 0)
 	{
 		handle_redirections(exec, pipefd, fd);
-		if (exec->current->tag == AST_CMD)
+		if (exec->current->tag == CMD)
 			handle_pipe_process(exec);
-		else if (fd == 0 && exec->current->tag == AST_PIPE)
+		else if (fd == 0 && exec->current->tag == PIPE)
 		{
 			ret = exec_node(exec);
 			free_exec(exec);
