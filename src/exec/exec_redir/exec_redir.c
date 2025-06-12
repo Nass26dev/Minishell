@@ -6,14 +6,14 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:56:08 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:35:07 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <fcntl.h>
 
-static int	handle_redir_in(t_exec *exec)
+int	handle_redir_in(t_exec *exec)
 {
 	int	fd;
 
@@ -26,11 +26,10 @@ static int	handle_redir_in(t_exec *exec)
 	if (exec->infd != STDIN_FILENO)
 		close(exec->infd);
 	exec->infd = fd;
-	exec->current = exec->current->left;
-	return (exec_node(exec));
+	return (0);
 }
 
-static int	handle_redir_out(t_exec *exec)
+int	handle_redir_out(t_exec *exec)
 {
 	int	fd;
 
@@ -43,11 +42,10 @@ static int	handle_redir_out(t_exec *exec)
 	if (exec->outfd != STDOUT_FILENO)
 		close(exec->outfd);
 	exec->outfd = fd;
-	exec->current = exec->current->left;
-	return (exec_node(exec));
+	return (0);
 }
 
-static int	handle_append(t_exec *exec)
+int	handle_append(t_exec *exec)
 {
 	int	fd;
 
@@ -60,19 +58,21 @@ static int	handle_append(t_exec *exec)
 	if (exec->outfd != STDOUT_FILENO)
 		close(exec->outfd);
 	exec->outfd = fd;
-	exec->current = exec->current->left;
-	return (exec_node(exec));
+	return (0);
 }
 
 int	exec_redir(t_exec *exec)
 {
+	int	ret;
+	
 	if (exec->current->tag == AST_REDIR_IN)
-		return (handle_redir_in(exec));
+		ret = handle_redir_in(exec);
 	else if (exec->current->tag == AST_HEREDOC)
-		return (handle_heredoc(exec));
+		ret = handle_heredoc(exec);
 	else if (exec->current->tag == AST_REDIR_OUT)
-		return (handle_redir_out(exec));
+		ret = handle_redir_out(exec);
 	else if (exec->current->tag == AST_APPEND)
-		return (handle_append(exec));
-	return (0);
+		ret = handle_append(exec);
+	exec->current = exec->current->left;
+	return (exec_node(exec));
 }

@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 12:04:46 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:34:28 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	close_fds(t_exec *exec)
 {
-	if (exec->infd != STDIN_FILENO)
+	if (exec->infd > 2)
 		close(exec->infd);
-	if (exec->outfd != STDOUT_FILENO)
+	if (exec->outfd > 2)
 		close(exec->outfd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 11:46:55 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:36:53 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ char	*find_cmd_path(char *cmd_name, t_vector *env);
 int		is_directory(const char *path);
 
 /*exec_redir.c*/
+int		handle_redir_in(t_exec *exec);
+int		handle_redir_out(t_exec *exec);
+int		handle_append(t_exec *exec);
 int		exec_redir(t_exec *exec);
 
 /*heredoc.c*/
