@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/11 14:26:42 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 12:04:46 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	dup_fds(t_exec *exec)
 
 int	cmd_is_valid(t_exec *exec)
 {
+	if (!exec || !exec->current)
+		return (CMD_NOT_FOUND);
 	if (!exec->current->cmd || !exec->current->cmd->data
 		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
 	{
