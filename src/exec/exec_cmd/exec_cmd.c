@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/11 14:28:20 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 15:35:11 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	exec_extern_cmd(t_exec *exec, char *cmd)
 	strerror(errno);
 	// close_fds(exec); //TODO voir si utile
 	free(cmd);
-	if (exec->root)
-		free_ast(exec->root);
-	if (exec->shell)
-		free_shell(exec->shell);
+	free_exec(exec);
 	exit(FAIL_EXEC);
 }
 

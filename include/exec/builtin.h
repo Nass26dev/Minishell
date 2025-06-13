@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:30:55 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/11 14:17:26 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 15:27:54 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ int	exec_builtin(t_exec *exec, int ret);
 
 /*env.c*/
 int	exec_env(t_exec *exec);
+
+/*echo.c*/
+int	exec_echo(char **data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:10:42 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/11 14:17:55 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 15:43:30 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	exec_env(t_exec *exec)
 	i = 0;
 	if (exec->current->cmd->count > 1)
 	{
-		printf("minishell: env function cannot take any options or arguments\n");
-		return (2);
+		ft_putstr_fd("minishell: env function cannot take any options or arguments\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
 	}
 	while (i < exec->shell->env->count)
 	{
