@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/11 09:25:45 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:53:36 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,19 @@
 
 typedef enum e_tag
 {
-	AST_CMD,
-	AST_PIPE,
-	AST_AND,
-	AST_OR,
-	AST_REDIR_IN,
-	AST_REDIR_OUT,
-	AST_HEREDOC,
-	AST_APPEND,
-	AST_PARENTHESIS,
-	AST_SEPARATOR,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	WORD,
+	VARIABLE,
+	CMD,
+	PIPE,
+	AND,
+	OR,
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC,
+	APPEND,
+	PARENTHESIS,
 }	t_tag;
 
 typedef struct s_ast

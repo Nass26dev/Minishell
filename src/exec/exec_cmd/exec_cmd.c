@@ -6,22 +6,12 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/10 18:37:34 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 14:28:20 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
-
-static int	waitpid_process(t_exec *exec, int pid)
-{
-	waitpid(pid, &exec->shell->status, 0);
-	if (WIFEXITED(exec->shell->status))
-		return (WEXITSTATUS(exec->shell->status));
-	else if (WIFSIGNALED(exec->shell->status))
-		return (128 + WTERMSIG(exec->shell->status));
-	return (exec->shell->status);
-}
 
 void	exec_extern_cmd(t_exec *exec, char *cmd)
 {
@@ -86,7 +76,8 @@ int	exec_cmd(t_exec *exec)
 		close_fds(exec);
 		exec->infd = STDIN_FILENO;
 		exec->outfd = STDOUT_FILENO;
-		ret = waitpid_process(exec, pid);
+		waitpid(pid, &exec->shell->status, 0);
+		ret = return_process(exec);
 	}
 	return (ret);
 }

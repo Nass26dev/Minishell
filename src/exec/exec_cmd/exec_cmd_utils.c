@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 19:04:20 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:34:28 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	close_fds(t_exec *exec)
 {
-	if (exec->infd != STDIN_FILENO)
+	if (exec->infd > 2)
 		close(exec->infd);
-	if (exec->outfd != STDOUT_FILENO)
+	if (exec->outfd > 2)
 		close(exec->outfd);
 }
 
@@ -31,6 +31,8 @@ void	dup_fds(t_exec *exec)
 
 int	cmd_is_valid(t_exec *exec)
 {
+	if (!exec || !exec->current)
+		return (CMD_NOT_FOUND);
 	if (!exec->current->cmd || !exec->current->cmd->data
 		|| !exec->current->cmd->data[0] || !exec->current->cmd->data[0][0])
 	{
@@ -39,4 +41,13 @@ int	cmd_is_valid(t_exec *exec)
 		return (CMD_NOT_FOUND);
 	}
 	return (0);
+}
+
+int	return_process(t_exec *exec)
+{
+	if (WIFEXITED(exec->shell->status))
+		return (WEXITSTATUS(exec->shell->status));
+	else if (WIFSIGNALED(exec->shell->status))
+		return (128 + WTERMSIG(exec->shell->status));
+	return (exec->shell->status);
 }
