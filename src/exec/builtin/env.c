@@ -6,13 +6,13 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:10:42 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/13 15:43:30 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 13:59:21 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	exec_env(t_exec *exec)
+int	builtin_env(t_exec *exec)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/13 15:29:39 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 13:59:33 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ int	exec_builtin(t_exec *exec, int builtin)
 	// dup_fds(exec);
 	// close_fds(exec); //TODO to be checked again > maybe need -1 set up for both fds and restore fds after builtin exec
 	if (builtin == CD)
-		printf("exec cd\n");//ret = exec_cd(shell, exec->current->cmd->data);
+		printf("exec cd\n");//ret = builtin_cd(shell, exec->current->cmd->data);
 	else if (builtin == ECHO)
-		ret = exec_echo(exec->current->cmd->data);
+		ret = builtin_echo(exec->current->cmd->data);
 	else if (builtin == ENV)
-		ret = exec_env(exec);
+		ret = builtin_env(exec);
 	else if (builtin == EXIT)
 		printf("exec exit\n");//ret = exec_exit(shell, exec);
 	else if (builtin == EXPORT)
 		printf("exec export\n");//ret = exec_export(shell, exec->current->cmd->data);
 	else if (builtin == PWD)
-		printf("exec pwd\n");//ret = exec_pwd(shell);
+		printf("exec pwd\n");//ret = builtin_pwd(shell);
 	else if (builtin == UNSET)
 		printf("exec unset\n");//ret = exec_unset(shell, exec->current->cmd->data);
 	return (ret);

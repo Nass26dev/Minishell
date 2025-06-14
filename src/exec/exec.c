@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:53:58 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 13:46:31 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int	execute(t_ast *ast, t_shell *shell)
 
 	init_exec(&exec, ast, shell);
 	ret = exec_node(&exec);
+	// shell = &exec.shell;
 	return (ret);
 }

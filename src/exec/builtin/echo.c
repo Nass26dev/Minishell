@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:16:17 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/13 15:27:37 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 13:59:33 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	parse_trailing_newline(const char *str, char n)
 	return (0);
 }
 
-int	exec_echo(char **data)
+int	builtin_echo(char **data)
 {
 	int		i;
 	bool	n_flag;
