@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/11 15:10:17 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/16 10:52:29 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void lexer(t_data *data, char *input);
 t_ast *parser(t_data *data, t_token *start, t_token *end);
 // ast.c
 t_ast *create_ast_node(t_type type, char *value);
+void print_ast(t_ast *node, int depth);
 // case_utils.c
 int redir_in_heredoc(t_data *data, const char *input, int i);
 int redir_out_append(t_data *data, const char *input, int i);

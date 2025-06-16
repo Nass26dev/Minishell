@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/11 15:11:50 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/16 10:44:55 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_ast
 {
 	t_tag			tag;
 	t_type			type;
-	t_command		*command;
+	char		*command;
 	t_vector		*cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;
