@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/16 11:15:25 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:19:08 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int minishell_loop(void)
 	// 	tmp = tmp->next;
 	// }
 	
+	// t_token *tmp;
+	
 	// printf("apres concatenation :\n");
 	// tmp = data.tokens;
 	// while (tmp)
@@ -58,7 +60,7 @@ int minishell_loop(void)
 	// }
 
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
-	// print_ast(data.ast, 0);
+	print_ast(data.ast, 0);
 	free_tokens(&data.tokens);
 	// if (data.ast)
 	// 	execute(data.ast, data.shell);

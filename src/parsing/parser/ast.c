@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/16 11:08:23 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/16 14:47:30 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,25 @@ t_ast *create_ast_node(t_type type, char *value)
     node->type = type;
     if (value)
     {
-        node->command = ft_strdup(value);
-        if (!node->command)
-        return (NULL);
+        node->command[0] = ft_strdup(value);
+		node->command[1] = NULL;
+		node->command[2] = NULL;
+        if (!node->command[0])
+        	return (NULL);
     }
     else
-        node->command = NULL;
+        node->command[0] = NULL;
     node->left = NULL;
     node->right = NULL;
     return (node);
+}
+
+void add_args_to_command(t_ast **node, char *args)
+{
+	t_ast *tmp;
+
+	tmp = *node;
+	tmp->command[1] = ft_strdup(args);
 }
 
 void print_indent(int depth)
@@ -46,6 +56,7 @@ void print_node(t_ast *node)
 		printf("(null)\n");
 		return;
 	}
+
 	if (node->type == TOKEN_AND)
 		printf("AND\n");
 	else if (node->type == TOKEN_OR)
@@ -53,7 +64,25 @@ void print_node(t_ast *node)
 	else if (node->type == TOKEN_PIPE)
 		printf("PIPE\n");
 	else if (node->type == TOKEN_WORD || node->type == TOKEN_DOUBLE_QUOTE || node->type == TOKEN_SINGLE_QUOTE)
-		printf("CMD: %s\n", node->command ? node->command : "(null)");
+	{
+		printf("CMD:");
+		if (node->command[0])
+		{
+			for (int i = 0; node->command[i]; i++)
+				printf(" %s", node->command[i]);
+			printf("\n");
+		}
+		else
+			printf(" (null)\n");
+	}
+	else if (node->type == TOKEN_REDIR_IN)
+		printf("REDIR IN: %s\n", node->command[0] ? node->command[0] : "(null)");
+	else if (node->type == TOKEN_REDIR_OUT)
+		printf("REDIR OUT: %s\n", node->command[0] ? node->command[0] : "(null)");
+	else if (node->type == TOKEN_APPEND)
+		printf("APPEND: %s\n", node->command[0] ? node->command[0] : "(null)");
+	else if (node->type == TOKEN_HEREDOC)
+		printf("HEREDOC: %s\n", node->command[0] ? node->command[0] : "(null)");
 	else
 		printf("UNKNOWN (%d)\n", node->type);
 }

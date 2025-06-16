@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/07 19:56:24 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/16 14:18:41 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ void expander(t_data *data)
         }
         tmp = tmp->next;
     }
-    concatenation(data);
 	change_redir_value(data);
+    concatenation(data);
 }

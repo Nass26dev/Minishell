@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:29 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 20:10:09 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/16 18:17:36 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@ bool tag_is_operator(t_type tag)
 	if (tag == TOKEN_OR)
 		return (true);
 	if (tag == TOKEN_PIPE)
-		return (true);
-    if (tag == TOKEN_APPEND)
-		return (true);
-	if (tag == TOKEN_HEREDOC)
-		return (true);
-	if (tag == TOKEN_REDIR_IN)
-		return (true);
-    if (tag == TOKEN_REDIR_OUT)
 		return (true);
     return (false);
 }

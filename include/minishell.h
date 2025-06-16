@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/16 10:44:55 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:08:58 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_ast
 {
 	t_tag			tag;
 	t_type			type;
-	char		*command;
+	char		*command[3];
 	t_vector		*cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/16 10:52:29 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:16:43 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_ast *parser(t_data *data, t_token *start, t_token *end);
 // ast.c
 t_ast *create_ast_node(t_type type, char *value);
 void print_ast(t_ast *node, int depth);
+void add_args_to_command(t_ast **node, char *args);
 // case_utils.c
 int redir_in_heredoc(t_data *data, const char *input, int i);
 int redir_out_append(t_data *data, const char *input, int i);
