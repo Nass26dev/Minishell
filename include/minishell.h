@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/12 15:53:36 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 15:35:10 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,8 @@ void	setup_child_signals(void);
 /*clean.c*/
 void	free_args(char **args);
 void	free_ast(t_ast *ast);
+
+/*utils.c*/
+void	write_fd(char *cmd, char *msg, int fd);
 
 #endif

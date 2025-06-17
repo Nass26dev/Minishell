@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/14 13:59:33 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 15:31:58 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	exec_builtin(t_exec *exec, int builtin)
 	// dup_fds(exec);
 	// close_fds(exec); //TODO to be checked again > maybe need -1 set up for both fds and restore fds after builtin exec
 	if (builtin == CD)
-		printf("exec cd\n");//ret = builtin_cd(shell, exec->current->cmd->data);
+		ret = builtin_cd(exec);
 	else if (builtin == ECHO)
 		ret = builtin_echo(exec->current->cmd->data);
 	else if (builtin == ENV)
@@ -54,8 +54,8 @@ int	exec_builtin(t_exec *exec, int builtin)
 	else if (builtin == EXPORT)
 		printf("exec export\n");//ret = exec_export(shell, exec->current->cmd->data);
 	else if (builtin == PWD)
-		printf("exec pwd\n");//ret = builtin_pwd(shell);
+		ret = builtin_pwd(exec);
 	else if (builtin == UNSET)
-		printf("exec unset\n");//ret = exec_unset(shell, exec->current->cmd->data);
+		ret = builtin_unset(exec);
 	return (ret);
 }
