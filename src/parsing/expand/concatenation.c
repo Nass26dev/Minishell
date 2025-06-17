@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:12:06 by nass              #+#    #+#             */
-/*   Updated: 2025/06/17 16:52:21 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/17 19:43:05 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,52 +109,62 @@ void concatenate_args(t_data *data)
     bool savestat;
     t_token *saved;
     t_token *last_redir;
+    // int i;
 
+    // i = 0;
     is_redir = false;
     saved = NULL;
     savestat = false;
     concat = false;
     current = data->tokens;
+    while(current->tag == TOKEN_REDIR_IN || current->tag == TOKEN_REDIR_OUT 
+        || current->tag == TOKEN_APPEND || current->tag == TOKEN_HEREDOC)
+        current = current->next;
     while (current)
     {
         if (current->tag != TOKEN_SINGLE_QUOTE && current->tag != TOKEN_DOUBLE_QUOTE && current->tag != TOKEN_WORD 
             && current->tag != TOKEN_REDIR_IN && current->tag != TOKEN_REDIR_OUT && current->tag != TOKEN_APPEND
             && current->tag != TOKEN_HEREDOC)
-        {
-            concat = false;
-            is_redir = false;
-            savestat = false;
-        }
-        else if (current->tag == TOKEN_REDIR_IN || current->tag == TOKEN_REDIR_OUT || current->tag == TOKEN_APPEND || current->tag == TOKEN_HEREDOC)
-        {
-            is_redir = true;
-            last_redir = current;
-        }
-        else if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_WORD) && concat == false)
-        {
-            concat = true;
-            saved = current;
-            savestat = true;
-        }
-        else if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_WORD) && concat == true)
-        {
-            if (savestat == false)
             {
+                // i = 0;
+                concat = false;
+                is_redir = false;
+                savestat = false;
+            }
+            else if (current->tag == TOKEN_REDIR_IN || current->tag == TOKEN_REDIR_OUT || current->tag == TOKEN_APPEND || current->tag == TOKEN_HEREDOC)
+            {
+                // if (i > 0)
+                // {
+                    is_redir = true;
+                    last_redir = current;
+                // }
+            }
+            else if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_WORD) && concat == false)
+            {
+                concat = true;
+                saved = current;
                 savestat = true;
-                saved = current;
             }
-            if (is_redir)
+            else if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_WORD) && concat == true)
             {
-                concatenate_nodes_after_redir(current, saved, last_redir);
-            }
-            else if (current->next && (current->next->tag == TOKEN_SINGLE_QUOTE 
-                || current->next->tag == TOKEN_DOUBLE_QUOTE || current->next->tag == TOKEN_WORD))
-            {
-                concatenate_nodes_with_spaces(current, current->next);
-                continue ;
-            }
-            else
-                saved = current;
+                if (savestat == false)
+                {
+                    savestat = true;
+                    saved = current;
+                }
+                if (is_redir)
+                {
+                    concatenate_nodes_after_redir(current, saved, last_redir);
+                }
+                else if (current->next && (current->next->tag == TOKEN_SINGLE_QUOTE 
+                    || current->next->tag == TOKEN_DOUBLE_QUOTE || current->next->tag == TOKEN_WORD))
+                    {
+                        concatenate_nodes_with_spaces(current, current->next);
+                        continue ;
+                    }
+                    else
+                    saved = current;
+            // i++;
         }
         current = current->next;
     }
@@ -167,8 +177,9 @@ void concatenation(t_data *data)
     current = data->tokens;
     while (current)
     {
-        if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_VARIABLE || current->tag == TOKEN_WORD) 
-                && current->space == 0)
+        if (node_is_word(current) && node_is_word(current->next))
+            concatenate_nodes_with_spaces(current, current->next);
+        else if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_VARIABLE || current->tag == TOKEN_WORD))
                 concatenate_nodes(current, current->next);
         if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_VARIABLE || current->tag == TOKEN_WORD) 
                 && current->space == 0 && should_concatenate(current, current->next))

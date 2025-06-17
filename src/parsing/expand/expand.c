@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/17 17:26:52 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/17 19:44:11 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void sort_redirections(t_token **head)
     
     current = *head;
     prev = NULL;
+    
 	while (current)
 	{
 		if (is_redirection(current->tag))
@@ -131,7 +132,74 @@ void sort_redirections(t_token **head)
 	}
 }
 
+void switch_nodes(t_token *a, t_token *b)
+{
+    t_type tmp_tag;
+    char *tmp_value;
+    bool tmp_space;
+    
+    if (!a || !b)
+        return;
+    
+    tmp_tag = a->tag;
+    tmp_value = a->value;
+    tmp_space = a->space;
+    
+    a->tag = b->tag;
+    a->value = b->value;
+    a->space = b->space;
+    
+    b->tag = tmp_tag;
+    b->value = tmp_value;
+    b->space = tmp_space;
+}
 
+bool node_is_redir(t_token *node)
+{
+    if (!node)
+        return (false);
+    return (node->tag == TOKEN_REDIR_IN || node->tag == TOKEN_REDIR_OUT
+		|| node->tag == TOKEN_APPEND || node->tag == TOKEN_HEREDOC);
+}
+
+bool node_is_word(t_token *node)
+{
+    if (!node)
+        return (false);
+    return (node->tag == TOKEN_SINGLE_QUOTE || node->tag == TOKEN_DOUBLE_QUOTE 
+            || node->tag == TOKEN_WORD);
+}
+
+bool node_is_operator(t_token *node)
+{
+    if (!node)
+        return (false);
+    return (node->tag == TOKEN_PIPE || node->tag == TOKEN_SINGLE_QUOTE || node->tag == TOKEN_DOUBLE_QUOTE);
+}
+
+void move_start_redir(t_token **head)
+{
+    t_token *current;
+    bool is_start;
+
+    is_start = true;
+    current = *head;
+    while (current)
+    {
+        while (node_is_redir(current) && node_is_redir(current->next))
+            current = current->next;
+        if (node_is_redir(current) && node_is_word(current->next) && is_start)
+        {
+            is_start = false;
+            switch_nodes(current, current->next);
+            current = *head;
+            continue ;
+        }
+        if (node_is_operator(current))
+            is_start = true;
+        current = current->next;
+    }
+}
 void expander(t_data *data)
 {
     t_token *tmp;
@@ -148,5 +216,6 @@ void expander(t_data *data)
     }
 	change_redir_value(data);
     concatenation(data);
+    move_start_redir(&data->tokens);
     sort_redirections(&data->tokens);
 }
