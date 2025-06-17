@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   concatenation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:12:06 by nass              #+#    #+#             */
-/*   Updated: 2025/06/16 17:04:07 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/17 16:52:21 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ void concatenate_args(t_data *data)
 
     is_redir = false;
     saved = NULL;
+    savestat = false;
     concat = false;
     current = data->tokens;
     while (current)
     {
-        // gerer le cas ou echo < in salut
         if (current->tag != TOKEN_SINGLE_QUOTE && current->tag != TOKEN_DOUBLE_QUOTE && current->tag != TOKEN_WORD 
             && current->tag != TOKEN_REDIR_IN && current->tag != TOKEN_REDIR_OUT && current->tag != TOKEN_APPEND
             && current->tag != TOKEN_HEREDOC)
@@ -133,6 +133,8 @@ void concatenate_args(t_data *data)
         else if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_WORD) && concat == false)
         {
             concat = true;
+            saved = current;
+            savestat = true;
         }
         else if ((current->tag == TOKEN_SINGLE_QUOTE || current->tag == TOKEN_DOUBLE_QUOTE || current->tag == TOKEN_WORD) && concat == true)
         {
