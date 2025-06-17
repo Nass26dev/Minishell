@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/16 14:18:41 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/17 17:02:20 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,63 @@ bool is_var(char *value)
     return (false);
 }
 
+bool	is_redirection(t_type tag)
+{
+	return (tag == TOKEN_REDIR_IN || tag == TOKEN_REDIR_OUT
+		|| tag == TOKEN_APPEND || tag == TOKEN_HEREDOC);
+}
+
+t_token *reverse_token_list(t_token *start, t_token *end)
+{
+	t_token *prev = NULL;
+	t_token *current = start;
+	t_token *next = NULL;
+
+	while (current && current != end->next)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	return (prev); // nouvelle tête de la sous-liste inversée
+}
+
+void	sort_redir(t_token **head)
+{
+    t_token_sort tok;
+	tok.current = *head;
+	tok.prev = NULL;
+
+	while (tok.current)
+	{
+		if (is_redirection(tok.current->tag))
+		{
+			tok.redir_start = tok.current;
+			tok.redir_end = tok.current;
+
+			while (tok.redir_end->next && is_redirection(tok.redir_end->next->tag))
+				tok.redir_end = tok.redir_end->next;
+
+			tok.after = tok.redir_end->next;
+			tok.reversed = reverse_token_list(tok.redir_start, tok.redir_end);
+
+			if (!tok.prev)
+				*head = tok.reversed;
+			else
+				tok.prev->next = tok.reversed;
+
+			tok.redir_start->next = tok.after;
+			tok.current = tok.after;
+		}
+		else
+		{
+			tok.prev = tok.current;
+			tok.current = tok.current->next;
+		}
+	}
+}
+
 void expander(t_data *data)
 {
     t_token *tmp;
@@ -83,4 +140,5 @@ void expander(t_data *data)
     }
 	change_redir_value(data);
     concatenation(data);
+    sort_redir(&data->tokens);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/16 13:16:43 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/17 17:00:07 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ typedef struct s_data
 	t_shell	*shell;
 	bool error;
 }			t_data;
+
+typedef struct s_token_sort
+{
+	t_token *current;
+	t_token *prev;
+	t_token *redir_start;
+	t_token *redir_end;
+	t_token *after;
+	t_token *reversed;
+}			t_token_sort;
 
 typedef struct s_expand
 {
