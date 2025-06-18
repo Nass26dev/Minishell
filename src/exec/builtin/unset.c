@@ -12,11 +12,11 @@
 
 #include "builtin.h"
 
-int	find_var_index_in_env(t_vector *env, char *var)
+int	find_env_var_index(t_vector *env, char *var)
 {
 	size_t	var_len;
 	int		i;
-	char	*entry;
+	char	*line;
 
 	if (!env || !var)
 		return (-1);
@@ -24,8 +24,8 @@ int	find_var_index_in_env(t_vector *env, char *var)
 	i = 0;
 	while (i < env->count)
 	{
-		entry = env->data[i];
-		if (ft_strncmp(entry, var, var_len) == 0 && entry[var_len] == '=')
+		line = env->data[i];
+		if (ft_strncmp(line, var, var_len) == 0 && line[var_len] == '=')
 			return (i);
 		i++;
 	}
@@ -36,9 +36,9 @@ static int	remove_env_var(t_vector *env, char *var)
 {
 	int	i;
 
-	i = find_var_index_in_env(env, var);
+	i = find_env_var_index(env, var);
 	if (i == -1)
-		return (EXIT_FAILURE);
+		return (1);
 	free(env->data[i]);
 	while (i < env->count - 1)
 	{
@@ -47,7 +47,7 @@ static int	remove_env_var(t_vector *env, char *var)
 	}
 	env->count--;
 	env->data[env->count] = NULL;
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 int	builtin_unset(t_exec *exec)
@@ -55,17 +55,17 @@ int	builtin_unset(t_exec *exec)
 	int	i;
 
 	if (!exec->shell->env)
-		return (EXIT_FAILURE);
+		return (1);
 	i = 1;
 	while (exec->current->cmd->data[i])
 	{
 		if (exec->current->cmd->data[i][0] == '-')
 		{
-			write_fd("unset", "options are not supported", STDERR_FILENO);
+			write_fd("unset", NULL, "options are not supported", STDERR_FILENO);
 			return (1);
 		}
 		remove_env_var(exec->shell->env, exec->current->cmd->data[i]);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }

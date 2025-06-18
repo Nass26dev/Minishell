@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:16:17 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/14 13:59:33 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 14:35:05 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_echo(char **data)
 	bool	n_flag;
 
 	if (!data|| !data[0])
-		return (EXIT_FAILURE);
+		return (1);
 	i = 1;
 	n_flag = true;
 	while (data[i] && parse_trailing_newline(data[i], 'n') == 0)
@@ -51,5 +51,5 @@ int	builtin_echo(char **data)
 	}
 	if (n_flag == true)
 		printf("\n");
-	return (EXIT_SUCCESS);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:29:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/17 13:40:47 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 11:39:34 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	builtin_pwd(t_exec *exec)
 		if (!pwd)
 		{
 			printf("pwd: error retrieving current directory\n");
-			return (EXIT_FAILURE);
+			return (1);
 		}
 	}
 	printf("%s\n", pwd);
 	free(pwd);
-	return (EXIT_SUCCESS);
+	return (0);
 }
