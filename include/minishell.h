@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/17 15:35:10 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 16:30:18 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ void	free_args(char **args);
 void	free_ast(t_ast *ast);
 
 /*utils.c*/
-void	write_fd(char *cmd, char *msg, int fd);
+void	write_fd(char *cmd1, char *cmd2, char *msg, int fd);
 
 #endif

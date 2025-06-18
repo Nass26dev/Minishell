@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/17 15:31:58 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 15:13:44 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	exec_builtin(t_exec *exec, int builtin)
 	else if (builtin == ENV)
 		ret = builtin_env(exec);
 	else if (builtin == EXIT)
-		printf("exec exit\n");//ret = exec_exit(shell, exec);
+		printf("exec exit\n");//ret = builtin_exit(exec);
 	else if (builtin == EXPORT)
-		printf("exec export\n");//ret = exec_export(shell, exec->current->cmd->data);
+		ret = builtin_export(exec->shell, exec->current->cmd->data);
 	else if (builtin == PWD)
 		ret = builtin_pwd(exec);
 	else if (builtin == UNSET)

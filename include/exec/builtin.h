@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:30:55 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/17 15:35:35 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 15:17:32 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,15 @@ int	builtin_cd(t_exec *exec);
 /*pwd.c*/
 int	builtin_pwd(t_exec *exec);
 
+/*export.c*/
+int	builtin_export(t_shell *shell, char **data);
+int	add_env_var(t_vector *env, char *name, char *value);
+
 /*unset.c*/
 int	builtin_unset(t_exec *exec);
-int	find_var_index_in_env(t_vector *env, char *var);
+int	find_env_var_index(t_vector *env, char *var);
+
+/*exit.c*/
+// int	builtin_exit(t_exec *exec);
 
 #endif

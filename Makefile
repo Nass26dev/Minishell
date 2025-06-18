@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/17 15:35:49 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/18 15:12:35 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS =	src/main.c \
 		src/exec/builtin/echo.c \
 		src/exec/builtin/cd.c \
 		src/exec/builtin/pwd.c \
+		src/exec/builtin/export.c \
 		src/exec/builtin/unset.c \
 		src/exec/exec_cmd/exec_cmd.c \
 		src/exec/exec_cmd/find_cmd_path.c \
