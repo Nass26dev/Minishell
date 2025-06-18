@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/13 15:35:11 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 14:28:53 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	exec_cmd(t_exec *exec)
 		return (ret);
 	ret = is_builtin(exec);
 	if (ret >= 0 && ret < 7)
+	{
 		ret = exec_builtin(exec, ret);
+		close_fds(exec);
+	}
 	else
 	{
 		pid = fork();

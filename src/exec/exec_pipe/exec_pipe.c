@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/13 14:50:28 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 14:28:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ static void	handle_pipe_process(t_exec *exec)
 	}
 	ret = is_builtin(exec);
 	if (ret >= 0 && ret < 7)
-		exit(exec_builtin(exec, ret));
+	{
+		ret = exec_builtin(exec, ret);
+		close_fds(exec);
+		exit(ret);
+	}
 	else
 	{
 		is_extern_cmd(exec, &cmd);
