@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 15:31:28 by eelissal          #+#    #+#             */
-/*   Updated: 2024/11/23 19:00:46 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 14:19:27 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ char	*ft_strrchr(const char *s, int c)
 			return ((char *) s + i);
 		i--;
 	}
-	return (0);
+	return (NULL);
 }
