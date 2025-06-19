@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:53:58 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	handle_redir_in(t_exec *exec)
 {
 	int	fd;
 
-	fd = open(exec->current->cmd->data[0], O_RDONLY);
+	fd = open(exec->current->command[0], O_RDONLY);
 	if (fd == -1)
 	{
-		printf("%s: %s\n", exec->current->cmd->data[0], strerror(errno));
+		printf("%s: %s\n", exec->current->command[0], strerror(errno));
 		return (1); //TODO to check again
 	}
 	if (exec->infd != STDIN_FILENO)
@@ -33,10 +33,10 @@ int	handle_redir_out(t_exec *exec)
 {
 	int	fd;
 
-	fd = open(exec->current->cmd->data[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(exec->current->command[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		printf("%s: %s\n", exec->current->cmd->data[0], strerror(errno));
+		printf("%s: %s\n", exec->current->command[0], strerror(errno));
 		return (1); //TODO to check again
 	}
 	if (exec->outfd != STDOUT_FILENO)
@@ -49,10 +49,10 @@ int	handle_append(t_exec *exec)
 {
 	int	fd;
 
-	fd = open(exec->current->cmd->data[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(exec->current->command[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		printf("%s: %s\n", exec->current->cmd->data[0], strerror(errno));
+		printf("%s: %s\n", exec->current->command[0], strerror(errno));
 		return (128 + errno); //TODO to check again
 	}
 	if (exec->outfd != STDOUT_FILENO)
@@ -65,13 +65,13 @@ int	exec_redir(t_exec *exec)
 {
 	int	ret;
 
-	if (exec->current->tag == REDIR_IN)
+	if (exec->current->tag == TOKEN_REDIR_IN)
 		ret = handle_redir_in(exec);
-	else if (exec->current->tag == HEREDOC)
+	else if (exec->current->tag == TOKEN_HEREDOC)
 		ret = handle_heredoc(exec);
-	else if (exec->current->tag == REDIR_OUT)
+	else if (exec->current->tag == TOKEN_REDIR_OUT)
 		ret = handle_redir_out(exec);
-	else if (exec->current->tag == APPEND)
+	else if (exec->current->tag == TOKEN_APPEND)
 		ret = handle_append(exec);
 	exec->current = exec->current->left;
 	return (exec_node(exec));

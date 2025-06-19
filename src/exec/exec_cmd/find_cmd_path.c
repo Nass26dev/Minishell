@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:57:11 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:50:27 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is_directory(const char *path)
 // 	if (stat(path, &buffer) == 0)
 // 	{
 // 		strerror(S_ISDIR(buffer.st_mode));
-// 		//printf("%s: is a directory\n", exec->current->cmd->data[0]);
+// 		//printf("%s: is a directory\n", exec->current->command[0]);
 // 		free(cmd);
 // 		close_fds(exec);
 // 		exit (FAIL_EXEC);

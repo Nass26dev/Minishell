@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 13:22:48 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:51:34 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_builtin(t_exec *exec)
 	char	*cmd;
 
 	i = 0;
-	cmd = exec->current->cmd->data[0];
+	cmd = exec->current->command[0];
 	while (builtin[i])
 	{
 		len = ft_strlen(builtin[i]);
@@ -46,13 +46,13 @@ int	exec_builtin(t_exec *exec, int builtin)
 	if (builtin == CD)
 		ret = builtin_cd(exec);
 	else if (builtin == ECHO)
-		ret = builtin_echo(exec->current->cmd->data);
+		ret = builtin_echo(exec->current->command);
 	else if (builtin == ENV)
 		ret = builtin_env(exec);
 	else if (builtin == EXIT)
 		ret = builtin_exit(exec);
 	else if (builtin == EXPORT)
-		ret = builtin_export(exec->shell, exec->current->cmd->data);
+		ret = builtin_export(exec->shell, exec->current->command);
 	else if (builtin == PWD)
 		ret = builtin_pwd(exec);
 	else if (builtin == UNSET)

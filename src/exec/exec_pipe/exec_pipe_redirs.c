@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:35 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/13 14:54:48 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:47:38 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	handle_redirections(t_exec *exec, int pipefd[2], int fd)
 
 t_exec	*exec_redir_pipe(t_exec *exec)
 {
-	if (exec->current->tag == REDIR_IN)
+	if (exec->current->tag == TOKEN_REDIR_IN)
 		exec->shell->status = handle_redir_in(exec);
-	else if (exec->current->tag == HEREDOC)
+	else if (exec->current->tag == TOKEN_HEREDOC)
 		exec->shell->status = handle_heredoc(exec);
-	else if (exec->current->tag == REDIR_OUT)
+	else if (exec->current->tag == TOKEN_REDIR_OUT)
 		exec->shell->status = handle_redir_out(exec);
-	else if (exec->current->tag == APPEND)
+	else if (exec->current->tag == TOKEN_APPEND)
 		exec->shell->status = handle_append(exec);
 	exec->current = exec->current->left;
 	return (exec);

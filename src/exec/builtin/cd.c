@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 11:12:05 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ int	cd_home(char *target, t_vector *env)
 
 int	builtin_cd(t_exec *exec)
 {
-	if (exec->current->cmd->data[0] && !exec->current->cmd->data[1])
+	if (exec->current->command[0] && !exec->current->command[1])
 		return (cd_home("HOME", exec->shell->env));
-	else if (exec->current->cmd->data[1] && !exec->current->cmd->data[2])
-		return (cd_get_path(exec->current->cmd->data[1], exec->shell->env));
+	else if (exec->current->command[1] && !exec->current->command[2])
+		return (cd_get_path(exec->current->command[1], exec->shell->env));
 	else
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);

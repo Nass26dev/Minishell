@@ -57,14 +57,14 @@ int	builtin_unset(t_exec *exec)
 	if (!exec->shell->env)
 		return (1);
 	i = 1;
-	while (exec->current->cmd->data[i])
+	while (exec->current->command[i])
 	{
-		if (exec->current->cmd->data[i][0] == '-')
+		if (exec->current->command[i][0] == '-')
 		{
 			write_fd("unset", NULL, "options are not supported", STDERR_FILENO);
 			return (1);
 		}
-		remove_env_var(exec->shell->env, exec->current->cmd->data[i]);
+		remove_env_var(exec->shell->env, exec->current->command[i]);
 		i++;
 	}
 	return (0);

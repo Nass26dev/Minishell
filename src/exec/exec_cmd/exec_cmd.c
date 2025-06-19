@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/18 14:28:53 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	exec_extern_cmd(t_exec *exec, char *cmd)
 {
-	execve(cmd, exec->current->cmd->data, exec->shell->env->data);
+	execve(cmd, exec->current->command, exec->shell->env->data);
 	strerror(errno);
 	// close_fds(exec); //TODO voir si utile
 	free(cmd);
@@ -25,18 +25,18 @@ void	exec_extern_cmd(t_exec *exec, char *cmd)
 
 void	is_extern_cmd(t_exec *exec, char **cmd)
 {
-	*cmd = find_cmd_path(exec->current->cmd->data[0], exec->shell->env);
+	*cmd = find_cmd_path(exec->current->command[0], exec->shell->env);
 	if (!(*cmd))
 	{
 		close_fds(exec); //TODO voir si utile
-		printf("%s: command not found\n", exec->current->cmd->data[0]);
+		printf("%s: command not found\n", exec->current->command[0]);
 		free_exec(exec); //TODO to be checked
 		exit (CMD_NOT_FOUND);
 	}
 	if (is_directory(*cmd) != 0)
 	{
 		close_fds(exec); //TODO voir si utile
-		printf("%s: is a directory\n", exec->current->cmd->data[0]);
+		printf("%s: is a directory\n", exec->current->command[0]);
 		free_exec(exec); //TODO to be checked
 		free(*cmd);
 		exit (FAIL_EXEC);

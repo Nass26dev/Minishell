@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:56:33 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:35:25 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	readline_heredoc(t_exec *exec, int *fd)
 	char	*delimiter;
 	char	*line;
 
-	delimiter = exec->current->cmd->data[0];
+	delimiter = exec->current->command[0];
 	while (1)
 	{
 		line = readline("> ");

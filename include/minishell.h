@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 11:04:27 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:50:25 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,28 @@
 # include <errno.h>
 # include "env.h"
 
-typedef enum e_tag
+typedef enum e_type
 {
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-	WORD,
-	VARIABLE,
-	CMD,
-	PIPE,
-	AND,
-	OR,
-	REDIR_IN,
-	REDIR_OUT,
-	HEREDOC,
-	APPEND,
-	PARENTHESIS,
-}	t_tag;
+	TOKEN_SINGLE_QUOTE,
+	TOKEN_DOUBLE_QUOTE,
+	TOKEN_WORD,
+	TOKEN_VARIABLE,
+	TOKEN_CMD,
+	TOKEN_PIPE,
+	TOKEN_AND,
+	TOKEN_OR,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_HEREDOC,
+	TOKEN_APPEND,
+	TOKEN_PARENTHESIS,
+}	t_type;
 
 typedef struct s_ast
 {
-	t_tag			tag;
-	t_vector		*cmd;
+	t_type			tag;
+	// t_vector		*cmd;
+	char			*command[3];
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;

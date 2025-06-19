@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/14 13:46:31 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:46:00 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ int	exec_node(t_exec *exec)
 	if (!exec->current)
 		return (0);
 	ret = 0;
-	if (exec->current->tag == PARENTHESIS)
+	if (exec->current->tag == TOKEN_PARENTHESIS)
 		ret = exec_parenthesis(exec);
-	else if (exec->current->tag == AND || exec->current->tag == OR)
+	else if (exec->current->tag == TOKEN_AND || exec->current->tag == TOKEN_OR)
 		ret = exec_operator(exec);
-	else if (exec->current->tag == PIPE)
+	else if (exec->current->tag == TOKEN_PIPE)
 		ret = exec_pipe(exec);
-	else if (exec->current->tag >= REDIR_IN
-		&& exec->current->tag <= APPEND)
+	else if (exec->current->tag >= TOKEN_REDIR_IN
+		&& exec->current->tag <= TOKEN_APPEND)
 		ret = exec_redir(exec);
-	else if (exec->current->tag == CMD)
+	else if (exec->current->tag == TOKEN_CMD)
 		ret = exec_cmd(exec);
 	return (ret);
 }
@@ -58,6 +58,6 @@ int	execute(t_ast *ast, t_shell *shell)
 
 	init_exec(&exec, ast, shell);
 	ret = exec_node(&exec);
-	// shell = &exec.shell;
+	// shell = exec.shell;
 	return (ret);
 }

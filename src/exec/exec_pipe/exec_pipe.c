@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 12:18:19 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:46:31 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void	handle_pipe_process(t_exec *exec)
 
 static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 {
-	while (exec->current && exec->current->tag >= REDIR_IN
-		&& exec->current->tag <= APPEND)
+	while (exec->current && exec->current->tag >= TOKEN_REDIR_IN
+		&& exec->current->tag <= TOKEN_APPEND)
 		exec = exec_redir_pipe(exec);
 	pid[fd] = fork();
 	if (pid[fd] == -1)
@@ -66,9 +66,9 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 			free_exec(exec);
 			exit(0);
 		}
-		if (exec->current->tag == CMD)
+		if (exec->current->tag == TOKEN_CMD)
 			handle_pipe_process(exec);
-		else if (fd == 0 && exec->current->tag == PIPE)
+		else if (fd == 0 && exec->current->tag == TOKEN_PIPE)
 		{
 			exec->shell->status = exec_node(exec);
 			free_exec(exec);
