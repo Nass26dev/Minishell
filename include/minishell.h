@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/18 16:30:18 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 11:04:27 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_ast
 }	t_ast;
 
 // loop.c
-int minishell_loop(void);
+int		minishell_loop(void);
 
 /*signal.c*/
 void	handle_sigint(int sig);

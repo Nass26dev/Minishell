@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:30:55 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/18 15:17:32 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 13:23:01 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int	builtin_unset(t_exec *exec);
 int	find_env_var_index(t_vector *env, char *var);
 
 /*exit.c*/
-// int	builtin_exit(t_exec *exec);
+int	builtin_exit(t_exec *exec);
 
 #endif
