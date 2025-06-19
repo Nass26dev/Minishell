@@ -3,82 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/10 18:41:58 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 18:02:03 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
-
-static int	waitpid_process(t_exec *exec, int pid[2])
-{
-	waitpid(pid[0], &exec->shell->status, 0);
-	if (pid[0] > 0)
-		waitpid(pid[1], &exec->shell->status, 0);
-	if (WIFEXITED(exec->shell->status))
-		return (WEXITSTATUS(exec->shell->status));
-	else if (WIFSIGNALED(exec->shell->status))
-		return (128 + WTERMSIG(exec->shell->status));
-	return (exec->shell->status);
-}
-
-static void	dup_infds(t_exec *exec, int pipefd[2])
-{
-	close(pipefd[1]);
-	if (exec->infd != STDIN_FILENO)
-	{
-		dup2(exec->infd, STDIN_FILENO);
-		close(exec->infd);
-	}
-	else
-		dup2(pipefd[0], STDIN_FILENO);
-	close(pipefd[0]);
-}
-
-static void	dup_outfds(t_exec *exec, int pipefd[2])
-{
-	close(pipefd[0]);
-	if (exec->outfd != STDOUT_FILENO)
-	{
-		dup2(exec->outfd, STDOUT_FILENO);
-		close(exec->outfd);
-	}
-	else
-		dup2(pipefd[1], STDOUT_FILENO);
-	close(pipefd[1]);
-}
-
-static void	handle_pipe_process(t_exec *exec, int pipefd[2], bool left)
-{
-	char	*cmd;
-	int		ret;
-
-	if (left == true)
-		exec->current = exec->current->left;
-	else
-		exec->current = exec->current->right;
-	ret = cmd_is_valid(exec);
-	if (ret != 0)
-	{
-		free_exec(exec);
-		exit (ret);
-	}
-	if (left == true)
-		dup_outfds(exec, pipefd);
-	else
-		dup_infds(exec, pipefd);
-	ret = is_builtin(exec);
-	if (ret >= 0 && ret < 7)
-		exit(exec_builtin(exec, ret));
-	else
-	{
-		is_extern_cmd(exec, &cmd);
-		exec_extern_cmd(exec, cmd);
-	}
-}
 
 static int	handle_fork_error(int pipefd[2], const char *msg)
 {
@@ -88,34 +21,89 @@ static int	handle_fork_error(int pipefd[2], const char *msg)
 	return (FAIL_FORK);
 }
 
+static void	handle_pipe_process(t_exec *exec)
+{
+	char	*cmd;
+	int		ret;
+
+	ret = cmd_is_valid(exec);
+	if (ret != 0)
+	{
+		free_exec(exec);
+		exit (ret);
+	}
+	ret = is_builtin(exec);
+	if (ret >= 0 && ret < 7)
+	{
+		ret = exec_builtin(exec, ret);
+		close_fds(exec);
+		free_exec(exec);
+		exit(ret);
+	}
+	else
+	{
+		is_extern_cmd(exec, &cmd);
+		exec_extern_cmd(exec, cmd);
+	}
+}
+
+static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
+{
+	while (exec->current && exec->current->tag >= TOKEN_REDIR_IN
+		&& exec->current->tag <= TOKEN_APPEND)
+		exec = exec_redir_pipe(exec);
+	pid[fd] = fork();
+	if (pid[fd] == -1)
+	{
+		if (fd == 1 && pid[0] > 0)
+			waitpid(pid[0], NULL, 0);
+		return (handle_fork_error(pipefd, "fork"));
+	}
+	if (pid[fd] == 0)
+	{
+		handle_redirections(exec, pipefd, fd);
+		if (!exec->current)
+		{
+			free_exec(exec);
+			exit(0);
+		}
+		if (exec->current->tag == TOKEN_CMD)
+			handle_pipe_process(exec);
+		else if (fd == 0 && exec->current->tag == TOKEN_PIPE)
+		{
+			exec->shell->status = exec_node(exec);
+			free_exec(exec);
+			exit(exec->shell->status);
+		}
+	}
+	return (0);
+}
+
 int	exec_pipe(t_exec *exec)
 {
-	int	infd;
-	int	outfd;
-	int	pipefd[2];
-	int	pid[2];
-	
-	infd = exec->infd;
-	outfd = exec->outfd;
-	// TODO printf("infd: %d\noutfd: %d\n", infd, outfd);
+	int		pipefd[2];
+	int		pid[2];
+	t_ast	*current;
+
 	if (pipe(pipefd) == -1)
 	{
 		strerror(errno); //TODO to check again
 		return (1);
 	}
-	pid[0] = fork();
-	if (pid[0] == -1)
-		return (handle_fork_error(pipefd, "fork"));
-	if (pid[0] == 0)
-		handle_pipe_process(exec, pipefd, true);
-	pid[1] = fork();
-	if (pid[1] == -1)
-		return (handle_fork_error(pipefd, "fork"));
-	if (pid[1] == 0)
-		handle_pipe_process(exec, pipefd, false);
+	current = exec->current;
+	exec->current = exec->current->left;
+	if (exec_pipe_fork(exec, pipefd, pid, 0) != 0)
+		return (FAIL_FORK);
+	exec->current = current;
+	exec->current = exec->current->right;
+	if (exec_pipe_fork(exec, pipefd, pid, 1) != 0)
+		return (FAIL_FORK);
+	exec->current = current;
 	close(pipefd[0]);
 	close(pipefd[1]);
-	exec->infd = infd;
-	exec->outfd = outfd;
-	return (waitpid_process(exec, pid));
+	close_fds(exec);
+	waitpid(pid[0], &exec->shell->status, 0);
+	if (pid[0] > 0)
+		waitpid(pid[1], &exec->shell->status, 0);
+	return (return_process(exec));
 }

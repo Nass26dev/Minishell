@@ -6,20 +6,23 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 15:55:57 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 17:38:20 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_ast	*create_ast_node(t_type type, char *value)
+t_ast	*create_ast_node(t_tag tag, char *value)
 {
 	t_ast	*node;
 
 	node = malloc(sizeof(t_ast));
 	if (!node)
 		return (NULL);
-	node->type = type;
+	if (tag == TOKEN_WORD || tag == TOKEN_DOUBLE_QUOTE || tag == TOKEN_SINGLE_QUOTE)
+		node->tag = TOKEN_CMD;
+	else
+		node->tag = tag;
 	if (value)
 	{
 		node->command[0] = ft_strdup(value);
@@ -56,14 +59,13 @@ void	print_node(t_ast *node)
 		printf("(null)\n");
 		return ;
 	}
-	if (node->type == TOKEN_AND)
+	if (node->tag == TOKEN_AND)
 		printf("AND\n");
-	else if (node->type == TOKEN_OR)
+	else if (node->tag == TOKEN_OR)
 		printf("OR\n");
-	else if (node->type == TOKEN_PIPE)
+	else if (node->tag == TOKEN_PIPE)
 		printf("PIPE\n");
-	else if (node->type == TOKEN_WORD || node->type == TOKEN_DOUBLE_QUOTE
-		|| node->type == TOKEN_SINGLE_QUOTE)
+	else if (node->tag == TOKEN_CMD)
 	{
 		printf("CMD:");
 		if (node->command[0])
@@ -79,18 +81,18 @@ void	print_node(t_ast *node)
 		else
 			printf(" (null)\n");
 	}
-	else if (node->type == TOKEN_REDIR_IN)
+	else if (node->tag == TOKEN_REDIR_IN)
 		printf("REDIR IN: %s\n",
 			node->command[0] ? node->command[0] : "(null)");
-	else if (node->type == TOKEN_REDIR_OUT)
+	else if (node->tag == TOKEN_REDIR_OUT)
 		printf("REDIR OUT: %s\n",
 			node->command[0] ? node->command[0] : "(null)");
-	else if (node->type == TOKEN_APPEND)
+	else if (node->tag == TOKEN_APPEND)
 		printf("APPEND: %s\n", node->command[0] ? node->command[0] : "(null)");
-	else if (node->type == TOKEN_HEREDOC)
+	else if (node->tag == TOKEN_HEREDOC)
 		printf("HEREDOC: %s\n", node->command[0] ? node->command[0] : "(null)");
 	else
-		printf("UNKNOWN (%d)\n", node->type);
+		printf("UNKNOWN (%d)\n", node->tag);
 }
 
 #define INDENT_STEP 4
@@ -112,16 +114,4 @@ void	print_ast(t_ast *node, int depth)
 		print_ast(node->left, depth + INDENT_STEP);
 }
 
-void free_ast(t_ast *node)
-{
-	if (!node)
-		return ;
-	if (node->type == TOKEN_WORD)
-	{
-		free(node->command[0]);
-		free(node->command[1]);
-	}
-	free_ast(node->left);
-	free_ast(node->right);
-	free(node);
-}
+

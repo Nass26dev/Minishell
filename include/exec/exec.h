@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/10 17:06:35 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:48:16 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,21 @@ int		execute(t_ast *ast, t_shell *shell);
 int		exec_cmd(t_exec *exec);
 void	is_extern_cmd(t_exec *exec, char **cmd);
 void	exec_extern_cmd(t_exec *exec, char *cmd);
+
+/*exec_cmd_utils.c*/
 int		cmd_is_valid(t_exec *exec);
 void	dup_fds(t_exec *exec);
 void	close_fds(t_exec *exec);
+int		return_process(t_exec *exec);
 
 /*find_cmd_path.c*/
 char	*find_cmd_path(char *cmd_name, t_vector *env);
 int		is_directory(const char *path);
 
 /*exec_redir.c*/
+int		handle_redir_in(t_exec *exec);
+int		handle_redir_out(t_exec *exec);
+int		handle_append(t_exec *exec);
 int		exec_redir(t_exec *exec);
 
 /*heredoc.c*/
@@ -56,6 +62,10 @@ int		handle_heredoc(t_exec *exec);
 
 /*exec_pipe.c*/
 int		exec_pipe(t_exec *exec);
+
+/*exec_pipe_redirs.c*/
+void	handle_redirections(t_exec *exec, int pipefd[2], int fd);
+t_exec	*exec_redir_pipe(t_exec *exec);
 
 /*exec_operator.c*/
 int		exec_operator(t_exec *exec);

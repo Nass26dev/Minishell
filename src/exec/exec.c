@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:02:04 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 17:02:52 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
+#include "parsing.h"
 
 void	free_exec(t_exec *exec)
 {
@@ -28,16 +29,16 @@ int	exec_node(t_exec *exec)
 	if (!exec->current)
 		return (0);
 	ret = 0;
-	if (exec->current->tag == AST_PARENTHESIS)
+	if (exec->current->tag == TOKEN_PARENTHESIS)
 		ret = exec_parenthesis(exec);
-	else if (exec->current->tag == AST_AND || exec->current->tag == AST_OR)
+	else if (exec->current->tag == TOKEN_AND || exec->current->tag == TOKEN_OR)
 		ret = exec_operator(exec);
-	else if (exec->current->tag == AST_PIPE)
+	else if (exec->current->tag == TOKEN_PIPE)
 		ret = exec_pipe(exec);
-	else if (exec->current->tag >= AST_REDIR_IN
-		&& exec->current->tag <= AST_APPEND)
+	else if (exec->current->tag >= TOKEN_REDIR_IN
+		&& exec->current->tag <= TOKEN_APPEND)
 		ret = exec_redir(exec);
-	else if (exec->current->tag == AST_CMD)
+	else if (exec->current->tag == TOKEN_CMD)
 		ret = exec_cmd(exec);
 	return (ret);
 }
@@ -58,5 +59,6 @@ int	execute(t_ast *ast, t_shell *shell)
 
 	init_exec(&exec, ast, shell);
 	ret = exec_node(&exec);
+	// shell = exec.shell;
 	return (ret);
 }

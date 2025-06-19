@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
+#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/11 15:20:37 by nass             ###   ########.fr        #
+#    Updated: 2025/06/19 16:50:19 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,6 @@ MAKEFLAGS += --no-print-directory
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
 SRCS =	src/main.c \
-		src/signal.c \
-		src/env.c \
-		src/vector.c \
-		src/clean.c \
 		src/parsing/loop.c \
 		src/parsing/input.c \
 		src/parsing/utils.c \
@@ -34,23 +30,29 @@ SRCS =	src/main.c \
 		src/parsing/expand/expand_utils.c \
 		src/parsing/expand/concatenation.c \
 		src/parsing/expand/redir_value.c \
+		src/exec/exec.c \
+		src/exec/builtin/builtin.c \
+		src/exec/builtin/env.c \
+		src/exec/builtin/echo.c \
+		src/exec/builtin/cd.c \
+		src/exec/builtin/pwd.c \
+		src/exec/builtin/export.c \
+		src/exec/builtin/unset.c \
+		src/exec/builtin/exit.c \
 		src/exec/exec_cmd/exec_cmd.c \
 		src/exec/exec_cmd/find_cmd_path.c \
 		src/exec/exec_cmd/exec_cmd_utils.c \
 		src/exec/exec_redir/exec_redir.c \
 		src/exec/exec_redir/heredoc.c \
 		src/exec/exec_pipe/exec_pipe.c \
+		src/exec/exec_pipe/exec_pipe_redirs.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/exec_parenthesis/exec_parenthesis.c \
-		src/exec/builtin/builtin.c \
-		src/exec/builtin/cd.c \
-		src/exec/builtin/echo.c \
-		src/exec/builtin/env.c \
-		src/exec/builtin/exit.c \
-		src/exec/builtin/export.c \
-		src/exec/builtin/pwd.c \
-		src/exec/builtin/unset.c \
-		src/exec/exec.c
+		src/signal.c \
+		src/env.c \
+		src/vector.c \
+		src/clean.c \
+		src/utils.c \
 
 MAKEDIR = make
 OBJDIR = make/objs

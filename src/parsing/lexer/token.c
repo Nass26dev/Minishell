@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:55:03 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 15:41:45 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 17:38:59 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,17 @@ void	free_tokens(t_token **head)
 	*head = NULL;
 }
 
-t_token	*create_token(char *value, t_type tag)
+t_token	*create_token(char *value, t_tag tag)
 {
 	t_token	*new;
 
 	new = malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->value = ft_strdup(value);
+	if (value)
+		new->value = ft_strdup(value);
+	else
+		new->value = NULL;
 	new->tag = tag;
 	new->space = false;
 	new->next = NULL;

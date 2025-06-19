@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 16:15:10 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:44:13 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef struct s_token
 {
-	t_type			tag;
+	t_tag			tag;
 	char			*value;
 	bool			space;
 	struct s_token	*next;
@@ -56,13 +56,13 @@ int					get_input_and_add_to_historical(char **input);
 // error_checker.c
 void				error_checker(t_data *data);
 void				syntax_error(t_data *data, char *error);
-void				print_correct_error(t_type tag);
+void				print_correct_error(t_tag tag);
 // lexer.c
 void				lexer(t_data *data, char *input);
 // parser.c
 t_ast				*parser(t_data *data, t_token *start, t_token *end);
 // ast.c
-t_ast				*create_ast_node(t_type type, char *value);
+t_ast				*create_ast_node(t_tag tag, char *value);
 void				print_ast(t_ast *node, int depth);
 void				add_args_to_command(t_ast **node, char *args);
 void				free_ast(t_ast *node);
@@ -77,7 +77,7 @@ int					extract_quoted_string(t_data *data, char *input, int i);
 int					extract_variable(t_data *data, const char *input, int i);
 int					extract_word(t_data *data, const char *input, int i);
 // token.c
-t_token				*create_token(char *value, t_type tag);
+t_token				*create_token(char *value, t_tag tag);
 void				add_token(t_token **head, t_token *new);
 void				free_tokens(t_token **head);
 void				set_space_to_token(t_token **head);

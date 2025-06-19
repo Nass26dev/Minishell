@@ -6,27 +6,27 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 15:46:29 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:46:34 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	get_operator_priority(t_type type)
+int	get_operator_priority(t_tag tag)
 {
-	if (type == TOKEN_OR)
+	if (tag == TOKEN_OR)
 		return (1);
-	if (type == TOKEN_AND)
+	if (tag == TOKEN_AND)
 		return (2);
-	if (type == TOKEN_PIPE)
+	if (tag == TOKEN_PIPE)
 		return (3);
-	if (type == TOKEN_REDIR_IN)
+	if (tag == TOKEN_REDIR_IN)
 		return (4);
-	if (type == TOKEN_REDIR_OUT)
+	if (tag == TOKEN_REDIR_OUT)
 		return (4);
-	if (type == TOKEN_APPEND)
+	if (tag == TOKEN_APPEND)
 		return (4);
-	if (type == TOKEN_HEREDOC)
+	if (tag == TOKEN_HEREDOC)
 		return (4);
 	return (100);
 }

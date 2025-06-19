@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 15:47:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 17:27:01 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	is_var(char *value)
 	return (false);
 }
 
-bool	is_redirection(t_type tag)
+bool	is_redirection(t_tag tag)
 {
 	return (tag == TOKEN_REDIR_IN || tag == TOKEN_REDIR_OUT
 		|| tag == TOKEN_APPEND || tag == TOKEN_HEREDOC);
@@ -131,7 +131,7 @@ void	sort_redirections(t_token **head)
 
 void	switch_nodes(t_token *a, t_token *b)
 {
-	t_type	tmp_tag;
+	t_tag	tmp_tag;
 	char	*tmp_value;
 	bool	tmp_space;
 
@@ -168,8 +168,8 @@ bool	node_is_operator(t_token *node)
 {
 	if (!node)
 		return (false);
-	return (node->tag == TOKEN_PIPE || node->tag == TOKEN_SINGLE_QUOTE
-		|| node->tag == TOKEN_DOUBLE_QUOTE);
+	return (node->tag == TOKEN_PIPE || node->tag == TOKEN_OR
+		|| node->tag == TOKEN_AND);
 }
 
 void	move_start_redir(t_token **head)

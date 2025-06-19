@@ -6,13 +6,13 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:29 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 16:01:46 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:45:59 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-bool	tag_is_operator(t_type tag)
+bool	tag_is_operator(t_tag tag)
 {
 	if (tag == TOKEN_AND)
 		return (true);
@@ -23,7 +23,7 @@ bool	tag_is_operator(t_type tag)
 	return (false);
 }
 
-void	print_correct_error(t_type tag)
+void	print_correct_error(t_tag tag)
 {
 	printf("syntax error near unexpected token « ");
 	if (tag == TOKEN_AND)
@@ -42,7 +42,7 @@ void	print_correct_error(t_type tag)
 		printf("> »\n");
 }
 
-bool	is_operator_error(t_data *data, t_type tag)
+bool	is_operator_error(t_data *data, t_tag tag)
 {
 	if (tag_is_operator(tag))
 	{

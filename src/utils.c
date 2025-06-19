@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 14:22:11 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/18 14:17:36 by eelissal         ###   ########lyon.fr   */
+/*   Created: 2025/06/17 15:34:07 by eelissal          #+#    #+#             */
+/*   Updated: 2025/06/18 16:31:13 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+void	write_fd(char *cmd1, char *cmd2, char *msg, int fd)
 {
-	int		i;
-	char	*dest;
-	int		len;
-
-	i = 0;
-	len = ft_strlen(s);
-	if (len < 0)
-		return (NULL);
-	dest = malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (!dest)
-		return (NULL);
-	while (s[i])
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	ft_putstr_fd("minishell: ", fd);
+	ft_putstr_fd(cmd1, fd);
+	if (cmd1)
+		write(fd, ": ", 2);
+	ft_putstr_fd(cmd2, fd);
+	if (cmd2)
+		write(fd, ": ", 2);
+	ft_putendl_fd(msg, fd);
 }

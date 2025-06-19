@@ -6,50 +6,37 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/10 18:37:34 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
 
-static int	waitpid_process(t_exec *exec, int pid)
-{
-	waitpid(pid, &exec->shell->status, 0);
-	if (WIFEXITED(exec->shell->status))
-		return (WEXITSTATUS(exec->shell->status));
-	else if (WIFSIGNALED(exec->shell->status))
-		return (128 + WTERMSIG(exec->shell->status));
-	return (exec->shell->status);
-}
-
 void	exec_extern_cmd(t_exec *exec, char *cmd)
 {
-	execve(cmd, exec->current->cmd->data, exec->shell->env->data);
+	execve(cmd, exec->current->command, exec->shell->env->data);
 	strerror(errno);
 	// close_fds(exec); //TODO voir si utile
 	free(cmd);
-	if (exec->root)
-		free_ast(exec->root);
-	if (exec->shell)
-		free_shell(exec->shell);
+	free_exec(exec);
 	exit(FAIL_EXEC);
 }
 
 void	is_extern_cmd(t_exec *exec, char **cmd)
 {
-	*cmd = find_cmd_path(exec->current->cmd->data[0], exec->shell->env);
+	*cmd = find_cmd_path(exec->current->command[0], exec->shell->env);
 	if (!(*cmd))
 	{
 		close_fds(exec); //TODO voir si utile
-		printf("%s: command not found\n", exec->current->cmd->data[0]);
+		printf("%s: command not found\n", exec->current->command[0]);
 		free_exec(exec); //TODO to be checked
 		exit (CMD_NOT_FOUND);
 	}
 	if (is_directory(*cmd) != 0)
 	{
 		close_fds(exec); //TODO voir si utile
-		printf("%s: is a directory\n", exec->current->cmd->data[0]);
+		printf("%s: is a directory\n", exec->current->command[0]);
 		free_exec(exec); //TODO to be checked
 		free(*cmd);
 		exit (FAIL_EXEC);
@@ -75,7 +62,10 @@ int	exec_cmd(t_exec *exec)
 		return (ret);
 	ret = is_builtin(exec);
 	if (ret >= 0 && ret < 7)
+	{
 		ret = exec_builtin(exec, ret);
+		close_fds(exec);
+	}
 	else
 	{
 		pid = fork();
@@ -86,7 +76,8 @@ int	exec_cmd(t_exec *exec)
 		close_fds(exec);
 		exec->infd = STDIN_FILENO;
 		exec->outfd = STDOUT_FILENO;
-		ret = waitpid_process(exec, pid);
+		waitpid(pid, &exec->shell->status, 0);
+		ret = return_process(exec);
 	}
 	return (ret);
 }
