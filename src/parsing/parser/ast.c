@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/16 14:47:30 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 14:23:31 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,11 @@ void print_node(t_ast *node)
 		if (node->command[0])
 		{
 			for (int i = 0; node->command[i]; i++)
+			{
+				if (i == 1)
+					printf(" ,");	
 				printf(" %s", node->command[i]);
+			}
 			printf("\n");
 		}
 		else

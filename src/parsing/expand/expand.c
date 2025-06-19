@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/17 19:44:11 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/19 15:21:14 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,24 +180,17 @@ bool node_is_operator(t_token *node)
 void move_start_redir(t_token **head)
 {
     t_token *current;
-    bool is_start;
-
-    is_start = true;
+    
     current = *head;
     while (current)
     {
-        while (node_is_redir(current) && node_is_redir(current->next))
-            current = current->next;
-        if (node_is_redir(current) && node_is_word(current->next) && is_start)
+        if (node_is_redir(current) && node_is_word(current->next))
         {
-            is_start = false;
             switch_nodes(current, current->next);
             current = *head;
-            continue ;
         }
-        if (node_is_operator(current))
-            is_start = true;
-        current = current->next;
+        else
+            current = current->next;
     }
 }
 void expander(t_data *data)

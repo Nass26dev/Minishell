@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:48:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/06 19:45:18 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 14:24:53 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_sigint(int signum)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-
+	
 /*Handles signals in interactive mode:
 - SIGINT (Ctrl-C): handles the signal (with handle_sigint)
 - SIGQUIT (Ctrl-\): ignores the signal (with SIG_IGN)

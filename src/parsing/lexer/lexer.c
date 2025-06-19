@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 00:33:42 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/19 15:30:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void lexer(t_data *data, char *input)
 		else if (input[i] == '$')
 			i += extract_variable(data, input, i);
 		else
+		{
+			write(1, "b", 1);
 			i += extract_word(data, input, i);
+		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/17 19:37:19 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/19 14:35:35 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ bool ft_isspace(char c);
 bool is_operator(char c);
 // expand.c
 void expander(t_data *data);
+bool node_is_operator(t_token *node);
 bool node_is_word(t_token *node);
-
+bool node_is_redir(t_token *node);
 // expand_utils.c
 char *recup_beforevar(char *input);
 char *recup_varname(char *input);
