@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2024/11/23 19:01:18 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 14:17:20 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (-1);
 	while (s[i])
 		i++;
 	return (i);

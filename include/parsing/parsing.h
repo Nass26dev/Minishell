@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/11 13:59:56 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:44:10 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 #include "minishell.h"
 
 #define PROMPT "\033[0;35mMinishell$\033[0m "
-
-typedef enum e_type
-{
-	TOKEN_SINGLE_QUOTE,
-	TOKEN_DOUBLE_QUOTE,
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_APPEND,
-	TOKEN_HEREDOC,
-	TOKEN_OR,
-	TOKEN_AND,
-	TOKEN_VARIABLE
-}			t_type;
 
 typedef struct s_token
 {

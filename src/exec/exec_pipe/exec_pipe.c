@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:53:58 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:46:31 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ static void	handle_pipe_process(t_exec *exec)
 	}
 	ret = is_builtin(exec);
 	if (ret >= 0 && ret < 7)
-		exit(exec_builtin(exec, ret));
+	{
+		ret = exec_builtin(exec, ret);
+		close_fds(exec);
+		exit(ret);
+	}
 	else
 	{
 		is_extern_cmd(exec, &cmd);
@@ -44,10 +48,8 @@ static void	handle_pipe_process(t_exec *exec)
 
 static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 {
-	int	ret;
-
-	while (exec->current->tag >= REDIR_IN
-		&& exec->current->tag <= APPEND)
+	while (exec->current && exec->current->tag >= TOKEN_REDIR_IN
+		&& exec->current->tag <= TOKEN_APPEND)
 		exec = exec_redir_pipe(exec);
 	pid[fd] = fork();
 	if (pid[fd] == -1)
@@ -59,13 +61,18 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 	if (pid[fd] == 0)
 	{
 		handle_redirections(exec, pipefd, fd);
-		if (exec->current->tag == CMD)
-			handle_pipe_process(exec);
-		else if (fd == 0 && exec->current->tag == PIPE)
+		if (!exec->current)
 		{
-			ret = exec_node(exec);
 			free_exec(exec);
-			exit(ret);
+			exit(0);
+		}
+		if (exec->current->tag == TOKEN_CMD)
+			handle_pipe_process(exec);
+		else if (fd == 0 && exec->current->tag == TOKEN_PIPE)
+		{
+			exec->shell->status = exec_node(exec);
+			free_exec(exec);
+			exit(exec->shell->status);
 		}
 	}
 	return (0);

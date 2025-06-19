@@ -6,21 +6,23 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:10:42 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/11 14:17:55 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:56:42 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	exec_env(t_exec *exec)
+int	builtin_env(t_exec *exec)
 {
 	int	i;
 
 	i = 0;
-	if (exec->current->cmd->count > 1)
+	while (exec->current->command[i])
+		i++;
+	if (i > 1)
 	{
-		printf("minishell: env function cannot take any options or arguments\n");
-		return (2);
+		ft_putstr_fd("minishell: env: too many arguments\n", STDERR_FILENO);
+		return (1);
 	}
 	while (i < exec->shell->env->count)
 	{
@@ -28,5 +30,5 @@ int	exec_env(t_exec *exec)
 			printf("%s\n", exec->shell->env->data[i]);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }

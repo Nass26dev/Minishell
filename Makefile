@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/12 15:48:54 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/19 13:22:20 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,12 @@ SRCS =	src/main.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/builtin/env.c \
+		src/exec/builtin/echo.c \
+		src/exec/builtin/cd.c \
+		src/exec/builtin/pwd.c \
+		src/exec/builtin/export.c \
+		src/exec/builtin/unset.c \
+		src/exec/builtin/exit.c \
 		src/exec/exec_cmd/exec_cmd.c \
 		src/exec/exec_cmd/find_cmd_path.c \
 		src/exec/exec_cmd/exec_cmd_utils.c \
@@ -45,6 +51,7 @@ SRCS =	src/main.c \
 		src/env.c \
 		src/vector.c \
 		src/clean.c \
+		src/utils.c \
 
 MAKEDIR = make
 OBJDIR = make/objs

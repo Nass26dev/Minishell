@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:58:05 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 16:00:16 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	free_ast(t_ast *ast)
 {
 	if (!ast)
 		return ;
-	if (ast->cmd)
-		free_vector(ast->cmd);
+	if (ast->command[0])
+		free_args(ast->command);
 	if (ast->left)
 		free_ast(ast->left);
 	if (ast->right)

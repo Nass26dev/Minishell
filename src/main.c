@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:55:02 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/11 09:45:52 by codespace        ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 17:16:43 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,8 @@ int main(int argc, char **argv, char **envp)
 	setup_interactive_signals();
 	while (1)
 		if (minishell_loop() == 1)
-		{
-			printf("exit\n");
-			free_shell(&shell);
-			exit(0);
-		}
+			break ;
 	free_shell(&shell);
+	rl_clear_history();
 	return (0);
 }

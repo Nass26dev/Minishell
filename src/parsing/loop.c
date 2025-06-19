@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/11 14:01:05 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 14:46:23 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ int minishell_loop(void)
 	ast = NULL;
 	shell = NULL;
 	if (ast)
-		execute(ast, shell);
+		shell->status = execute(ast, shell);
 	return (0);
 }
