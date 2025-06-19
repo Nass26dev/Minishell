@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/16 18:26:40 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 12:57:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ t_ast	*parser(t_data *data, t_token *start, t_token *end)
 	t_token	*main_op;
 	t_ast	*node;
 
-    // mettre dans le bon ordre les redirections
 	main_op = find_main_operator(start, end);
 	if (main_op && start && end && start != end)
 	{
