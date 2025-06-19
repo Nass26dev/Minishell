@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/18 14:28:29 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 12:18:19 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	handle_pipe_process(t_exec *exec)
 
 static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 {
-	while (exec->current->tag >= REDIR_IN
+	while (exec->current && exec->current->tag >= REDIR_IN
 		&& exec->current->tag <= APPEND)
 		exec = exec_redir_pipe(exec);
 	pid[fd] = fork();
@@ -61,6 +61,11 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 	if (pid[fd] == 0)
 	{
 		handle_redirections(exec, pipefd, fd);
+		if (!exec->current)
+		{
+			free_exec(exec);
+			exit(0);
+		}
 		if (exec->current->tag == CMD)
 			handle_pipe_process(exec);
 		else if (fd == 0 && exec->current->tag == PIPE)
