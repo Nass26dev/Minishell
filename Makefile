@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/19 13:22:20 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/19 16:50:19 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS =	src/main.c \
 		src/parsing/lexer/extract_utils.c \
 		src/parsing/lexer/token.c \
 		src/parsing/parser/parser.c \
+		src/parsing/parser/ast.c \
 		src/parsing/expand/expand.c \
 		src/parsing/expand/expand_utils.c \
 		src/parsing/expand/concatenation.c \

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 00:33:42 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/19 16:19:44 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void lexer(t_data *data, char *input)
+void	lexer(t_data *data, char *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (input[i] != 0)

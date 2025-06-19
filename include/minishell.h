@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 15:50:25 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 16:58:01 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <errno.h>
 # include "env.h"
 
-typedef enum e_type
+typedef enum e_tag
 {
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
@@ -44,22 +44,21 @@ typedef enum e_type
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
 	TOKEN_PARENTHESIS,
-}	t_type;
+}	t_tag;
 
 typedef struct s_ast
 {
-	t_type			tag;
-	// t_vector		*cmd;
+	t_tag			tag;
 	char			*command[3];
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;
 
 // loop.c
-int		minishell_loop(void);
+int		minishell_loop(t_shell *shell);
 
 /*signal.c*/
-void	handle_sigint(int sig);
+void	handle_sigint(int signum);
 void	setup_interactive_signals(void);
 void	setup_child_signals(void);
 

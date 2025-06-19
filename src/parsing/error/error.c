@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:29 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/07 20:10:09 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/19 16:45:59 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-bool tag_is_operator(t_type tag)
+bool	tag_is_operator(t_tag tag)
 {
 	if (tag == TOKEN_AND)
 		return (true);
@@ -20,18 +20,10 @@ bool tag_is_operator(t_type tag)
 		return (true);
 	if (tag == TOKEN_PIPE)
 		return (true);
-    if (tag == TOKEN_APPEND)
-		return (true);
-	if (tag == TOKEN_HEREDOC)
-		return (true);
-	if (tag == TOKEN_REDIR_IN)
-		return (true);
-    if (tag == TOKEN_REDIR_OUT)
-		return (true);
-    return (false);
+	return (false);
 }
 
-void print_correct_error(t_type tag)
+void	print_correct_error(t_tag tag)
 {
 	printf("syntax error near unexpected token « ");
 	if (tag == TOKEN_AND)
@@ -50,18 +42,25 @@ void print_correct_error(t_type tag)
 		printf("> »\n");
 }
 
-void error_checker(t_data *data)
+bool	is_operator_error(t_data *data, t_tag tag)
 {
-	t_token *current;
-
-	current = data->tokens;
-	if (tag_is_operator(current->tag))
+	if (tag_is_operator(tag))
 	{
-		print_correct_error(current->tag);
+		print_correct_error(tag);
 		free_tokens(&data->tokens);
 		data->error = true;
-		return ;
+		return (true);
 	}
+	return (false);
+}
+
+void	error_checker(t_data *data)
+{
+	t_token	*current;
+
+	current = data->tokens;
+	if (is_operator_error(data, current->tag))
+		return ;
 	while (current->next)
 	{
 		if (tag_is_operator(current->tag) && current->next)
@@ -76,16 +75,11 @@ void error_checker(t_data *data)
 		}
 		current = current->next;
 	}
-	if (tag_is_operator(current->tag))
-	{
-		print_correct_error(current->tag);
-		free_tokens(&data->tokens);
-		data->error = true;
+	if (is_operator_error(data, current->tag))
 		return ;
-	}
 }
 
-void syntax_error(t_data *data, char *error)
+void	syntax_error(t_data *data, char *error)
 {
 	free_tokens(&data->tokens);
 	printf("%s\n", error);

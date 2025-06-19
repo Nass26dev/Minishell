@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 10:55:02 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/13 17:16:43 by eelissal         ###   ########lyon.fr   */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/06/19 16:56:32 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -29,7 +30,7 @@ int main(int argc, char **argv, char **envp)
 	}
 	setup_interactive_signals();
 	while (1)
-		if (minishell_loop() == 1)
+		if (minishell_loop(&shell) == 1)
 			break ;
 	free_shell(&shell);
 	rl_clear_history();
