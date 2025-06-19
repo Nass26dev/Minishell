@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/18 15:13:44 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 13:22:48 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	is_builtin(t_exec *exec)
 {
 	static char	*builtin[] = {"cd", "echo", "env", "exit", "export",
 		"pwd", "unset", NULL};
-	int			i;
-	size_t		len;
-	char		*cmd;
+	int		i;
+	size_t	len;
+	char	*cmd;
 
 	i = 0;
 	cmd = exec->current->cmd->data[0];
@@ -28,7 +28,7 @@ int	is_builtin(t_exec *exec)
 		len = ft_strlen(builtin[i]);
 		if (len == ft_strlen(cmd))
 		{
-			if (ft_strncmp(exec->current->cmd->data[0], builtin[i], len) == 0)
+			if (ft_strncmp(cmd, builtin[i], len) == 0)
 				return (i);
 		}
 		i++;
@@ -50,7 +50,7 @@ int	exec_builtin(t_exec *exec, int builtin)
 	else if (builtin == ENV)
 		ret = builtin_env(exec);
 	else if (builtin == EXIT)
-		printf("exec exit\n");//ret = builtin_exit(exec);
+		ret = builtin_exit(exec);
 	else if (builtin == EXPORT)
 		ret = builtin_export(exec->shell, exec->current->cmd->data);
 	else if (builtin == PWD)

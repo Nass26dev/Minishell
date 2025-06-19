@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:16:17 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/18 14:35:05 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 11:05:11 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	builtin_echo(char **data)
 	int		i;
 	bool	n_flag;
 
-	if (!data|| !data[0])
+	if (!data || !data[0])
 		return (1);
 	i = 1;
 	n_flag = true;

@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/18 16:37:57 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 11:12:05 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ pwd + rajouter l'absolute path + check si c'est un directory et qu'il existe
 */
 int	exec_cd(char *newpwd, t_vector *env)
 {
+	int	ret;
+
 	if (access(newpwd, F_OK | X_OK) != 0)
 	{
 		printf("cd: %s: %s\n", newpwd, strerror(errno));
@@ -56,7 +58,10 @@ int	exec_cd(char *newpwd, t_vector *env)
 		perror("cd: chdir fail");
 		return (1);
 	}
-	return (add_env_var(env, "PWD", newpwd));
+	ret = add_env_var(env, "PWD", newpwd);
+	if (ret != 0)
+			write_fd("cd", "PWD", "not exported", 2);
+	return (ret);
 }
 // else
 // {
@@ -68,8 +73,9 @@ int	exec_cd(char *newpwd, t_vector *env)
 
 int	cd_get_path(char *target, t_vector *env)
 {
-	char		oldpwd[PATH_MAX];
-	char		*newpwd;
+	char	oldpwd[PATH_MAX];
+	char	*newpwd;
+	int		ret;
 
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
 	{
@@ -89,13 +95,17 @@ int	cd_get_path(char *target, t_vector *env)
 		free(newpwd);
 		return (1);
 	}
-	return (add_env_var(env, "OLDPWD", oldpwd));
+	ret = add_env_var(env, "OLDPWD", oldpwd);
+	if (ret != 0)
+			write_fd("cd", "PWD", "not exported", 2);
+	return (ret);
 }
 
 int	cd_home(char *target, t_vector *env)
 {
-	char		oldpwd[PATH_MAX];
-	char		*newpwd;
+	char	oldpwd[PATH_MAX];
+	char	*newpwd;
+	int		ret;
 
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
 	{
@@ -113,7 +123,10 @@ int	cd_home(char *target, t_vector *env)
 		free(newpwd);
 		return (1);
 	}
-	return (add_env_var(env, "OLDPWD", oldpwd));
+	ret = add_env_var(env, "OLDPWD", oldpwd);
+	if (ret != 0)
+			write_fd("cd", "PWD", "not exported", 2);
+	return (ret);
 }
 
 int	builtin_cd(t_exec *exec)
