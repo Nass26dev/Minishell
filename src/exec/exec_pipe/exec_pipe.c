@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 15:46:31 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 18:00:46 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	handle_pipe_process(t_exec *exec)
 	{
 		ret = exec_builtin(exec, ret);
 		close_fds(exec);
+		free_exec(exec);
 		exit(ret);
 	}
 	else
