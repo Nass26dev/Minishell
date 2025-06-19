@@ -6,13 +6,13 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:08:54 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 15:30:29 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 15:42:04 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-bool ft_isspace(char c)
+bool	ft_isspace(char c)
 {
 	if (c == ' ')
 		return (true);
@@ -29,7 +29,7 @@ bool ft_isspace(char c)
 	return (false);
 }
 
-bool is_operator(char c)
+bool	is_operator(char c)
 {
 	if (c == '<')
 		return (true);
@@ -42,21 +42,20 @@ bool is_operator(char c)
 	return (false);
 }
 
-char *ft_strndup(const char *src, size_t n)
+char	*ft_strndup(const char *src, size_t n)
 {
-    size_t i;
-    char *dup;
-    
-    i = 0;
-    dup = malloc(n + 1);
-    if (!dup)
-        return NULL;
-    while (i < n && src[i])
-    {
-        dup[i] = src[i];
-        i++;
-    }
-    dup[i] = '\0';
-    return dup;
-}
+	size_t	i;
+	char	*dup;
 
+	i = 0;
+	dup = malloc(n + 1);
+	if (!dup)
+		return (NULL);
+	while (i < n && src[i])
+	{
+		dup[i] = src[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
+}

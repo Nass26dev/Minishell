@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 12:57:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 15:46:29 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	get_operator_priority(t_type type)
 		return (4);
 	if (type == TOKEN_HEREDOC)
 		return (4);
-	return (100); // for words/commands
+	return (100);
 }
 
 t_token	*find_main_operator(t_token *start, t_token *end)
@@ -72,7 +72,7 @@ t_token	*find_prev(t_token *node, t_token *lst)
 	t_token	*current;
 
 	if (!node || !lst || node == lst)
-		return (NULL); // aucun précédent si node est NULL ou en tête
+		return (NULL);
 	current = lst;
 	while (current && current->next)
 	{
@@ -80,7 +80,7 @@ t_token	*find_prev(t_token *node, t_token *lst)
 			return (current);
 		current = current->next;
 	}
-	return (NULL); // node non trouvé ou pas dans la liste
+	return (NULL);
 }
 
 t_ast	*parser(t_data *data, t_token *start, t_token *end)

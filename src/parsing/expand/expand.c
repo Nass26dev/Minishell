@@ -6,65 +6,65 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 15:21:14 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 15:47:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void set_to_null(t_expand *expand)
+void	set_to_null(t_expand *expand)
 {
-    expand->aftervar = NULL;
-    expand->beforevar = NULL;
-    expand->varname = NULL;
-    expand->varvalue = NULL;
+	expand->aftervar = NULL;
+	expand->beforevar = NULL;
+	expand->varname = NULL;
+	expand->varvalue = NULL;
 }
 
-char *set_empty(void)
+char	*set_empty(void)
 {
-    char *result;
-    
-    result = malloc(1);
-    result[0] = 0;
-    return (result);
+	char	*result;
+
+	result = malloc(1);
+	result[0] = 0;
+	return (result);
 }
 
-void expand_token_value(char *input, t_token **token)
+void	expand_token_value(char *input, t_token **token)
 {
-    char *result;
-    t_token *tmp;
-    t_expand expand;
-    
-    result = set_empty();
-    set_to_null(&expand);
-    expand.beforevar = recup_beforevar(input);
-    expand.varname = recup_varname(input);
-    expand.aftervar = recup_aftervar(input);
-    expand.varvalue = recup_varvalue(expand.varname);
-    free(expand.varname);
-    free(input);
-    result = ft_strjoin(result, expand.beforevar);
-    free(expand.beforevar);
-    result = ft_strjoin(result, expand.varvalue);
-    free(expand.varvalue);
-    result = ft_strjoin(result, expand.aftervar);
-    free(expand.aftervar);
-    tmp = *token;
-    tmp->value = ft_strdup(result);
+	char		*result;
+	t_token		*tmp;
+	t_expand	expand;
+
+	result = set_empty();
+	set_to_null(&expand);
+	expand.beforevar = recup_beforevar(input);
+	expand.varname = recup_varname(input);
+	expand.aftervar = recup_aftervar(input);
+	expand.varvalue = recup_varvalue(expand.varname);
+	free(expand.varname);
+	free(input);
+	result = ft_strjoin(result, expand.beforevar);
+	free(expand.beforevar);
+	result = ft_strjoin(result, expand.varvalue);
+	free(expand.varvalue);
+	result = ft_strjoin(result, expand.aftervar);
+	free(expand.aftervar);
+	tmp = *token;
+	tmp->value = ft_strdup(result);
 }
 
-bool is_var(char *value)
+bool	is_var(char *value)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (value[i])
-    {
-        if (value[i] == '$')
-            return (true);
-        i++;
-    }
-    return (false);
+	i = 0;
+	while (value[i])
+	{
+		if (value[i] == '$')
+			return (true);
+		i++;
+	}
+	return (false);
 }
 
 bool	is_redirection(t_type tag)
@@ -73,13 +73,17 @@ bool	is_redirection(t_type tag)
 		|| tag == TOKEN_APPEND || tag == TOKEN_HEREDOC);
 }
 
-t_token *reverse_token_list(t_token *start, t_token *end)
+t_token	*reverse_token_list(t_token *start, t_token *end)
 {
-	t_token *prev = NULL;
-	t_token *current = start;
-	t_token *next = NULL;
-	t_token *after = end->next;
+	t_token	*prev;
+	t_token	*current;
+	t_token	*next;
+	t_token	*after;
 
+	prev = NULL;
+	current = start;
+	next = NULL;
+	after = end->next;
 	while (current != after)
 	{
 		next = current->next;
@@ -87,40 +91,33 @@ t_token *reverse_token_list(t_token *start, t_token *end)
 		prev = current;
 		current = next;
 	}
-
 	start->next = after;
-
 	return (prev);
 }
 
-void sort_redirections(t_token **head)
+void	sort_redirections(t_token **head)
 {
-	t_token *current;
-	t_token *prev;
-    t_token *redir_start;
-    t_token *redir_end;
-    t_token *reversed;
-    
-    current = *head;
-    prev = NULL;
-    
+	t_token	*current;
+	t_token	*prev;
+	t_token	*redir_start;
+	t_token	*redir_end;
+	t_token	*reversed;
+
+	current = *head;
+	prev = NULL;
 	while (current)
 	{
 		if (is_redirection(current->tag))
 		{
 			redir_start = current;
 			redir_end = current;
-
 			while (redir_end->next && is_redirection(redir_end->next->tag))
 				redir_end = redir_end->next;
-
 			reversed = reverse_token_list(redir_start, redir_end);
-
 			if (prev)
 				prev->next = reversed;
 			else
 				*head = reversed;
-
 			prev = redir_start;
 			current = redir_start->next;
 		}
@@ -132,83 +129,83 @@ void sort_redirections(t_token **head)
 	}
 }
 
-void switch_nodes(t_token *a, t_token *b)
+void	switch_nodes(t_token *a, t_token *b)
 {
-    t_type tmp_tag;
-    char *tmp_value;
-    bool tmp_space;
-    
-    if (!a || !b)
-        return;
-    
-    tmp_tag = a->tag;
-    tmp_value = a->value;
-    tmp_space = a->space;
-    
-    a->tag = b->tag;
-    a->value = b->value;
-    a->space = b->space;
-    
-    b->tag = tmp_tag;
-    b->value = tmp_value;
-    b->space = tmp_space;
+	t_type	tmp_tag;
+	char	*tmp_value;
+	bool	tmp_space;
+
+	if (!a || !b)
+		return ;
+	tmp_tag = a->tag;
+	tmp_value = a->value;
+	tmp_space = a->space;
+	a->tag = b->tag;
+	a->value = b->value;
+	a->space = b->space;
+	b->tag = tmp_tag;
+	b->value = tmp_value;
+	b->space = tmp_space;
 }
 
-bool node_is_redir(t_token *node)
+bool	node_is_redir(t_token *node)
 {
-    if (!node)
-        return (false);
-    return (node->tag == TOKEN_REDIR_IN || node->tag == TOKEN_REDIR_OUT
+	if (!node)
+		return (false);
+	return (node->tag == TOKEN_REDIR_IN || node->tag == TOKEN_REDIR_OUT
 		|| node->tag == TOKEN_APPEND || node->tag == TOKEN_HEREDOC);
 }
 
-bool node_is_word(t_token *node)
+bool	node_is_word(t_token *node)
 {
-    if (!node)
-        return (false);
-    return (node->tag == TOKEN_SINGLE_QUOTE || node->tag == TOKEN_DOUBLE_QUOTE 
-            || node->tag == TOKEN_WORD);
+	if (!node)
+		return (false);
+	return (node->tag == TOKEN_SINGLE_QUOTE || node->tag == TOKEN_DOUBLE_QUOTE
+		|| node->tag == TOKEN_WORD);
 }
 
-bool node_is_operator(t_token *node)
+bool	node_is_operator(t_token *node)
 {
-    if (!node)
-        return (false);
-    return (node->tag == TOKEN_PIPE || node->tag == TOKEN_SINGLE_QUOTE || node->tag == TOKEN_DOUBLE_QUOTE);
+	if (!node)
+		return (false);
+	return (node->tag == TOKEN_PIPE || node->tag == TOKEN_SINGLE_QUOTE
+		|| node->tag == TOKEN_DOUBLE_QUOTE);
 }
 
-void move_start_redir(t_token **head)
+void	move_start_redir(t_token **head)
 {
-    t_token *current;
-    
-    current = *head;
-    while (current)
-    {
-        if (node_is_redir(current) && node_is_word(current->next))
-        {
-            switch_nodes(current, current->next);
-            current = *head;
-        }
-        else
-            current = current->next;
-    }
+	t_token	*current;
+
+	current = *head;
+	while (current)
+	{
+		if (node_is_redir(current) && node_is_word(current->next))
+		{
+			switch_nodes(current, current->next);
+			current = *head;
+		}
+		else
+			current = current->next;
+	}
 }
-void expander(t_data *data)
+
+void	expander(t_data *data)
 {
-    t_token *tmp;
-    
-    tmp = data->tokens;
-    while (tmp)
-    {
-        if (tmp->tag == TOKEN_VARIABLE || tmp->tag == TOKEN_DOUBLE_QUOTE || tmp->tag == TOKEN_WORD)
-        {
-            while (is_var(tmp->value))
-                expand_token_value(tmp->value, &tmp);
-        }
-        tmp = tmp->next;
-    }
+	t_token	*tmp;
+
+	tmp = data->tokens;
+	while (tmp)
+	{
+		if (tmp->tag == TOKEN_VARIABLE || tmp->tag == TOKEN_DOUBLE_QUOTE
+			|| tmp->tag == TOKEN_WORD)
+		{
+			while (is_var(tmp->value))
+				expand_token_value(tmp->value, &tmp);
+		}
+		tmp = tmp->next;
+	}
 	change_redir_value(data);
-    concatenation(data);
-    move_start_redir(&data->tokens);
-    sort_redirections(&data->tokens);
+	concatenation(data);
+	move_start_redir(&data->tokens);
+	sort_redirections(&data->tokens);
 }

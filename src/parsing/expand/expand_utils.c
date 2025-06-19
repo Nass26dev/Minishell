@@ -6,17 +6,17 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 23:11:14 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 14:23:51 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 15:41:14 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-char *recup_beforevar(char *input)
+char	*recup_beforevar(char *input)
 {
-	int i;
-	int j;
-	char *beforevar;
+	int		i;
+	int		j;
+	char	*beforevar;
 
 	i = 0;
 	j = 0;
@@ -32,12 +32,12 @@ char *recup_beforevar(char *input)
 	return (beforevar);
 }
 
-char *recup_varname(char *input)
+char	*recup_varname(char *input)
 {
-	int i;
-	int j;
-	int y;
-	char *varname;
+	int		i;
+	int		j;
+	int		y;
+	char	*varname;
 
 	i = 0;
 	y = 0;
@@ -55,12 +55,12 @@ char *recup_varname(char *input)
 	return (varname);
 }
 
-char *recup_aftervar(char *input)
+char	*recup_aftervar(char *input)
 {
-	int i;
-	int j;
-	int y;
-	char *aftervar;
+	int		i;
+	int		j;
+	int		y;
+	char	*aftervar;
 
 	i = 0;
 	j = 0;
@@ -80,9 +80,9 @@ char *recup_aftervar(char *input)
 	return (aftervar);
 }
 
-char *recup_varvalue(char *varname)
+char	*recup_varvalue(char *varname)
 {
-	char *varvalue;
+	char	*varvalue;
 
 	varvalue = getenv(varname);
 	if (varvalue)

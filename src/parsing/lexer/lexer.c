@@ -6,15 +6,15 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 15:30:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:19:44 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void lexer(t_data *data, char *input)
+void	lexer(t_data *data, char *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (input[i] != 0)
@@ -33,9 +33,6 @@ void lexer(t_data *data, char *input)
 		else if (input[i] == '$')
 			i += extract_variable(data, input, i);
 		else
-		{
-			write(1, "b", 1);
 			i += extract_word(data, input, i);
-		}
 	}
 }

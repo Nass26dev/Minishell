@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/09 18:58:05 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:52:54 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	free_args(char **args)
 	free(args);
 }
 
-void	free_ast(t_ast *ast)
-{
-	if (!ast)
-		return ;
-	if (ast->cmd)
-		free_vector(ast->cmd);
-	if (ast->left)
-		free_ast(ast->left);
-	if (ast->right)
-		free_ast(ast->right);
-	free(ast);
-}
+// void	free_ast(t_ast *ast)
+// {
+// 	if (!ast)
+// 		return ;
+// 	if (ast->cmd)
+// 		free_vector(ast->cmd);
+// 	if (ast->left)
+// 		free_ast(ast->left);
+// 	if (ast->right)
+// 		free_ast(ast->right);
+// 	free(ast);
+// }
