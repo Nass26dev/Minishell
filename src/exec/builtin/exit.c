@@ -6,13 +6,13 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:59:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 10:23:01 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	check_overflow(int	n)
+int	check_overflow(int n)
 {
 	if (n < 0 || n > 255)
 	{

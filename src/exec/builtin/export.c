@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:29:41 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 12:12:06 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 10:23:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	add_env_var(t_vector *env, char *name, char *value)
 
 static int	check_identifier(char **name)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while ((*name)[j])

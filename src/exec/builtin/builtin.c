@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 16:31:18 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/20 10:22:38 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	is_builtin(t_exec *exec)
 {
 	static char	*builtin[] = {"cd", "echo", "env", "exit", "export",
 		"pwd", "unset", NULL};
-	int		i;
-	size_t	len;
-	char	*cmd;
+	int			i;
+	size_t		len;
+	char		*cmd;
 
 	i = 0;
 	cmd = exec->current->command[0];
