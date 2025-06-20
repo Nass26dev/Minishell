@@ -6,182 +6,96 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:29:41 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/20 10:23:29 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 12:28:03 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	add_env_var(t_vector *env, char *name, char *value)
+static int	init_tab_env(char ***tab_env, t_vector *env)
 {
-	char	*new_entry;
-	char	*tmp;
-	int		i;
+	int	i;
 
-	i = find_env_var_index(env, name);
-	tmp = ft_strjoin(name, "=");
-	if (!tmp)
+	*tab_env = malloc(sizeof(char *) * (env->count + 1));
+	if (!*tab_env)
 		return (1);
-	new_entry = ft_strjoin(tmp, value);
-	free(tmp);
-	if (!new_entry)
-		return (1);
-	if (i >= 0)
+	i = 0;
+	while (i < env->count)
 	{
-		free(env->data[i]);
-		env->data[i] = ft_strdup(new_entry);
-	}
-	else
-		vector_add(env, new_entry);
-	free(new_entry);
-	return (0);
-}
-
-static int	check_identifier(char **name)
-{
-	int	j;
-
-	j = 0;
-	while ((*name)[j])
-	{
-		if (!ft_isalnum((*name)[j]) && (*name)[j] != '_')
+		(*tab_env)[i] = ft_strdup(env->data[i]);
+		if (!(*tab_env)[i])
 		{
-			write_fd("export", *name, "not a valid identifier", 2);
-			free(*name);
+			while (--i >= 0)
+				free((*tab_env)[i]);
+			free(*tab_env);
 			return (1);
 		}
-		j++;
+		i++;
 	}
+	(*tab_env)[i] = NULL;
 	return (0);
 }
 
-static int	extract_var_name(char **name, char *var)
+static void	sort_tab_env(char **tab_env)
 {
+	char	*temp;
 	int		i;
+	int		j;
 
 	i = 0;
-	while (var[i])
+	while (tab_env[i])
 	{
-		if (var[i] == '=')
+		j = i + 1;
+		while (tab_env[j])
 		{
-			*name = ft_substr(var, 0, i);
-			if (*name)
-				return (check_identifier(name));
+			if (ft_strcmp(tab_env[i], tab_env[j]) > 0)
+			{
+				temp = tab_env[i];
+				tab_env[i] = tab_env[j];
+				tab_env[j] = temp;
+			}
+			j++;
 		}
 		i++;
 	}
-	return (1);
 }
 
-static int	extract_var_value(char **value, char *var)
+static void	print_tab_env(char **tab_env)
 {
-	int		var_len;
-	int		i;
+	int	i;
+	int	equal_pos;
 
 	i = 0;
-	var_len = ft_strlen(var);
-	if (var_len < 0)
-		return (1);
-	while (var[i])
+	while (tab_env[i])
 	{
-		if (var[i] == '=')
+		write(1, "export ", 7);
+		equal_pos = 0;
+		while (tab_env[i][equal_pos] && tab_env[i][equal_pos] != '=')
+			equal_pos++;
+		if (tab_env[i][equal_pos] == '=')
 		{
-			*value = ft_substr(var, i + 1, var_len - i - 1);
-			if (*value)
-				return (0);
+			write(1, tab_env[i], equal_pos + 1);
+			write(1, "\"", 1);
+			write(1, tab_env[i] + equal_pos + 1,
+				ft_strlen(tab_env[i] + equal_pos + 1));
+			write(1, "\"", 1);
 		}
-		i++;
+		else
+			write(1, tab_env[i], ft_strlen(tab_env[i]));
+		write(1, "\n", 1);
+		free(tab_env[i++]);
 	}
-	return (1);
-}
-
-static int	export_var(t_vector *env, char *var)
-{
-	char	*name;
-	char	*value;
-	int		ret;
-
-	name = NULL;
-	ret = extract_var_name(&name, var);
-	value = NULL;
-	if (ret == 0)
-		ret = extract_var_value(&value, var);
-	if (name && value && ret == 0)
-	{
-		ret = add_env_var(env, name, value);
-		if (ret != 0)
-			write_fd("export", name, "not exported", 2);
-	}
-	if (name)
-		free(name);
-	if (value)
-		free(value);
-	return (ret);
 }
 
 static int	display_sorted_var(t_vector *env)
 {
-	// char	**sorted_env;
-	// char	*temp;
-	// int		i;
-	// int		j;
-	// int		equal_pos;
+	char	**tab_env;
 
-	// sorted_env = malloc(sizeof(char *) * (env->size + 1));
-	// if (!sorted_env)
-	// 	return (1);
-	// i = 0;
-	// while (i < env->size)
-	// {
-	// 	sorted_env[i] = ft_strdup(env->data[i]);
-	// 	if (!sorted_env[i])
-	// 	{
-	// 		while (--i >= 0)
-	// 			free(sorted_env[i]);
-	// 		free(sorted_env);
-	// 		return (1);
-	// 	}
-	// 	i++;
-	// }
-	// sorted_env[i] = NULL;
-	// i = 0;
-	// while (sorted_env[i])
-	// {
-	// 	j = i + 1;
-	// 	while (sorted_env[j])
-	// 	{
-	// 		if (ft_strcmp(sorted_env[i], sorted_env[j]) > 0)
-	// 		{
-	// 			temp = sorted_env[i];
-	// 			sorted_env[i] = sorted_env[j];
-	// 			sorted_env[j] = temp;
-	// 		}
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-	// i = 0;
-	// while (sorted_env[i])
-	// {
-	// 	write(1, "declare -x ", 11);
-	// 	equal_pos = 0;
-	// 	while (sorted_env[i][equal_pos] && sorted_env[i][equal_pos] != '=')
-	// 		equal_pos++;
-	// 	if (sorted_env[i][equal_pos] == '=')
-	// 	{
-	// 		write(1, sorted_env[i], equal_pos + 1);
-	// 		write(1, "\"", 1);
-	// 		write(1, sorted_env[i] + equal_pos + 1, 
-	// 			ft_strlen(sorted_env[i] + equal_pos + 1));
-	// 		write(1, "\"", 1);
-	// 	}
-	// 	else
-	// 		write(1, sorted_env[i], ft_strlen(sorted_env[i]));
-	// 	write(1, "\n", 1);
-	// 	free(sorted_env[i++]);
-	// }
-	// free(sorted_env);
-	(void) env;
+	if (init_tab_env(&tab_env, env) != 0)
+		return (1);
+	sort_tab_env(tab_env);
+	print_tab_env(tab_env);
+	free(tab_env);
 	return (0);
 }
 

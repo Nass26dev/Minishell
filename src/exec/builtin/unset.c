@@ -12,26 +12,6 @@
 
 #include "builtin.h"
 
-int	find_env_var_index(t_vector *env, char *var)
-{
-	size_t	var_len;
-	int		i;
-	char	*line;
-
-	if (!env || !var)
-		return (-1);
-	var_len = ft_strlen(var);
-	i = 0;
-	while (i < env->count)
-	{
-		line = env->data[i];
-		if (ft_strncmp(line, var, var_len) == 0 && line[var_len] == '=')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
 static int	remove_env_var(t_vector *env, char *var)
 {
 	int	i;

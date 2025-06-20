@@ -6,13 +6,12 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/20 10:25:59 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 11:51:02 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
-#include "parsing.h"
 
 void	free_exec(t_exec *exec)
 {
