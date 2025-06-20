@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 17:27:01 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/20 23:28:44 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,93 @@ void	move_start_redir(t_token **head)
 	}
 }
 
+void	delete_node(t_token **head, t_token *node_to_delete)
+{
+	t_token *prev;
+
+	if (!head || !*head || !node_to_delete)
+		return;
+
+	// Si le nœud à supprimer est la tête
+	if (*head == node_to_delete)
+	{
+		*head = node_to_delete->next;
+		free(node_to_delete->value); // libère la chaîne si allouée dynamiquement
+		free(node_to_delete);
+		return;
+	}
+
+	prev = *head;
+	while (prev && prev->next != node_to_delete)
+		prev = prev->next;
+
+	// Si le nœud a été trouvé
+	if (prev && prev->next == node_to_delete)
+	{
+		prev->next = node_to_delete->next;
+		free(node_to_delete->value); // libère la chaîne si allouée dynamiquement
+		free(node_to_delete);
+	}
+}
+
+int get_nb_args(t_token *node)
+{
+	t_token *current;
+	int i;
+
+	i = 0;
+	current = node;
+	while (current && !node_is_operator(current))
+	{
+		if (node_is_word(current))
+			i++;
+		current = current->next;
+	}
+	return (i);
+}
+
+void get_cmd(t_token **node)
+{
+	t_token *current;
+	t_token *prev;
+	char **cmd;
+	int i;
+
+	i = 0;
+	cmd = malloc(sizeof(char *) * (get_nb_args(*node) + 1));
+	current = *node;
+	cmd[i++] = ft_strdup(current->value);
+	prev = current;
+	current = current->next;
+	while (current && !node_is_operator(current))
+	{
+		if (node_is_word(current))
+		{
+			cmd[i++] = ft_strdup(current->value);
+			delete_node(node, current);
+			current = prev;
+		}
+		current = current->next;
+	}
+	cmd[i] = NULL;
+	current = *node;
+	current->cmd = cmd;
+	current->tag = TOKEN_CMD;
+}
+
+void create_cmd(t_data *data)
+{
+	t_token *current;
+
+	current = data->tokens;
+	while (current)
+	{
+		if (node_is_word(current))
+			get_cmd(&current);
+		current = current->next;
+	}
+}
+
 void	expander(t_data *data)
 {
 	t_token	*tmp;
@@ -208,4 +295,5 @@ void	expander(t_data *data)
 	concatenation(data);
 	move_start_redir(&data->tokens);
 	sort_redirections(&data->tokens);
+	create_cmd(data);
 }

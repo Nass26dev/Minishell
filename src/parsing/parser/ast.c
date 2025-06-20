@@ -3,36 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 17:38:20 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/20 23:31:21 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_ast	*create_ast_node(t_tag tag, char *value)
+t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 {
 	t_ast	*node;
 
 	node = malloc(sizeof(t_ast));
 	if (!node)
 		return (NULL);
-	if (tag == TOKEN_WORD || tag == TOKEN_DOUBLE_QUOTE || tag == TOKEN_SINGLE_QUOTE)
-		node->tag = TOKEN_CMD;
-	else
-		node->tag = tag;
-	if (value)
+	node->tag = tag;
+	if (tag == TOKEN_CMD)
+		node->command = cmd;
+	else if (value)
 	{
+		node->command = malloc(sizeof(char *) * 2);
 		node->command[0] = ft_strdup(value);
 		node->command[1] = NULL;
-		node->command[2] = NULL;
-		if (!node->command[0])
-			return (NULL);
 	}
 	else
-		node->command[0] = NULL;
+		node->command = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
@@ -71,11 +68,7 @@ void	print_node(t_ast *node)
 		if (node->command[0])
 		{
 			for (int i = 0; node->command[i]; i++)
-			{
-				if (i == 1)
-					printf(" ,");
-				printf(" %s", node->command[i]);
-			}
+				printf(" | %s", node->command[i]);
 			printf("\n");
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 18:01:44 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/20 23:32:06 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	minishell_loop(t_shell *shell)
 {
 	static t_data	data;
 	char			*input;
-	// t_token *tmp;
 	
 	data.shell = shell;
 	if (get_input_and_add_to_historical(&input) == 1)
@@ -43,13 +42,21 @@ int	minishell_loop(t_shell *shell)
 	error_checker(&data);
 	if (is_error(&data.error))
 		return (0);
-	// tmp = data.tokens;
+	//t_token *tmp = data.tokens;
 	// while (tmp)
 	// {
-	// 	printf("tag = %d, value = %s\n", tmp->tag, tmp->value);
+	// 	if (tmp->tag == TOKEN_CMD)
+	// 	{
+	// 		printf("tag = %d, value = ", tmp->tag);
+	// 		int i = 0;
+	// 		while (tmp->cmd[i])
+	// 			printf("%s ", tmp->cmd[i++]);
+	// 		printf("\n");
+	// 	}
+	// 	else
+	// 		printf("tag = %d, value = %s\n", tmp->tag, tmp->value);
 	// 	tmp = tmp->next;
 	// }
-	
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
 	print_ast(data.ast, 0);
 	free_tokens(&data.tokens);

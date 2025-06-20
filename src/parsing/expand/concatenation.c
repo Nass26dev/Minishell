@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   concatenation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:12:06 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 17:28:06 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/20 22:51:50 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,28 +120,6 @@ void skip_redir(t_token **node, bool cmd, t_token **last_redir)
 	}
 }
 
-// void manage_words(t_token **current, bool is_saved, t_token **saved, t_token **last_redir)
-// {
-// 	if (node_is_word(current) && !is_saved)
-// 	{
-// 		if (node_is_word(current->next))
-// 		{
-// 			concatenate_nodes_with_spaces(current, current->next);
-// 			continue ;
-// 		}
-// 		else if (node_is_redir(current->next))
-// 		{
-// 			saved = current;
-// 			is_saved = true;
-// 			current = current->next;
-// 			while (node_is_redir(current))
-// 			{
-// 				last_redir = current;
-// 				current = current->next;
-// 			}
-// 		}
-// 	}
-// }
 void	concatenate_args(t_data *data)
 {
 	t_token	*current;
@@ -218,5 +196,5 @@ void	concatenation(t_data *data)
 			continue ;
 		current = current->next;
 	}
-	concatenate_args(data);
+	// concatenate_args(data);
 }
