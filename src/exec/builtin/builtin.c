@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 13:46:15 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 13:48:08 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	exec_builtin(t_exec *exec, int builtin)
 	int	ret;
 
 	ret = -1;
-	// dup_fds(exec);
-	// close_fds(exec); //TODO to be checked again > maybe need -1 set up for both fds and restore fds after builtin exec
 	if (builtin == CD)
 		ret = builtin_cd(exec);
 	else if (builtin == ECHO)
