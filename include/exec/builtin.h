@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:30:55 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 13:31:52 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 13:46:48 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	builtin_cd(t_exec *exec);
 int	builtin_pwd(t_exec *exec);
 
 /*export.c*/
-int	builtin_export(t_shell *shell, char **data);
+int	builtin_export(t_shell *shell, char **data, int fd);
 
 /*export_utils.c*/
 int	export_var(t_vector *env, char *var);

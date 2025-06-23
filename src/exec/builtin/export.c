@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:29:41 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/20 12:28:03 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 13:45:55 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	sort_tab_env(char **tab_env)
 	}
 }
 
-static void	print_tab_env(char **tab_env)
+static void	print_tab_env(char **tab_env, int fd)
 {
 	int	i;
 	int	equal_pos;
@@ -68,38 +68,38 @@ static void	print_tab_env(char **tab_env)
 	i = 0;
 	while (tab_env[i])
 	{
-		write(1, "export ", 7);
+		write(fd, "export ", 7);
 		equal_pos = 0;
 		while (tab_env[i][equal_pos] && tab_env[i][equal_pos] != '=')
 			equal_pos++;
 		if (tab_env[i][equal_pos] == '=')
 		{
-			write(1, tab_env[i], equal_pos + 1);
-			write(1, "\"", 1);
-			write(1, tab_env[i] + equal_pos + 1,
+			write(fd, tab_env[i], equal_pos + 1);
+			write(fd, "\"", 1);
+			write(fd, tab_env[i] + equal_pos + 1,
 				ft_strlen(tab_env[i] + equal_pos + 1));
-			write(1, "\"", 1);
+			write(fd, "\"", 1);
 		}
 		else
-			write(1, tab_env[i], ft_strlen(tab_env[i]));
-		write(1, "\n", 1);
+			write(fd, tab_env[i], ft_strlen(tab_env[i]));
+		write(fd, "\n", 1);
 		free(tab_env[i++]);
 	}
 }
 
-static int	display_sorted_var(t_vector *env)
+static int	display_sorted_var(t_vector *env, int fd)
 {
 	char	**tab_env;
 
 	if (init_tab_env(&tab_env, env) != 0)
 		return (1);
 	sort_tab_env(tab_env);
-	print_tab_env(tab_env);
+	print_tab_env(tab_env, fd);
 	free(tab_env);
 	return (0);
 }
 
-int	builtin_export(t_shell *shell, char **data)
+int	builtin_export(t_shell *shell, char **data, int fd)
 {
 	int	ret;
 	int	i;
@@ -109,7 +109,7 @@ int	builtin_export(t_shell *shell, char **data)
 		i++;
 	if (i == 1)
 	{
-		ret = display_sorted_var(shell->env);
+		ret = display_sorted_var(shell->env, fd);
 		if (ret != 0)
 			write_fd("export", NULL, "env cannot be displayed", 2);
 	}
