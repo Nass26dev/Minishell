@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/20 10:25:27 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 15:18:26 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,11 @@ int	exec_cd(char *newpwd, t_vector *env)
 		write_fd("cd", "PWD", "not exported", 2);
 	return (ret);
 }
-// else
-// {
-// 	set_env("OLDPWD", oldpwd);
-// 	char *currpwd = getcwd(NULL, 0);
-// 	set_env("PWD", currpwd);
-// 	free(currpwd);
-// }
 
 int	cd_get_path(char *target, t_vector *env)
 {
 	char	oldpwd[PATH_MAX];
-	char	*newpwd;
+	char	newpwd[PATH_MAX];
 	int		ret;
 
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
@@ -82,19 +75,30 @@ int	cd_get_path(char *target, t_vector *env)
 		perror("getcwd error");
 		return (1);
 	}
-	if (ft_strcmp(target, ".") == 0) //TODO fix if ./././
-		newpwd = ft_strdup(oldpwd);
-	else if (ft_strcmp(target, "..") == 0) //TODO fix if ../../..
-		newpwd = ft_strdup(ft_strrchr(oldpwd, '/'));
-	else
-		newpwd = ft_strjoin(oldpwd, target);
-	if (!newpwd)
-		return (1);
-	if (exec_cd(newpwd, env) != 0)
+	// if (access(target, F_OK | X_OK) != 0)
+	// {
+	// 	printf("cd: %s: %s\n", target, strerror(errno));
+	// 	return (1);
+	// }
+	// if (is_directory(target) == 0)
+	// {
+	// 	printf("cd: %s: %s\n", target, strerror(ENOTDIR));
+	// 	return (1);
+	// }
+	if (chdir(target) != 0)
 	{
-		free(newpwd);
+		printf("cd: %s: %s\n", target, strerror(errno));
 		return (1);
 	}
+	if (!getcwd(newpwd, sizeof(newpwd)))
+	{
+		perror("getcwd error");
+		chdir(oldpwd);
+		return (1);
+	}
+	ret = add_env_var(env, "PWD", newpwd);
+	if (ret != 0)
+		write_fd("cd", "PWD", "not exported", 2);
 	ret = add_env_var(env, "OLDPWD", oldpwd);
 	if (ret != 0)
 		write_fd("cd", "PWD", "not exported", 2);
