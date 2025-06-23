@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 23:11:14 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 15:41:14 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/23 15:39:32 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*recup_beforevar(char *input)
 	return (beforevar);
 }
 
-char	*recup_varname(char *input)
+char	*recup_varname(char *input, int status)
 {
 	int		i;
 	int		j;
@@ -45,6 +45,8 @@ char	*recup_varname(char *input)
 	while (input[i] && input[i] != '$')
 		i++;
 	i++;
+	if (input[i] == '?' && !input[i + 1])
+		return(ft_itoa(status));
 	j = i;
 	while (input[i] && !ft_isspace(input[i]) && input[i] != '$')
 		i++;

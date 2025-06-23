@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/20 23:28:44 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/23 15:44:46 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*set_empty(void)
 	return (result);
 }
 
-void	expand_token_value(char *input, t_token **token)
+void	expand_token_value(char *input, t_token **token, int status)
 {
 	char		*result;
 	t_token		*tmp;
@@ -38,9 +38,12 @@ void	expand_token_value(char *input, t_token **token)
 	result = set_empty();
 	set_to_null(&expand);
 	expand.beforevar = recup_beforevar(input);
-	expand.varname = recup_varname(input);
+	expand.varname = recup_varname(input, status);
 	expand.aftervar = recup_aftervar(input);
-	expand.varvalue = recup_varvalue(expand.varname);
+	if (input[1] != '?' && !input[2])
+		expand.varvalue = recup_varvalue(expand.varname);
+	else
+		expand.varvalue = ft_strdup(expand.varname);
 	free(expand.varname);
 	free(input);
 	result = ft_strjoin(result, expand.beforevar);
@@ -51,6 +54,7 @@ void	expand_token_value(char *input, t_token **token)
 	free(expand.aftervar);
 	tmp = *token;
 	tmp->value = ft_strdup(result);
+	tmp->tag = TOKEN_WORD;
 }
 
 bool	is_var(char *value)
@@ -287,7 +291,7 @@ void	expander(t_data *data)
 			|| tmp->tag == TOKEN_WORD)
 		{
 			while (is_var(tmp->value))
-				expand_token_value(tmp->value, &tmp);
+				expand_token_value(tmp->value, &tmp, data->status);
 		}
 		tmp = tmp->next;
 	}

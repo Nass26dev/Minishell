@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/20 23:25:30 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/23 15:37:51 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_data
 	t_ast			*ast;
 	t_shell			*shell;
 	bool			error;
+	int				status;
 }					t_data;
 
 typedef struct s_token_sort
@@ -94,7 +95,7 @@ bool				node_is_word(t_token *node);
 bool				node_is_redir(t_token *node);
 // expand_utils.c
 char				*recup_beforevar(char *input);
-char				*recup_varname(char *input);
+char				*recup_varname(char *input, int status);
 char				*recup_aftervar(char *input);
 char				*recup_varvalue(char *varname);
 // concatenation.c
