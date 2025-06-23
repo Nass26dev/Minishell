@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 23:11:14 by nass              #+#    #+#             */
-/*   Updated: 2025/06/23 15:39:32 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/23 17:33:48 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*recup_aftervar(char *input)
 	j = i;
 	while (input[i])
 		i++;
-	aftervar = malloc(i - j);
+	aftervar = malloc((i - j) + 1);
 	while (j < i)
 		aftervar[y++] = input[j++];
 	aftervar[y] = 0;

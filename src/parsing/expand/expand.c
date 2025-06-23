@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/23 16:39:06 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/23 17:32:18 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,30 @@ char	*set_empty(void)
 	return (result);
 }
 
+char	*free_strjoin(char *s1, char *s2)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	i = -1;
+	str = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!str)
+		return (NULL);
+	j = 0;
+	while (s1[j])
+		str[++i] = s1[j++];
+	j = 0;
+	while (s2[j])
+		str[++i] = s2[j++];
+	str[++i] = 0;
+	free(s1);
+	free(s2);
+	return (str);
+}
+
 void	expand_token_value(char *input, t_token **token, int status)
 {
 	char		*result;
@@ -46,14 +70,12 @@ void	expand_token_value(char *input, t_token **token, int status)
 		expand.varvalue = recup_varvalue(expand.varname);
 	free(expand.varname);
 	free(input);
-	result = ft_strjoin(result, expand.beforevar);
-	free(expand.beforevar);
-	result = ft_strjoin(result, expand.varvalue);
-	free(expand.varvalue);
-	result = ft_strjoin(result, expand.aftervar);
-	free(expand.aftervar);
+	result = free_strjoin(result, expand.beforevar);
+	result = free_strjoin(result, expand.varvalue);
+	result = free_strjoin(result, expand.aftervar);
 	tmp = *token;
 	tmp->value = ft_strdup(result);
+	free(result);
 	tmp->tag = TOKEN_WORD;
 }
 
