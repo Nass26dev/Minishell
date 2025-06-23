@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:16:17 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 11:05:11 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 13:30:52 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ static int	parse_trailing_newline(const char *str, char n)
 	return (0);
 }
 
-int	builtin_echo(char **data)
+int	builtin_echo(char **data, int fd)
 {
 	int		i;
 	bool	n_flag;
+	int		len;
 
 	if (!data || !data[0])
 		return (1);
@@ -44,12 +45,16 @@ int	builtin_echo(char **data)
 	}
 	while (data[i])
 	{
-		printf("%s", data[i]);
-		if (data[i + 1])
-			printf(" ");
+		len = ft_strlen(data[i]);
+		if (len > 0)
+		{
+			write(fd, data[i], len);
+			if (data[i + 1])
+				write(fd, " ", 1);
+		}
 		i++;
 	}
 	if (n_flag == true)
-		printf("\n");
+		write(fd, "\n", 1);
 	return (0);
 }
