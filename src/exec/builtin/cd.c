@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 15:18:26 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 16:49:16 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,9 @@ int	cd_get_path(char *target, t_vector *env)
 
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
 	{
-		perror("getcwd error");
+		write_fd("cd", target, strerror(errno), 2);
 		return (1);
 	}
-	// if (access(target, F_OK | X_OK) != 0)
-	// {
-	// 	printf("cd: %s: %s\n", target, strerror(errno));
-	// 	return (1);
-	// }
-	// if (is_directory(target) == 0)
-	// {
-	// 	printf("cd: %s: %s\n", target, strerror(ENOTDIR));
-	// 	return (1);
-	// }
 	if (chdir(target) != 0)
 	{
 		printf("cd: %s: %s\n", target, strerror(errno));
@@ -92,12 +82,11 @@ int	cd_get_path(char *target, t_vector *env)
 	}
 	if (!getcwd(newpwd, sizeof(newpwd)))
 	{
-		perror("getcwd error");
+		write_fd("cd", target, strerror(errno), 2);
 		chdir(oldpwd);
 		return (1);
 	}
-	ret = add_env_var(env, "PWD", newpwd);
-	if (ret != 0)
+	if (add_env_var(env, "PWD", newpwd) != 0)
 		write_fd("cd", "PWD", "not exported", 2);
 	ret = add_env_var(env, "OLDPWD", oldpwd);
 	if (ret != 0)
