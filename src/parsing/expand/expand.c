@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 17:27:01 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/23 17:32:18 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,31 @@ char	*set_empty(void)
 	return (result);
 }
 
-void	expand_token_value(char *input, t_token **token)
+char	*free_strjoin(char *s1, char *s2)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	i = -1;
+	str = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!str)
+		return (NULL);
+	j = 0;
+	while (s1[j])
+		str[++i] = s1[j++];
+	j = 0;
+	while (s2[j])
+		str[++i] = s2[j++];
+	str[++i] = 0;
+	free(s1);
+	free(s2);
+	return (str);
+}
+
+void	expand_token_value(char *input, t_token **token, int status)
 {
 	char		*result;
 	t_token		*tmp;
@@ -38,19 +62,21 @@ void	expand_token_value(char *input, t_token **token)
 	result = set_empty();
 	set_to_null(&expand);
 	expand.beforevar = recup_beforevar(input);
-	expand.varname = recup_varname(input);
+	expand.varname = recup_varname(input, status);
 	expand.aftervar = recup_aftervar(input);
-	expand.varvalue = recup_varvalue(expand.varname);
+	if (input[1] == '?' && !input[2])
+		expand.varvalue = ft_strdup(expand.varname);
+	else
+		expand.varvalue = recup_varvalue(expand.varname);
 	free(expand.varname);
 	free(input);
-	result = ft_strjoin(result, expand.beforevar);
-	free(expand.beforevar);
-	result = ft_strjoin(result, expand.varvalue);
-	free(expand.varvalue);
-	result = ft_strjoin(result, expand.aftervar);
-	free(expand.aftervar);
+	result = free_strjoin(result, expand.beforevar);
+	result = free_strjoin(result, expand.varvalue);
+	result = free_strjoin(result, expand.aftervar);
 	tmp = *token;
 	tmp->value = ft_strdup(result);
+	free(result);
+	tmp->tag = TOKEN_WORD;
 }
 
 bool	is_var(char *value)
@@ -189,6 +215,93 @@ void	move_start_redir(t_token **head)
 	}
 }
 
+void	delete_node(t_token **head, t_token *node_to_delete)
+{
+	t_token *prev;
+
+	if (!head || !*head || !node_to_delete)
+		return;
+
+	// Si le nœud à supprimer est la tête
+	if (*head == node_to_delete)
+	{
+		*head = node_to_delete->next;
+		free(node_to_delete->value); // libère la chaîne si allouée dynamiquement
+		free(node_to_delete);
+		return;
+	}
+
+	prev = *head;
+	while (prev && prev->next != node_to_delete)
+		prev = prev->next;
+
+	// Si le nœud a été trouvé
+	if (prev && prev->next == node_to_delete)
+	{
+		prev->next = node_to_delete->next;
+		free(node_to_delete->value); // libère la chaîne si allouée dynamiquement
+		free(node_to_delete);
+	}
+}
+
+int get_nb_args(t_token *node)
+{
+	t_token *current;
+	int i;
+
+	i = 0;
+	current = node;
+	while (current && !node_is_operator(current))
+	{
+		if (node_is_word(current))
+			i++;
+		current = current->next;
+	}
+	return (i);
+}
+
+void get_cmd(t_token **node)
+{
+	t_token *current;
+	t_token *prev;
+	char **cmd;
+	int i;
+
+	i = 0;
+	cmd = malloc(sizeof(char *) * (get_nb_args(*node) + 1));
+	current = *node;
+	cmd[i++] = ft_strdup(current->value);
+	prev = current;
+	current = current->next;
+	while (current && !node_is_operator(current))
+	{
+		if (node_is_word(current))
+		{
+			cmd[i++] = ft_strdup(current->value);
+			delete_node(node, current);
+			current = prev;
+		}
+		current = current->next;
+	}
+	cmd[i] = NULL;
+	current = *node;
+	current->cmd = cmd;
+	current->tag = TOKEN_CMD;
+}
+
+void create_cmd(t_data *data)
+{
+	t_token *current;
+
+	current = data->tokens;
+	while (current)
+	{
+		if (node_is_word(current))
+			get_cmd(&current);
+		current = current->next;
+	}
+}
+
 void	expander(t_data *data)
 {
 	t_token	*tmp;
@@ -200,7 +313,7 @@ void	expander(t_data *data)
 			|| tmp->tag == TOKEN_WORD)
 		{
 			while (is_var(tmp->value))
-				expand_token_value(tmp->value, &tmp);
+				expand_token_value(tmp->value, &tmp, data->status);
 		}
 		tmp = tmp->next;
 	}
@@ -208,4 +321,5 @@ void	expander(t_data *data)
 	concatenation(data);
 	move_start_redir(&data->tokens);
 	sort_redirections(&data->tokens);
+	create_cmd(data);
 }

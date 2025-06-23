@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 16:58:01 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/20 23:23:20 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum e_tag
 typedef struct s_ast
 {
 	t_tag			tag;
-	char			*command[3];
+	char			**command;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;

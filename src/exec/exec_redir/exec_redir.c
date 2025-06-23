@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 22:50:06 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	exec_redir(t_exec *exec)
 {
 	int	ret;
 
+	(void)ret;
 	if (exec->current->tag == TOKEN_REDIR_IN)
 		ret = handle_redir_in(exec);
 	else if (exec->current->tag == TOKEN_HEREDOC)

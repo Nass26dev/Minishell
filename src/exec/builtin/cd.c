@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
 /*   Updated: 2025/06/23 15:18:26 by eelissal         ###   ########lyon.fr   */
@@ -63,6 +63,8 @@ int	exec_cd(char *newpwd, t_vector *env)
 		write_fd("cd", "PWD", "not exported", 2);
 	return (ret);
 }
+
+
 
 int	cd_get_path(char *target, t_vector *env)
 {

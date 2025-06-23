@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 16:46:34 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/20 23:26:47 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_ast	*parser(t_data *data, t_token *start, t_token *end)
 	main_op = find_main_operator(start, end);
 	if (main_op && start && end && start != end)
 	{
-		node = create_ast_node(main_op->tag, main_op->value);
+		node = create_ast_node(main_op->tag, main_op->value, main_op->cmd);
 		if (main_op->tag == TOKEN_REDIR_IN || main_op->tag == TOKEN_REDIR_OUT
 			|| main_op->tag == TOKEN_APPEND || main_op->tag == TOKEN_HEREDOC)
 		{
@@ -105,20 +105,11 @@ t_ast	*parser(t_data *data, t_token *start, t_token *end)
 		}
 		return (node);
 	}
-	if (start && start != end && (start->tag == TOKEN_WORD
-			|| start->tag == TOKEN_DOUBLE_QUOTE
-			|| start->tag == TOKEN_SINGLE_QUOTE))
-	{
-		node = create_ast_node(start->tag, start->value);
-		if (start->next && (start->next->tag == TOKEN_WORD
-				|| start->next->tag == TOKEN_DOUBLE_QUOTE
-				|| start->next->tag == TOKEN_SINGLE_QUOTE))
-			add_args_to_command(&node, start->next->value);
-		return (node);
-	}
+	if (start->tag == TOKEN_CMD)
+		return (create_ast_node(start->tag, start->value, start->cmd));
 	if (start == end)
-		return (create_ast_node(start->tag, start->value));
+		return (create_ast_node(start->tag, start->value, start->cmd));
 	if (end && !start)
-		return (create_ast_node(end->tag, end->value));
+		return (create_ast_node(end->tag, end->value, end->cmd));
 	return (NULL);
 }

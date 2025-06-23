@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:56:26 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 15:41:32 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/23 15:36:17 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	extract_variable(t_data *data, const char *input, int i)
 
 	start = i;
 	i++;
-	while (ft_isalnum(input[i]) || input[i] == '_')
+	while (ft_isalnum(input[i]) || input[i] == '_' || input[i] == '?')
 		i++;
 	len = i - start;
 	content = ft_strndup(input + start, len);

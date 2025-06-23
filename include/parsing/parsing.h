@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 16:44:13 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/23 15:37:51 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_token
 {
 	t_tag			tag;
 	char			*value;
+	char			**cmd;
 	bool			space;
 	struct s_token	*next;
 }					t_token;
@@ -31,6 +32,7 @@ typedef struct s_data
 	t_ast			*ast;
 	t_shell			*shell;
 	bool			error;
+	int				status;
 }					t_data;
 
 typedef struct s_token_sort
@@ -62,7 +64,7 @@ void				lexer(t_data *data, char *input);
 // parser.c
 t_ast				*parser(t_data *data, t_token *start, t_token *end);
 // ast.c
-t_ast				*create_ast_node(t_tag tag, char *value);
+t_ast				*create_ast_node(t_tag tag, char *value, char **cmd);
 void				print_ast(t_ast *node, int depth);
 void				add_args_to_command(t_ast **node, char *args);
 void				free_ast(t_ast *node);
@@ -93,7 +95,7 @@ bool				node_is_word(t_token *node);
 bool				node_is_redir(t_token *node);
 // expand_utils.c
 char				*recup_beforevar(char *input);
-char				*recup_varname(char *input);
+char				*recup_varname(char *input, int status);
 char				*recup_aftervar(char *input);
 char				*recup_varvalue(char *varname);
 // concatenation.c
