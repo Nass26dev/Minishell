@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/23 15:59:45 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/23 16:39:06 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	expand_token_value(char *input, t_token **token, int status)
 	expand.beforevar = recup_beforevar(input);
 	expand.varname = recup_varname(input, status);
 	expand.aftervar = recup_aftervar(input);
-	if (input[1] != '?' && input[2])
-		expand.varvalue = recup_varvalue(expand.varname);
-	else
+	if (input[1] == '?' && !input[2])
 		expand.varvalue = ft_strdup(expand.varname);
+	else
+		expand.varvalue = recup_varvalue(expand.varname);
 	free(expand.varname);
 	free(input);
 	result = ft_strjoin(result, expand.beforevar);
