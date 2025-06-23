@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:10:42 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 15:56:42 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 13:42:46 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	builtin_env(t_exec *exec)
 {
 	int	i;
+	int len;
 
 	i = 0;
 	while (exec->current->command[i])
@@ -27,7 +28,14 @@ int	builtin_env(t_exec *exec)
 	while (i < exec->shell->env->count)
 	{
 		if (exec->shell->env->data[i] != NULL)
-			printf("%s\n", exec->shell->env->data[i]);
+		{
+			len = ft_strlen(exec->shell->env->data[i]);
+			if (len > 0)
+			{
+				write(exec->outfd, exec->shell->env->data[i], len);
+				write(exec->outfd, "\n", 1);
+			}
+		}
 		i++;
 	}
 	return (0);

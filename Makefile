@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/19 16:50:19 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/20 12:25:38 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,10 @@ SRCS =	src/main.c \
 		src/exec/builtin/cd.c \
 		src/exec/builtin/pwd.c \
 		src/exec/builtin/export.c \
+		src/exec/builtin/export_utils.c \
 		src/exec/builtin/unset.c \
 		src/exec/builtin/exit.c \
+		src/exec/builtin/utils_builtin.c \
 		src/exec/exec_cmd/exec_cmd.c \
 		src/exec/exec_cmd/find_cmd_path.c \
 		src/exec/exec_cmd/exec_cmd_utils.c \

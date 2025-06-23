@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 16:31:18 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/23 13:48:08 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	is_builtin(t_exec *exec)
 {
 	static char	*builtin[] = {"cd", "echo", "env", "exit", "export",
 		"pwd", "unset", NULL};
-	int		i;
-	size_t	len;
-	char	*cmd;
+	int			i;
+	size_t		len;
+	char		*cmd;
 
 	i = 0;
 	cmd = exec->current->command[0];
@@ -38,21 +38,19 @@ int	is_builtin(t_exec *exec)
 
 int	exec_builtin(t_exec *exec, int builtin)
 {
-	int			ret;
+	int	ret;
 
 	ret = -1;
-	// dup_fds(exec);
-	// close_fds(exec); //TODO to be checked again > maybe need -1 set up for both fds and restore fds after builtin exec
 	if (builtin == CD)
 		ret = builtin_cd(exec);
 	else if (builtin == ECHO)
-		ret = builtin_echo(exec->current->command);
+		ret = builtin_echo(exec->current->command, exec->outfd);
 	else if (builtin == ENV)
 		ret = builtin_env(exec);
 	else if (builtin == EXIT)
 		ret = builtin_exit(exec);
 	else if (builtin == EXPORT)
-		ret = builtin_export(exec->shell, exec->current->command);
+		ret = builtin_export(exec->shell, exec->current->command, exec->outfd);
 	else if (builtin == PWD)
 		ret = builtin_pwd(exec);
 	else if (builtin == UNSET)

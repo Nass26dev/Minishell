@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/12 15:48:16 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 10:49:54 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_exec
 }	t_exec;
 
 /*exec.c*/
+void	free_all(t_exec *exec);
 void	free_exec(t_exec *exec);
 int		exec_node(t_exec *exec);
 int		execute(t_ast *ast, t_shell *shell);

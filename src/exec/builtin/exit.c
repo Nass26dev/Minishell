@@ -6,13 +6,13 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:59:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 10:48:01 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	check_overflow(int	n)
+int	check_overflow(int n)
 {
 	if (n < 0 || n > 255)
 	{
@@ -38,7 +38,6 @@ int	arg_is_digit(t_exec *exec)
 		{
 			printf("exit\n");
 			printf("minishell: exit: %s: numeric argument required\n", data);
-			free_shell(exec->shell);
 			exec->shell->status = 2;
 			return (1);
 		}
@@ -47,41 +46,50 @@ int	arg_is_digit(t_exec *exec)
 	return (0);
 }
 
+static bool	exit_with_args(t_exec *exec, int i, int status)
+{
+	int	result;
+
+	if (i >= 2)
+	{
+		if (arg_is_digit(exec) != 0)
+		{
+			free_all(exec);
+			exit(status);
+		}
+		if (i > 2)
+		{
+			printf("exit\n");
+			write_fd("exit", NULL, "too many arguments", 2);
+			return (false);
+		}
+		else
+		{
+			result = ft_atoi(exec->current->command[1]);
+			status = check_overflow(result);
+			free_all(exec);
+			exit (status);
+		}
+	}
+	return (true);
+}
+
 int	builtin_exit(t_exec *exec)
 {
 	int	i;
-	int	result;
+	int	status;
 
 	i = 0;
+	status = exec->shell->status;
 	while (exec->current->command[i])
 		i++;
 	if (i == 1)
 	{
 		printf("exit\n");
-		free_shell(exec->shell);
-		rl_clear_history();
-		exit(exec->shell->status);
+		free_all(exec);
+		exit(status);
 	}
-	if (i > 2)
-	{
-		if (arg_is_digit(exec) != 0)
-			exit(exec->shell->status);
-		else
-		{
-			printf("exit\n");
-			write_fd("exit", NULL, "too many arguments", 2);
-			return (1);
-		}
-	}
-	if (i == 2)
-	{
-		if (arg_is_digit(exec) != 0)
-			exit(exec->shell->status);
-		result = ft_atoi(exec->current->command[1]);
-		exec->shell->status = check_overflow(result);
-		free_shell(exec->shell);
-		rl_clear_history();
-		exit (exec->shell->status);
-	}
+	if (exit_with_args(exec, i, status) != false)
+		return (1);
 	return (1);
 }

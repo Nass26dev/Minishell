@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 17:02:52 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/23 10:50:12 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
-#include "parsing.h"
+
+void	free_all(t_exec *exec)
+{
+	if (exec->shell)
+		free_shell(exec->shell);
+	if (exec->root)
+		free_ast(exec->root);
+	rl_clear_history();
+}
 
 void	free_exec(t_exec *exec)
 {
@@ -59,6 +67,5 @@ int	execute(t_ast *ast, t_shell *shell)
 
 	init_exec(&exec, ast, shell);
 	ret = exec_node(&exec);
-	// shell = exec.shell;
 	return (ret);
 }
