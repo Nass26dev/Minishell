@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/24 16:06:13 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:52:27 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,18 @@ int	minishell_loop(t_shell *shell)
 	if (round == 0)
 		data.status = 0;
 	data.shell = shell;
+	
 	if (get_input_and_add_to_historical(&input) == 1)
 		return (1);
+	if (!input[0])
+	{
+		free(input);
+		return (0);
+	}
 	lexer(&data, input);
 	if (is_error(&data.error))
 		return (0);
 	free(input);
-	printf("exit code %d\n", data.status);
 	expander(&data);
 	if (is_error(&data.error))
 		return (0);
@@ -67,8 +72,6 @@ int	minishell_loop(t_shell *shell)
 	if (data.ast)
 		data.shell->status = execute(data.ast, data.shell);
 	data.status = data.shell->status;
-	printf("|exit code %d\n", data.status);
-
 	free_ast(data.ast);
 	round++;
 	return (0);
