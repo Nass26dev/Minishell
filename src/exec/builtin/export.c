@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:29:41 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 13:45:55 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 12:27:13 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,6 @@ int	builtin_export(t_shell *shell, char **data, int fd)
 		while (data[i])
 		{
 			ret = export_var(shell->env, data[i]);
-			if (ret != 0)
-				write_fd("export", data[i], "was not exported", 2);
 			i++;
 		}
 	}
