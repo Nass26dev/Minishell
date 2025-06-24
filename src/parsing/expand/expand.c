@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/23 17:32:18 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/24 15:59:40 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ void	expand_token_value(char *input, t_token **token, int status)
 	result = set_empty();
 	set_to_null(&expand);
 	expand.beforevar = recup_beforevar(input);
-	expand.varname = recup_varname(input, status);
+	expand.varname = recup_varname(input);
 	expand.aftervar = recup_aftervar(input);
-	if (input[1] == '?' && !input[2])
-		expand.varvalue = ft_strdup(expand.varname);
+	if (expand.varname[0] == '?')
+		expand.varvalue = ft_itoa(status);
 	else
 		expand.varvalue = recup_varvalue(expand.varname);
 	free(expand.varname);
@@ -86,7 +86,7 @@ bool	is_var(char *value)
 	i = 0;
 	while (value[i])
 	{
-		if (value[i] == '$')
+		if (value[i] == '$' && value[i + 1] && !ft_isspace(value[i + 1]))
 			return (true);
 		i++;
 	}
@@ -314,6 +314,7 @@ void	expander(t_data *data)
 		{
 			while (is_var(tmp->value))
 				expand_token_value(tmp->value, &tmp, data->status);
+			tmp->tag = TOKEN_WORD;
 		}
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:10 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 15:41:56 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:14:15 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 
 int	get_input_and_add_to_historical(char **input)
 {
-	*input = readline(PROMPT);
+	char *prompt;
+
+	prompt = NULL;
+	if (isatty(STDIN_FILENO))
+		prompt = PROMPT;
+	else
+		prompt = "";
+	*input = readline(prompt);
+	
 	if (*input == NULL)
 		return (1);
 	if (*input && *input[0] != 0)
