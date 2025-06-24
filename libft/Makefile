@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 13:53:26 by eelissal          #+#    #+#              #
-#    Updated: 2025/06/24 18:04:49 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/24 18:16:25 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,10 +100,8 @@ $(NAME): $(OBJS)
 -include $(DEPS)
 
 clean:
-	@if [ -d $(BIN_DIR) ]; then \
+	@if [ -d $(BIN_DIR) ] || [ -f $(NAME) ]; then \
 		rm -rf $(BIN_DIR); \
-	else \
-		echo "$(MESSAGE_COLOR_GREEN)libft already clean 😉$(MESSAGE_RESET)"; \
 	fi
 
 fclean: clean

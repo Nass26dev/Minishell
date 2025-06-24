@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/24 18:07:52 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/24 18:15:24 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -149,6 +149,7 @@ clean:
 	else \
 		echo "$(MESSAGE_COLOR_GREEN)files already deleted 😉$(MESSAGE_RESET)"; \
 	fi
+	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	@rm -f $(NAME)
