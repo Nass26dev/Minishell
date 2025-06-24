@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:56:26 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/23 15:36:17 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/24 14:31:44 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,58 @@ int	extract_operator(t_data *data, const char *input, int i)
 	return (ret);
 }
 
+t_token *split_tokens(char *content, t_data *data)
+{
+	t_token *head = NULL;
+	int i;
+	int start;
+	char *before;
+	char *dollar;
+	char *last;
+
+	i = 0;
+	start = 0;
+	(void)data;
+	while (content[i])
+	{
+		if (content[i] == '$' && (content[i + 1] == '\0' || ft_isspace(content[i + 1]) || content[i + 1] == '$'))
+		{
+			if (i > start)
+			{
+				before = ft_substr(content, start, i - start);
+				if (before)
+				{
+					add_token(&head, create_token(before, TOKEN_WORD));
+					free(before);
+				}
+			}
+			dollar = ft_substr(content, i, 1);
+			if (dollar)
+			{
+				add_token(&head, create_token(dollar, TOKEN_WORD));
+				free(dollar);
+			}
+
+			i++;
+			start = i;
+		}
+		else
+			i++;
+	}
+	if (i > start)
+	{
+		last = ft_substr(content, start, i - start);
+		if (last)
+		{
+			add_token(&head, create_token(last, TOKEN_WORD));
+			free(last);
+		}
+	}
+
+	return head;
+}
+
+
 int	extract_quoted_string(t_data *data, char *input, int i)
 {
 	char	*content;
@@ -37,6 +89,8 @@ int	extract_quoted_string(t_data *data, char *input, int i)
 
 	quote = input[i];
 	start = ++i;
+	if (quote == '"' && input[i] == '"')
+		return (2);
 	while (input[i] && input[i] != quote)
 		i++;
 	if (input[i] != quote)
@@ -48,7 +102,7 @@ int	extract_quoted_string(t_data *data, char *input, int i)
 	len = i - start;
 	content = ft_strndup(input + start, len);
 	if (quote == '"')
-		add_token(&data->tokens, create_token(content, TOKEN_DOUBLE_QUOTE));
+		add_token(&data->tokens, split_tokens(content, data));
 	else
 		add_token(&data->tokens, create_token(content, TOKEN_SINGLE_QUOTE));
 	free(content);
@@ -81,6 +135,22 @@ int	extract_word(t_data *data, const char *input, int i)
 	start = i;
 	while (input[i] && !ft_isspace(input[i]) && !is_operator(input[i])
 		&& input[i] != '\'' && input[i] != '"' && input[i] != '$')
+		i++;
+	len = i - start;
+	content = ft_strndup(input + start, i - start);
+	add_token(&data->tokens, create_token(content, TOKEN_WORD));
+	free(content);
+	return (len);
+}
+
+int extract_space(t_data *data, const char *input, int i)
+{
+	int start;
+	char *content;
+	int len;
+	
+	start = i;
+	while (input[i] && ft_isspace(input[i]))
 		i++;
 	len = i - start;
 	content = ft_strndup(input + start, i - start);

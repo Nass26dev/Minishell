@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/19 16:56:32 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:33:56 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int main(int argc, char **argv, char **envp)
 	}
 	setup_interactive_signals();
 	while (1)
+	{
 		if (minishell_loop(&shell) == 1)
 			break ;
+	}
 	free_shell(&shell);
 	rl_clear_history();
 	return (0);
