@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 10:49:54 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 17:58:36 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define FAIL_EXEC 126
 # define CMD_NOT_FOUND 127
 # define FAIL_FORK 128 + errno
+# define BASE_FILENAME "/tmp/heredoc"
+# define MAX_TRIES INT_MAX
 
 typedef struct s_exec
 {
