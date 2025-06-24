@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 13:25:47 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 17:20:55 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,6 @@ int	cd_get_path(char *target, t_vector *env)
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
 	{
 		perror("getcwd error");
-		return (1);
-	}
-	if (ft_strcmp(target, oldpwd) == 0)
-	{
-		write_fd("cd", NULL, "too many arguments", 2);
 		return (1);
 	}
 	if (chdir(target) != 0)
