@@ -5,4 +5,4 @@ minishell
 *.a
 *.o
 *.d
-minishell_tester
+minishell_tester/
