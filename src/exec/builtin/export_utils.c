@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:50:42 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/20 12:27:23 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 12:08:03 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	check_identifier(char **name)
 		if (!ft_isalnum((*name)[j]) && (*name)[j] != '_')
 		{
 			write_fd("export", *name, "not a valid identifier", 2);
-			free(*name);
 			return (1);
 		}
 		j++;
