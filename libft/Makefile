@@ -3,38 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42lyon.fr>    +#+  +:+       +#+         #
+#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 13:53:26 by eelissal          #+#    #+#              #
-#    Updated: 2025/06/07 20:51:36 by codespace        ###   ########lyon.fr    #
+#    Updated: 2025/06/24 18:04:49 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Folders
+NAME = libft.a
+MAKEFLAGS += --no-print-directory
+CC = cc
+CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
 
-BIN		:= bin
-INC		:= includes
-SRC		:= src
+SRC_DIR = src
+INC_DIR = includes
+BIN_DIR = bin
+DEPS_DIR = bin/deps
 
-# Properties
-
-NAME	= libft.a
-
-# Commands
-
-CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
-RM			:= rm -rf
-INCLUDES	:= -I$(INC)
-
-
-# Sources
-
-HEADERS	:= $(addprefix $(INC)/,	\
-				libft.h \
-				)
-
-SRCS := ft_atoi.c \
+SRCS =	ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
 		ft_isalnum.c \
@@ -80,24 +66,49 @@ SRCS := ft_atoi.c \
 		ft_lstiter.c \
 		ft_lstmap.c \
 
-OBJS		:= $(addprefix $(BIN)/, $(SRCS:.c=.o))
+HEADERS = $(INC_DIR)/libft.h
 
-all:		$(NAME)
+OBJS = $(SRCS:%.c=$(BIN_DIR)/%.o)
+DEPS = $(SRCS:%.c=$(DEPS_DIR)/%.d)
 
-$(BIN)/%.o:	$(SRC)/%.c $(HEADERS) Makefile
-			@mkdir -p $(dir $@);
-			@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+COMPILED = 0
+MESSAGE_COLOR_GREEN = \033[1;32m
+MESSAGE_COLOR_BLUE = \033[1;34m
+MESSAGE_COLOR_YELLOW = \033[1;33m
+MESSAGE_COLOR_RED = \033[1;31m
+MESSAGE_RESET = \033[1;0m
 
-$(NAME):	$(OBJS)
-			@ar rcs $@ $?
+all: $(NAME)
+	@if [ $(COMPILED) -eq 1 ]; then \
+		echo "$(MESSAGE_COLOR_BLUE)libft compiled 🎉$(MESSAGE_RESET)"; \
+	else \
+		echo "$(MESSAGE_COLOR_BLUE)libft already up to date 😉$(MESSAGE_RESET)"; \
+	fi
+
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
+	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
+	@mkdir -p $(BIN_DIR) $(DEPS_DIR)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+	@mv -f $(BIN_DIR)/$*.d $(DEPS_DIR)/$*.d
+	@$(eval COMPILED := 1)
+	@echo "$(MESSAGE_COLOR_GREEN)Compiled $@ ✅$(MESSAGE_RESET)"
+
+$(NAME): $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
+	@$(eval COMPILED := 1)
+
+-include $(DEPS)
 
 clean:
-			@$(RM) $(OBJS)
+	@if [ -d $(BIN_DIR) ]; then \
+		rm -rf $(BIN_DIR); \
+	else \
+		echo "$(MESSAGE_COLOR_GREEN)libft already clean 😉$(MESSAGE_RESET)"; \
+	fi
 
-fclean:		clean
-			@$(RM) $(NAME)
-			@if [ -d bin ]; then find bin -type d -empty -delete; fi
+fclean: clean
+	@rm -f $(NAME)
 
-re:			fclean all
+re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY: all clean fclean re
