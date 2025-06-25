@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/24 15:32:23 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:28:57 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ bool				node_is_redir(t_token *node);
 char				*recup_beforevar(char *input);
 char				*recup_varname(char *input);
 char				*recup_aftervar(char *input);
-char				*recup_varvalue(char *varname);
+char				*recup_varvalue(char *varname, t_data *data);
 // concatenation.c
 void				concatenation(t_data *data);
 // redir_value

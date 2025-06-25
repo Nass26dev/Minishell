@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 23:11:14 by nass              #+#    #+#             */
-/*   Updated: 2025/06/24 16:00:41 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:28:46 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,26 @@ char	*recup_aftervar(char *input)
 	return (aftervar);
 }
 
-char	*recup_varvalue(char *varname)
+char	*ft_getenv(char *search, char **env)
+{
+	int	i;
+	int	len;
+
+	i = -1;
+	len = ft_strlen(search);
+	while (env[++i])
+	{
+		if (ft_strncmp(env[i], search, len) == 0 && env[i][len] == '=')
+			return (env[i] + (len + 1));
+	}
+	return (NULL);
+}
+
+char	*recup_varvalue(char *varname, t_data *data)
 {
 	char	*varvalue;
 
-	varvalue = getenv(varname);
+	varvalue = ft_getenv(varname, data->shell->env->data);
 	if (varvalue)
 		return (ft_strdup(varvalue));
 	return (ft_strdup(""));
