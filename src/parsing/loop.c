@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/25 15:31:22 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 17:17:16 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ int	minishell_loop(t_shell *shell)
 {
 	static t_data	data;
 	char			*input;
+	int				ret;
 
 	data.shell = shell;
-	
-	if (get_input_and_add_to_historical(&input) == 1)
+	ret = get_input_and_add_to_historical(&input);
+	if (ret == 1)
 		return (1);
+	if (ret == 2)
+		data.shell->status = 130;
 	if (!input[0])
 	{
 		free(input);
@@ -68,13 +71,7 @@ int	minishell_loop(t_shell *shell)
 	free_tokens(&data.tokens);
 	if (data.ast)
 		data.shell->status = execute(data.ast, data.shell);
-	// int i;
-	// i = 0;
-	// while (data.shell->env->data[i])
-	// {
-	// 	printf("%s\n", data.shell->env->data[i]);
-	// 	i++;
-	// }
+// 	shell->status = data.shell->status;
 	free_ast(data.ast);
 	return (0);
 }

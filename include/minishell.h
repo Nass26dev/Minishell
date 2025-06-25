@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/20 23:23:20 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/25 16:07:47 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef enum e_tag
 	TOKEN_PARENTHESIS,
 }	t_tag;
 
+extern int	received_signal;
+
 typedef struct s_ast
 {
 	t_tag			tag;
@@ -61,6 +63,7 @@ int		minishell_loop(t_shell *shell);
 void	handle_sigint(int signum);
 void	setup_interactive_signals(void);
 void	setup_child_signals(void);
+void	setup_waitpid_signals(void);
 
 /*clean.c*/
 void	free_args(char **args);

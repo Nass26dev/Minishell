@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 16:43:35 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 17:27:19 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ static void	handle_child_process(t_exec *exec)
 {
 	char	*cmd;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	setup_child_signals();
 	is_extern_cmd(exec, &cmd);
 	dup_fds(exec);
 	exec_extern_cmd(exec, cmd);
@@ -61,9 +60,7 @@ int	exec_cmd(t_exec *exec)
 
 	ret = cmd_is_valid(exec);
 	if (ret != 0)
-	{
 		return (ret);
-	}
 	ret = is_builtin(exec);
 	if (ret >= 0 && ret < 7)
 	{
@@ -75,15 +72,15 @@ int	exec_cmd(t_exec *exec)
 		pid = fork();
 		if (pid == -1)
 			return (FAIL_FORK);
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
 		if (pid == 0)
 			handle_child_process(exec);
 		close_fds(exec);
 		exec->infd = STDIN_FILENO;
 		exec->outfd = STDOUT_FILENO;
+		setup_waitpid_signals();
 		waitpid(pid, &exec->shell->status, 0);
 		ret = return_process(exec);
+		setup_interactive_signals();
 	}
 	return (ret);
 }
