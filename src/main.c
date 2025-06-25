@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/25 16:54:43 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/25 18:15:15 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ int main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	(void) argv;
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) || !isatty(STDERR_FILENO))
+	{
+		ft_putstr_fd("minishell: This program must be run in a standard terminal\n", STDERR_FILENO);
+		return (1);
+	}
 	if (argc != 1)
 	{
 		ft_putstr_fd("minishell: no arguments allowed\n", STDERR_FILENO);
