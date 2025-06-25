@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/24 15:33:56 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 17:57:35 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ int main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	(void) argv;
+	if (isatty(0) || isatty(1) || isatty(2))
+	{
+		printf("Error: Non-interactive terminals are not supported\n");
+		exit(EXIT_FAILURE);
+	}
 	if (argc != 1)
 	{
 		ft_putstr_fd("minishell: no arguments allowed\n", STDERR_FILENO);

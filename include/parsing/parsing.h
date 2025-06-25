@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/25 15:28:57 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 18:02:25 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_data
 	t_ast			*ast;
 	t_shell			*shell;
 	bool			error;
-	int				status;
 }					t_data;
 
 typedef struct s_token_sort
