@@ -28,7 +28,6 @@ int	minishell_loop(t_shell *shell)
 {
 	static t_data	data;
 	char			*input;
-	static int		round;
 	int				ret;
 
 	data.shell = shell;
@@ -57,10 +56,10 @@ int	minishell_loop(t_shell *shell)
 	// {
 	// 	if (tmp->tag == TOKEN_CMD)
 	// 	{
-	// 		printf("tag = %d, value = %s", tmp->tag);
+	// 		printf("tag = %d, value = %s", tmp->tag, tmp->value);
 	// 		int i = 0;
 	// 		while (tmp->cmd[i])
-	// 			printf(" ", tmp->cmd[i++]);
+	// 			printf("%s ", tmp->cmd[i++]);
 	// 		printf("\n");
 	// 	}
 	// 	else
@@ -72,8 +71,7 @@ int	minishell_loop(t_shell *shell)
 	free_tokens(&data.tokens);
 	if (data.ast)
 		data.shell->status = execute(data.ast, data.shell);
-	shell->status = data.shell->status;
+// 	shell->status = data.shell->status;
 	free_ast(data.ast);
-	round++;
 	return (0);
 }
