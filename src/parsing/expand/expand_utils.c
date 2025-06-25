@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 23:11:14 by nass              #+#    #+#             */
-/*   Updated: 2025/06/25 15:28:46 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 18:21:19 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ char	*recup_aftervar(char *input)
 	while (input[i] && input[i] != '$')
 		i++;
 	i++;
-	while (input[i] && !ft_isspace(input[i]) && input[i] != '$' && input[i - 1] != '?')
+	while (input[i] && !ft_isspace(input[i]) && input[i] != '$' && input[i
+		- 1] != '?')
 		i++;
 	j = i;
 	while (input[i])

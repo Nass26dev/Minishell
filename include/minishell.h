@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/25 16:07:47 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/25 18:32:05 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # include <readline/history.h>
 # include <errno.h>
 # include "env.h"
+
+#define BLUE = "\033[1;34m";
+#define PURPLE = "\033[1;35m";
+#define RESET = "\033[0m";
 
 typedef enum e_tag
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/20 23:31:21 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/25 18:22:38 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,10 @@ void	print_ast(t_ast *node, int depth)
 		return ;
 	if (depth == 0)
 		printf("vers le haut = droite , vers le bas = gauche\n");
-	// D’abord le sous-arbre droit (en haut)
 	if (node->right)
 		print_ast(node->right, depth + INDENT_STEP);
-	// Affiche le nœud courant
 	print_indent(depth);
 	print_node(node);
-	// Puis le sous-arbre gauche (en bas)
 	if (node->left)
 		print_ast(node->left, depth + INDENT_STEP);
 }
-
-

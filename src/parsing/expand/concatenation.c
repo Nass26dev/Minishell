@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   concatenation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:12:06 by nass              #+#    #+#             */
-/*   Updated: 2025/06/20 22:51:50 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/25 18:21:55 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ void	concatenate_nodes_after_redir(t_token *current, t_token *saved,
 	last_dir->next = tmp;
 }
 
-void skip_redir(t_token **node, bool cmd, t_token **last_redir)
+void	skip_redir(t_token **node, bool cmd, t_token **last_redir)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = *node;
 	while (node_is_redir(current))
@@ -196,5 +196,4 @@ void	concatenation(t_data *data)
 			continue ;
 		current = current->next;
 	}
-	// concatenate_args(data);
 }
