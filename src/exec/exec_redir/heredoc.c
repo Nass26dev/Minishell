@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:56:33 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 17:57:57 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/25 12:10:31 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static bool	reopen_fd_read(int *fd, char *tmp_path)
 	*fd = open(tmp_path, O_RDONLY);
 	if (*fd == -1)
 	{
+		setup_interactive_signals();
 		free(tmp_path);
 		perror("Failed to reopen heredoc file");
 		return (false);
@@ -107,9 +108,11 @@ int	handle_heredoc(t_exec *exec)
 		printf("%s: %s\n", tmp_path, strerror(errno));
 		return (1); //to check again
 	}
+	setup_child_signals();
 	readline_heredoc(exec);
 	if (reopen_fd_read(&fd, tmp_path) == false)
 		return (1);
+	setup_interactive_signals();
 	unlink(tmp_path);
 	free(tmp_path);
 	if (exec->infd != STDIN_FILENO)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 16:17:19 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:02:49 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,5 @@ int	return_process(t_exec *exec)
 		return (WEXITSTATUS(exec->shell->status));
 	else if (WIFSIGNALED(exec->shell->status))
 		return (128 + WTERMSIG(exec->shell->status));
-	else if (WIFSTOPPED(exec->shell->status))
-		return (128 + WSTOPSIG(exec->shell->status));
 	return (exec->shell->status);
 }
