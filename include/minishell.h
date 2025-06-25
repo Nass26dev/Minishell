@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/25 18:32:05 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 18:44:32 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 # include <errno.h>
 # include "env.h"
 
-#define BLUE = "\033[1;34m";
-#define PURPLE = "\033[1;35m";
-#define RESET = "\033[0m";
+#define BLUE "\033[1;34m"
+#define PURPLE "\033[1;35m"
+#define RESET "\033[0m"
 
 typedef enum e_tag
 {
