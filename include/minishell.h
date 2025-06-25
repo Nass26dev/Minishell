@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/25 11:44:08 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/25 16:07:47 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef enum e_tag
 	TOKEN_APPEND,
 	TOKEN_PARENTHESIS,
 }	t_tag;
+
+extern int	received_signal;
 
 typedef struct s_ast
 {

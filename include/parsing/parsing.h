@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/24 15:32:23 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 16:19:28 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_data
 	t_ast			*ast;
 	t_shell			*shell;
 	bool			error;
-	int				status;
 }					t_data;
 
 typedef struct s_token_sort

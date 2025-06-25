@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/25 11:54:20 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/25 17:27:19 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ int	exec_cmd(t_exec *exec)
 
 	ret = cmd_is_valid(exec);
 	if (ret != 0)
-	{
 		return (ret);
-	}
 	ret = is_builtin(exec);
 	if (ret >= 0 && ret < 7)
 	{
@@ -81,8 +79,8 @@ int	exec_cmd(t_exec *exec)
 		exec->outfd = STDOUT_FILENO;
 		setup_waitpid_signals();
 		waitpid(pid, &exec->shell->status, 0);
-		setup_interactive_signals();
 		ret = return_process(exec);
+		setup_interactive_signals();
 	}
 	return (ret);
 }

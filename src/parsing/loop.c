@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/24 16:52:27 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 17:17:16 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ int	minishell_loop(t_shell *shell)
 	static t_data	data;
 	char			*input;
 	static int		round;
+	int				ret;
 
-	if (round == 0)
-		data.status = 0;
 	data.shell = shell;
-	
-	if (get_input_and_add_to_historical(&input) == 1)
+	ret = get_input_and_add_to_historical(&input);
+	if (ret == 1)
 		return (1);
+	if (ret == 2)
+		data.shell->status = 130;
 	if (!input[0])
 	{
 		free(input);
@@ -71,7 +72,7 @@ int	minishell_loop(t_shell *shell)
 	free_tokens(&data.tokens);
 	if (data.ast)
 		data.shell->status = execute(data.ast, data.shell);
-	data.status = data.shell->status;
+	shell->status = data.shell->status;
 	free_ast(data.ast);
 	round++;
 	return (0);

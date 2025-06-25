@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/25 11:54:10 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/25 17:28:06 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	exec_pipe(t_exec *exec)
 	int		pipefd[2];
 	int		pid[2];
 	t_ast	*current;
+	int		ret;
 
 	if (pipe(pipefd) == -1)
 	{
@@ -107,6 +108,7 @@ int	exec_pipe(t_exec *exec)
 	waitpid(pid[0], &exec->shell->status, 0);
 	if (pid[0] > 0)
 		waitpid(pid[1], &exec->shell->status, 0);
+	ret = return_process(exec);
 	setup_interactive_signals();
-	return (return_process(exec));
+	return (ret);
 }

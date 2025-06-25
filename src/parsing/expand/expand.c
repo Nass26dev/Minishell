@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/24 15:59:40 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 13:49:25 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,7 +313,7 @@ void	expander(t_data *data)
 			|| tmp->tag == TOKEN_WORD)
 		{
 			while (is_var(tmp->value))
-				expand_token_value(tmp->value, &tmp, data->status);
+				expand_token_value(tmp->value, &tmp, data->shell->status);
 			tmp->tag = TOKEN_WORD;
 		}
 		tmp = tmp->next;
