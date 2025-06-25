@@ -6,10 +6,9 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/25 18:38:29 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 18:42:33 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -17,17 +16,13 @@ int	received_signal = 0;
 
 void	display_welcome_message(void)
 {
-	const char *blue = "\033[1;34m";     // Bleu clair
-	const char *purple = "\033[1;35m";   // Violet
-	const char *reset = "\033[0m";       // Réinitialise les couleurs
-
-	printf("%s", blue);
+	printf("%s", BLUE);
 	printf("╔══════════════════════════════════════╗\n");
 	printf("║                                      ║\n");
-	printf("║%s      👋 WELCOME TO MINISHELL 👋      %s║\n", purple, blue);
+	printf("║%s      👋 WELCOME TO MINISHELL 👋      %s║\n", PURPLE, BLUE);
 	printf("║                                      ║\n");
 	printf("╚══════════════════════════════════════╝\n");
-	printf("%s", reset);
+	printf("%s", RESET);
 }
 
 int main(int argc, char **argv, char **envp)
