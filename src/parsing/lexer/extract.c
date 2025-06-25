@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:56:26 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/24 14:31:44 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 18:21:01 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,23 @@ int	extract_operator(t_data *data, const char *input, int i)
 	return (ret);
 }
 
-t_token *split_tokens(char *content, t_data *data)
+t_token	*split_tokens(char *content, t_data *data)
 {
-	t_token *head = NULL;
-	int i;
-	int start;
-	char *before;
-	char *dollar;
-	char *last;
+	t_token	*head;
+	int		i;
+	int		start;
+	char	*before;
+	char	*dollar;
+	char	*last;
 
+	head = NULL;
 	i = 0;
 	start = 0;
 	(void)data;
 	while (content[i])
 	{
-		if (content[i] == '$' && (content[i + 1] == '\0' || ft_isspace(content[i + 1]) || content[i + 1] == '$'))
+		if (content[i] == '$' && (content[i + 1] == '\0' || ft_isspace(content[i
+					+ 1]) || content[i + 1] == '$'))
 		{
 			if (i > start)
 			{
@@ -59,7 +61,6 @@ t_token *split_tokens(char *content, t_data *data)
 				add_token(&head, create_token(dollar, TOKEN_WORD));
 				free(dollar);
 			}
-
 			i++;
 			start = i;
 		}
@@ -75,10 +76,8 @@ t_token *split_tokens(char *content, t_data *data)
 			free(last);
 		}
 	}
-
-	return head;
+	return (head);
 }
-
 
 int	extract_quoted_string(t_data *data, char *input, int i)
 {
@@ -143,12 +142,12 @@ int	extract_word(t_data *data, const char *input, int i)
 	return (len);
 }
 
-int extract_space(t_data *data, const char *input, int i)
+int	extract_space(t_data *data, const char *input, int i)
 {
-	int start;
-	char *content;
-	int len;
-	
+	int		start;
+	char	*content;
+	int		len;
+
 	start = i;
 	while (input[i] && ft_isspace(input[i]))
 		i++;

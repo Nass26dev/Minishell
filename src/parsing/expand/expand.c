@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/25 15:30:18 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 18:22:14 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,37 +217,32 @@ void	move_start_redir(t_token **head)
 
 void	delete_node(t_token **head, t_token *node_to_delete)
 {
-	t_token *prev;
+	t_token	*prev;
 
 	if (!head || !*head || !node_to_delete)
-		return;
-
-	// Si le nœud à supprimer est la tête
+		return ;
 	if (*head == node_to_delete)
 	{
 		*head = node_to_delete->next;
-		free(node_to_delete->value); // libère la chaîne si allouée dynamiquement
+		free(node_to_delete->value);
 		free(node_to_delete);
-		return;
+		return ;
 	}
-
 	prev = *head;
 	while (prev && prev->next != node_to_delete)
 		prev = prev->next;
-
-	// Si le nœud a été trouvé
 	if (prev && prev->next == node_to_delete)
 	{
 		prev->next = node_to_delete->next;
-		free(node_to_delete->value); // libère la chaîne si allouée dynamiquement
+		free(node_to_delete->value);
 		free(node_to_delete);
 	}
 }
 
-int get_nb_args(t_token *node)
+int	get_nb_args(t_token *node)
 {
-	t_token *current;
-	int i;
+	t_token	*current;
+	int		i;
 
 	i = 0;
 	current = node;
@@ -260,12 +255,12 @@ int get_nb_args(t_token *node)
 	return (i);
 }
 
-void get_cmd(t_token **node)
+void	get_cmd(t_token **node)
 {
-	t_token *current;
-	t_token *prev;
-	char **cmd;
-	int i;
+	t_token	*current;
+	t_token	*prev;
+	char	**cmd;
+	int		i;
 
 	i = 0;
 	cmd = malloc(sizeof(char *) * (get_nb_args(*node) + 1));
@@ -289,9 +284,9 @@ void get_cmd(t_token **node)
 	current->tag = TOKEN_CMD;
 }
 
-void create_cmd(t_data *data)
+void	create_cmd(t_data *data)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = data->tokens;
 	while (current)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/25 17:17:16 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/25 18:19:57 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,10 @@ int	minishell_loop(t_shell *shell)
 	error_checker(&data);
 	if (is_error(&data.error))
 		return (0);
-	// t_token *tmp = data.tokens;
-	// while (tmp)
-	// {
-	// 	if (tmp->tag == TOKEN_CMD)
-	// 	{
-	// 		printf("tag = %d, value = %s", tmp->tag, tmp->value);
-	// 		int i = 0;
-	// 		while (tmp->cmd[i])
-	// 			printf("%s ", tmp->cmd[i++]);
-	// 		printf("\n");
-	// 	}
-	// 	else
-	// 		printf("tag = %d, value = %s\n", tmp->tag, tmp->value);
-	// 	tmp = tmp->next;
-	// }
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
-	// print_ast(data.ast, 0);
 	free_tokens(&data.tokens);
 	if (data.ast)
 		data.shell->status = execute(data.ast, data.shell);
-// 	shell->status = data.shell->status;
 	free_ast(data.ast);
 	return (0);
 }
