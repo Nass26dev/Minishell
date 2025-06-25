@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/24 16:52:27 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:31:22 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ int	minishell_loop(t_shell *shell)
 {
 	static t_data	data;
 	char			*input;
-	static int		round;
 
-	if (round == 0)
-		data.status = 0;
 	data.shell = shell;
 	
 	if (get_input_and_add_to_historical(&input) == 1)
@@ -56,10 +53,10 @@ int	minishell_loop(t_shell *shell)
 	// {
 	// 	if (tmp->tag == TOKEN_CMD)
 	// 	{
-	// 		printf("tag = %d, value = %s", tmp->tag);
+	// 		printf("tag = %d, value = %s", tmp->tag, tmp->value);
 	// 		int i = 0;
 	// 		while (tmp->cmd[i])
-	// 			printf(" ", tmp->cmd[i++]);
+	// 			printf("%s ", tmp->cmd[i++]);
 	// 		printf("\n");
 	// 	}
 	// 	else
@@ -71,8 +68,13 @@ int	minishell_loop(t_shell *shell)
 	free_tokens(&data.tokens);
 	if (data.ast)
 		data.shell->status = execute(data.ast, data.shell);
-	data.status = data.shell->status;
+	// int i;
+	// i = 0;
+	// while (data.shell->env->data[i])
+	// {
+	// 	printf("%s\n", data.shell->env->data[i]);
+	// 	i++;
+	// }
 	free_ast(data.ast);
-	round++;
 	return (0);
 }

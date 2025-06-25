@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/24 15:59:40 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:30:18 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*free_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-void	expand_token_value(char *input, t_token **token, int status)
+void	expand_token_value(char *input, t_token **token, t_data *data)
 {
 	char		*result;
 	t_token		*tmp;
@@ -65,9 +65,9 @@ void	expand_token_value(char *input, t_token **token, int status)
 	expand.varname = recup_varname(input);
 	expand.aftervar = recup_aftervar(input);
 	if (expand.varname[0] == '?')
-		expand.varvalue = ft_itoa(status);
+		expand.varvalue = ft_itoa(data->shell->status);
 	else
-		expand.varvalue = recup_varvalue(expand.varname);
+		expand.varvalue = recup_varvalue(expand.varname, data);
 	free(expand.varname);
 	free(input);
 	result = free_strjoin(result, expand.beforevar);
@@ -313,7 +313,7 @@ void	expander(t_data *data)
 			|| tmp->tag == TOKEN_WORD)
 		{
 			while (is_var(tmp->value))
-				expand_token_value(tmp->value, &tmp, data->status);
+				expand_token_value(tmp->value, &tmp, data);
 			tmp->tag = TOKEN_WORD;
 		}
 		tmp = tmp->next;
