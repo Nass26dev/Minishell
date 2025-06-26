@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:36 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/26 16:43:04 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	exec_extern_cmd(t_exec *exec, char *cmd);
 int		cmd_is_valid(t_exec *exec);
 void	dup_fds(t_exec *exec);
 void	close_fds(t_exec *exec);
-int		return_process(t_exec *exec);
+int		return_process(int status);
+int		handle_fork_error(int pipefd[2], int error, int pipe);
 
 /*find_cmd_path.c*/
 char	*find_cmd_path(char *cmd_name, t_vector *env);

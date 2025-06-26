@@ -6,19 +6,40 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/25 17:28:06 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/26 17:48:58 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
 
-static int	handle_fork_error(int pipefd[2], const char *msg)
+static void	close_pipes(t_exec *exec, int pipefd[2], int pipe)
 {
-	perror(msg);
-	close(pipefd[0]);
-	close(pipefd[1]);
-	return (FAIL_FORK);
+	close_fds(exec);
+	exec->infd = STDIN_FILENO;
+	exec->outfd = STDOUT_FILENO;
+	if (pipe == 1)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
+}
+
+static int	pipe_waitpid_process(int pid[2])
+{
+	int	ret;
+	int	status1;
+	int	status2;
+
+	ret = -1;
+	setup_waitpid_signals();
+	waitpid(pid[0], &status1, 0);
+	waitpid(pid[1], &status2, 0);
+	ret = return_process(status2);
+	if (ret == 0)
+		ret = return_process(status1);
+	setup_interactive_signals();
+	return (ret);
 }
 
 static void	handle_pipe_process(t_exec *exec)
@@ -49,33 +70,27 @@ static void	handle_pipe_process(t_exec *exec)
 
 static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 {
-	while (exec->current && exec->current->tag >= TOKEN_REDIR_IN
-		&& exec->current->tag <= TOKEN_APPEND)
-		exec = exec_redir_pipe(exec);
 	pid[fd] = fork();
 	if (pid[fd] == -1)
 	{
 		if (fd == 1 && pid[0] > 0)
 			waitpid(pid[0], NULL, 0);
-		return (handle_fork_error(pipefd, "fork"));
+		return (handle_fork_error(pipefd, errno, 1));
 	}
 	if (pid[fd] == 0)
 	{
 		setup_child_signals();
-		handle_redirections(exec, pipefd, fd);
-		if (!exec->current)
-		{
-			free_exec(exec);
-			exit(0);
-		}
-		if (exec->current->tag == TOKEN_CMD)
+		while (exec->current && exec->current->tag >= TOKEN_REDIR_IN
+			&& exec->current->tag <= TOKEN_APPEND)
+			exec = exec_redir_pipe(exec);
+		if (exec->current)
+			handle_redirections(exec, pipefd, fd);
+		if (exec-> current && exec->current->tag == TOKEN_CMD)
 			handle_pipe_process(exec);
-		else if (fd == 0 && exec->current->tag == TOKEN_PIPE)
-		{
+		else if (exec-> current && exec->current->tag == TOKEN_PIPE && fd == 0)
 			exec->shell->status = exec_node(exec);
-			free_exec(exec);
-			exit(exec->shell->status);
-		}
+		free_exec(exec);
+		exit(exec->shell->status);
 	}
 	return (0);
 }
@@ -85,11 +100,10 @@ int	exec_pipe(t_exec *exec)
 	int		pipefd[2];
 	int		pid[2];
 	t_ast	*current;
-	int		ret;
 
 	if (pipe(pipefd) == -1)
 	{
-		strerror(errno); //TODO to check again
+		write_fd("pipe", NULL, strerror(errno), 2);
 		return (1);
 	}
 	current = exec->current;
@@ -97,18 +111,12 @@ int	exec_pipe(t_exec *exec)
 	if (exec_pipe_fork(exec, pipefd, pid, 0) != 0)
 		return (FAIL_FORK);
 	exec->current = current;
+	close_pipes(exec, pipefd, 0);
 	exec->current = exec->current->right;
 	if (exec_pipe_fork(exec, pipefd, pid, 1) != 0)
 		return (FAIL_FORK);
 	exec->current = current;
-	close(pipefd[0]);
-	close(pipefd[1]);
-	close_fds(exec);
-	setup_waitpid_signals();
-	waitpid(pid[0], &exec->shell->status, 0);
-	if (pid[0] > 0)
-		waitpid(pid[1], &exec->shell->status, 0);
-	ret = return_process(exec);
-	setup_interactive_signals();
-	return (ret);
+	close_pipes(exec, pipefd, 1);
+	exec->shell->status = pipe_waitpid_process(pid);
+	return (exec->shell->status);
 }

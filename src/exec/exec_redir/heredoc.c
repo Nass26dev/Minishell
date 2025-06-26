@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:56:33 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/25 12:10:31 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/26 17:57:28 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static bool	reopen_fd_read(int *fd, char *tmp_path)
 	if (*fd == -1)
 	{
 		setup_interactive_signals();
+		write_fd(tmp_path, NULL, "failed to reopen heredoc file", 2);
 		free(tmp_path);
-		perror("Failed to reopen heredoc file");
 		return (false);
 	}
 	return (true);
@@ -98,15 +98,14 @@ int	handle_heredoc(t_exec *exec)
 	tmp_path = create_file();
 	if (!tmp_path)
 	{
-		perror("Failed to create random path for tmp file creation");
+		write_fd(tmp_path, NULL, "Failed to create random path for tmp file creation", 2);
 		return (1);
 	}
-	printf("Heredoc file: %s\n", tmp_path);
 	fd = open(tmp_path, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 	{
-		printf("%s: %s\n", tmp_path, strerror(errno));
-		return (1); //to check again
+		write_fd(tmp_path, NULL, strerror(errno), 2);
+		return (1);
 	}
 	setup_child_signals();
 	readline_heredoc(exec);
@@ -115,7 +114,7 @@ int	handle_heredoc(t_exec *exec)
 	setup_interactive_signals();
 	unlink(tmp_path);
 	free(tmp_path);
-	if (exec->infd != STDIN_FILENO)
+	if (exec->infd > 2)
 		close(exec->infd);
 	exec->infd = fd;
 	return (0);
