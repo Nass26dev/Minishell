@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/20 23:26:47 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/26 16:34:38 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,91 @@ t_ast	*parser(t_data *data, t_token *start, t_token *end)
 {
 	t_token	*main_op;
 	t_ast	*node;
+	int i;
 
+	i = 0;
 	main_op = find_main_operator(start, end);
 	if (main_op && start && end && start != end)
 	{
 		node = create_ast_node(main_op->tag, main_op->value, main_op->cmd);
+		if (!node)
+		{
+			printf("malloc error\n");
+			free_ast(data->ast);
+			free_tokens(&data->tokens);
+			free_shell(data->shell);
+			rl_clear_history();
+			exit(EXIT_FAILURE);
+		}
 		if (main_op->tag == TOKEN_REDIR_IN || main_op->tag == TOKEN_REDIR_OUT
 			|| main_op->tag == TOKEN_APPEND || main_op->tag == TOKEN_HEREDOC)
 		{
 			node->left = parser(data, start, find_prev(main_op, start));
+			if (!node->left)
+			{
+				printf("malloc error\n");
+				if (node->command)
+				{
+					i = 0;
+					while (node->command[i])
+						free(node->command[i++]);	
+					free(node->command);
+				}
+				free(node);
+				free_ast(data->ast);
+				free_tokens(&data->tokens);
+				free_shell(data->shell);
+				rl_clear_history();
+				exit(EXIT_FAILURE);
+			}
 			node->right = NULL;
 		}
 		else
 		{
 			node->left = parser(data, start, find_prev(main_op, start));
+			if (!node->left)
+			{
+				printf("malloc error\n");
+				if (node->command)
+				{
+					i = 0;
+					while (node->command[i])
+						free(node->command[i++]);	
+					free(node->command);
+				}
+				free(node);
+				free_ast(data->ast);
+				free_tokens(&data->tokens);
+				free_shell(data->shell);
+				rl_clear_history();
+				exit(EXIT_FAILURE);
+			}
 			node->right = parser(data, main_op->next, end);
+			if (!node->right)
+			{
+				printf("malloc error\n");
+				if (node->left->command)
+				{
+					i = 0;
+					while (node->left->command[i])
+						free(node->left->command[i++]);	
+					free(node->left->command);
+				}
+				free(node->left);
+				if (node->command)
+				{
+					i = 0;
+					while (node->command[i])
+						free(node->command[i++]);	
+					free(node->command);
+				}
+				free(node);
+				free_ast(data->ast);
+				free_tokens(&data->tokens);
+				free_shell(data->shell);
+				rl_clear_history();
+				exit(EXIT_FAILURE);
+			}
 		}
 		return (node);
 	}

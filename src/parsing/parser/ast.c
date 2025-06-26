@@ -3,14 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/25 18:22:38 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:35:51 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+char **dup_cmd(char **cmd)
+{
+    if (!cmd)
+        return NULL;
+
+    // Compter le nombre d'éléments
+    int count = 0;
+    while (cmd[count])
+        count++;
+
+    // Allouer de la mémoire pour le tableau (pointeurs + NULL final)
+    char **copy = malloc(sizeof(char *) * (count + 1));
+    if (!copy)
+        return NULL;
+
+    // Copier chaque chaîne
+    for (int i = 0; i < count; i++) {
+        copy[i] = strdup(cmd[i]);
+        if (!copy[i]) {
+            // En cas d’échec, libérer ce qui a déjà été alloué
+            for (int j = 0; j < i; j++)
+                free(copy[j]);
+            free(copy);
+            return NULL;
+        }
+    }
+
+    // Terminer le tableau par NULL
+    copy[count] = NULL;
+
+    return copy;
+}
 
 t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 {
@@ -21,11 +54,29 @@ t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 		return (NULL);
 	node->tag = tag;
 	if (tag == TOKEN_CMD)
-		node->command = cmd;
+	{
+		node->command = dup_cmd(cmd);
+		if (!node->command)
+		{
+			free(node);
+			return (NULL);
+		}
+	}
 	else if (value)
 	{
 		node->command = malloc(sizeof(char *) * 2);
+		if (!node->command)
+		{
+			free(node);
+			return (NULL);
+		}
 		node->command[0] = ft_strdup(value);
+		if (!node->command[0])
+		{
+			free(node->command);
+			free(node);
+			return (NULL);
+		}
 		node->command[1] = NULL;
 	}
 	else
@@ -33,14 +84,6 @@ t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
-}
-
-void	add_args_to_command(t_ast **node, char *args)
-{
-	t_ast	*tmp;
-
-	tmp = *node;
-	tmp->command[1] = ft_strdup(args);
 }
 
 void	print_indent(int depth)

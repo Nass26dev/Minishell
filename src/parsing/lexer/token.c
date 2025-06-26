@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:55:03 by nass              #+#    #+#             */
-/*   Updated: 2025/06/26 14:56:19 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/26 16:20:44 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,22 @@ void	free_tokens(t_token **head)
 {
 	t_token	*next;
 	t_token	*tmp;
+	int i;
 
+	i = 0;
 	tmp = *head;
 	while (tmp)
 	{
 		next = tmp->next;
 		if (tmp->value)
 			free(tmp->value);
+		if (tmp->cmd)
+		{
+			i = 0;
+			while (tmp->cmd[i])
+				free(tmp->cmd[i++]);
+			free(tmp->cmd);
+		}
 		free(tmp);
 		tmp = next;
 	}
@@ -41,6 +50,7 @@ t_token	*create_token(char *value, t_tag tag)
 	else
 		new->value = NULL;
 	new->tag = tag;
+	new->cmd = NULL;
 	new->space = false;
 	new->next = NULL;
 	return (new);

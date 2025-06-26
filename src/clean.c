@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 17:10:52 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/26 16:25:34 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ void free_ast(t_ast *node)
 		return ;
 	if (node->tag == TOKEN_CMD || (node->tag >= TOKEN_REDIR_IN && node->tag <= TOKEN_APPEND))
 	{
-		while (node->command[i])
-			free(node->command[i++]);
-		free(node->command);
+		if (node->command)
+		{
+			while (node->command[i])
+				free(node->command[i++]);
+			free(node->command);
+		}
 	}
 	free_ast(node->left);
 	free_ast(node->right);
