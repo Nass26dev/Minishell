@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   concatenation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:12:06 by nass              #+#    #+#             */
-/*   Updated: 2025/06/25 18:21:55 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:37:51 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	should_concatenate(t_token *current, t_token *next)
 	return (true);
 }
 
-void	concatenate_nodes(t_token *current, t_token *next)
+int	concatenate_nodes(t_token *current, t_token *next)
 {
 	char	*new_value;
 	t_token	*tmp;
@@ -31,11 +31,13 @@ void	concatenate_nodes(t_token *current, t_token *next)
 	size_t	total_len;
 
 	if (!should_concatenate(current, next))
-		return ;
+		return (0);
 	len_current = ft_strlen(current->value);
 	len_next = ft_strlen(next->value);
 	total_len = (len_current + len_next) + 1;
 	new_value = malloc(total_len);
+	if (!new_value)
+		return (1);
 	ft_strlcpy(new_value, current->value, total_len);
 	ft_strlcat(new_value, next->value, total_len);
 	free(current->value);
@@ -46,6 +48,7 @@ void	concatenate_nodes(t_token *current, t_token *next)
 	free(next->value);
 	free(next);
 	current->next = tmp;
+	return (0);
 }
 
 void	concatenate_nodes_with_spaces(t_token *current, t_token *next)
@@ -187,7 +190,17 @@ void	concatenation(t_data *data)
 				|| current->tag == TOKEN_DOUBLE_QUOTE
 				|| current->tag == TOKEN_VARIABLE || current->tag == TOKEN_WORD)
 			&& !current->space)
-			concatenate_nodes(current, current->next);
+		{
+			
+			if (concatenate_nodes(current, current->next))
+			{
+				printf("malloc error\n");
+				free_tokens(&data->tokens);
+				free_shell(data->shell);
+				rl_clear_history();
+				exit(EXIT_FAILURE);
+			}
+		}
 		if ((current->tag == TOKEN_SINGLE_QUOTE
 				|| current->tag == TOKEN_DOUBLE_QUOTE
 				|| current->tag == TOKEN_VARIABLE || current->tag == TOKEN_WORD)

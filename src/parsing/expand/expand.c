@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/25 18:22:14 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:46:01 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*set_empty(void)
 	char	*result;
 
 	result = malloc(1);
+	if (!result)
+		return (NULL);
 	result[0] = 0;
 	return (result);
 }
@@ -40,7 +42,10 @@ char	*free_strjoin(char *s1, char *s2)
 	i = -1;
 	str = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
 	if (!str)
+	{
+		free(s1);
 		return (NULL);
+	}
 	j = 0;
 	while (s1[j])
 		str[++i] = s1[j++];
@@ -53,30 +58,77 @@ char	*free_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-void	expand_token_value(char *input, t_token **token, t_data *data)
+int	expand_token_value(char *input, t_token **token, t_data *data)
 {
 	char		*result;
 	t_token		*tmp;
 	t_expand	expand;
 
-	result = set_empty();
 	set_to_null(&expand);
 	expand.beforevar = recup_beforevar(input);
+	if (!expand.beforevar)
+		return (1);
 	expand.varname = recup_varname(input);
+	if (!expand.varname)
+	{
+		free(expand.beforevar);
+		return (1);
+	}
 	expand.aftervar = recup_aftervar(input);
+	if (!expand.aftervar)
+	{
+		free(expand.beforevar);
+		free(expand.varname);	
+		return (1);
+	}
 	if (expand.varname[0] == '?')
 		expand.varvalue = ft_itoa(data->shell->status);
 	else
 		expand.varvalue = recup_varvalue(expand.varname, data);
 	free(expand.varname);
-	free(input);
+	if (!expand.varvalue)
+	{
+		free(expand.beforevar);
+		free(expand.aftervar);
+		return (1);
+	}
+	result = set_empty();
+	if (!result)
+	{
+		free(expand.beforevar);
+		free(expand.varvalue);
+		free(expand.aftervar);
+		return (1);
+	}
 	result = free_strjoin(result, expand.beforevar);
+	if (!result)
+	{
+		free(expand.beforevar);
+		free(expand.varvalue);
+		free(expand.aftervar);
+		return (1);
+	}
 	result = free_strjoin(result, expand.varvalue);
+	if (!result)
+	{
+		free(expand.varvalue);
+		free(expand.aftervar);
+		return (1);
+	}
 	result = free_strjoin(result, expand.aftervar);
+	if (!result)
+	{
+		free(expand.aftervar);
+		return (1);
+	}
 	tmp = *token;
 	tmp->value = ft_strdup(result);
 	free(result);
+	if (!tmp->value)
+		return (1);
+	free(input);
 	tmp->tag = TOKEN_WORD;
+	return (0);
 }
 
 bool	is_var(char *value)
@@ -255,17 +307,26 @@ int	get_nb_args(t_token *node)
 	return (i);
 }
 
-void	get_cmd(t_token **node)
+int	get_cmd(t_token **node)
 {
 	t_token	*current;
 	t_token	*prev;
 	char	**cmd;
 	int		i;
+	int j;
 
+	j = 0;
 	i = 0;
 	cmd = malloc(sizeof(char *) * (get_nb_args(*node) + 1));
+	if (!cmd)
+		return (1);
 	current = *node;
 	cmd[i++] = ft_strdup(current->value);
+	if (!cmd[i - 1])
+	{
+		free(cmd);
+		return (1);
+	}
 	prev = current;
 	current = current->next;
 	while (current && !node_is_operator(current))
@@ -273,6 +334,13 @@ void	get_cmd(t_token **node)
 		if (node_is_word(current))
 		{
 			cmd[i++] = ft_strdup(current->value);
+			if (!cmd[i - 1])
+			{
+				while (j < (i - 1))
+					free(cmd[j++]);
+				free(cmd);
+				return (1);
+			}
 			delete_node(node, current);
 			current = prev;
 		}
@@ -282,6 +350,7 @@ void	get_cmd(t_token **node)
 	current = *node;
 	current->cmd = cmd;
 	current->tag = TOKEN_CMD;
+	return (0);
 }
 
 void	create_cmd(t_data *data)
@@ -292,7 +361,16 @@ void	create_cmd(t_data *data)
 	while (current)
 	{
 		if (node_is_word(current))
-			get_cmd(&current);
+		{
+			if (get_cmd(&current))
+			{
+				printf("malloc error\n");
+				free_tokens(&data->tokens);
+				free_shell(data->shell);
+				rl_clear_history();
+				exit(EXIT_FAILURE);
+			}
+		}
 		current = current->next;
 	}
 }
@@ -308,7 +386,16 @@ void	expander(t_data *data)
 			|| tmp->tag == TOKEN_WORD)
 		{
 			while (is_var(tmp->value))
-				expand_token_value(tmp->value, &tmp, data);
+			{
+				if (expand_token_value(tmp->value, &tmp, data))
+				{
+					printf("malloc error\n");
+					free_tokens(&data->tokens);
+					free_shell(data->shell);
+					rl_clear_history();
+					exit(EXIT_FAILURE);
+				}
+			}
 			tmp->tag = TOKEN_WORD;
 		}
 		tmp = tmp->next;

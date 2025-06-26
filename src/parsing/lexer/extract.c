@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:56:26 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/25 18:21:01 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:15:23 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ int	extract_quoted_string(t_data *data, char *input, int i)
 	}
 	len = i - start;
 	content = ft_strndup(input + start, len);
+	if (!content)
+	{
+		printf("malloc error\n");
+		free_tokens(&data->tokens);
+		return (0);
+	}
 	if (quote == '"')
 		add_token(&data->tokens, split_tokens(content, data));
 	else
@@ -120,6 +126,12 @@ int	extract_variable(t_data *data, const char *input, int i)
 		i++;
 	len = i - start;
 	content = ft_strndup(input + start, len);
+	if (!content)
+	{
+		printf("malloc error\n");
+		free_tokens(&data->tokens);
+		return (0);
+	}
 	add_token(&data->tokens, create_token(content, TOKEN_VARIABLE));
 	free(content);
 	return (len);
@@ -137,6 +149,12 @@ int	extract_word(t_data *data, const char *input, int i)
 		i++;
 	len = i - start;
 	content = ft_strndup(input + start, i - start);
+	if (!content)
+	{
+		printf("malloc error\n");
+		free_tokens(&data->tokens);
+		return (0);
+	}
 	add_token(&data->tokens, create_token(content, TOKEN_WORD));
 	free(content);
 	return (len);
@@ -153,6 +171,12 @@ int	extract_space(t_data *data, const char *input, int i)
 		i++;
 	len = i - start;
 	content = ft_strndup(input + start, i - start);
+	if (!content)
+	{
+		printf("malloc error\n");
+		free_tokens(&data->tokens);
+		return (0);
+	}
 	add_token(&data->tokens, create_token(content, TOKEN_WORD));
 	free(content);
 	return (len);

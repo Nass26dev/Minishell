@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 23:11:14 by nass              #+#    #+#             */
-/*   Updated: 2025/06/25 18:21:19 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:06:30 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*recup_beforevar(char *input)
 	while (input[i] && input[i] != '$')
 		i++;
 	beforevar = malloc(i + 1);
+	if (!beforevar)
+		return (NULL);
 	while (j < i)
 	{
 		beforevar[j] = input[j];
@@ -48,6 +50,8 @@ char	*recup_varname(char *input)
 	if (input[i] == '?')
 	{
 		varname = malloc(2);
+		if (!varname)
+			return (NULL);
 		varname[0] = '?';
 		varname[1] = 0;
 		return (varname);
@@ -56,6 +60,8 @@ char	*recup_varname(char *input)
 	while (input[i] && !ft_isspace(input[i]) && input[i] != '$')
 		i++;
 	varname = malloc((i - j) + 1);
+	if (!varname)
+		return (NULL);
 	while (j < i)
 		varname[y++] = input[j++];
 	varname[y] = 0;
@@ -82,6 +88,8 @@ char	*recup_aftervar(char *input)
 	while (input[i])
 		i++;
 	aftervar = malloc((i - j) + 1);
+	if (!aftervar)
+		return (NULL);
 	while (j < i)
 		aftervar[y++] = input[j++];
 	aftervar[y] = 0;

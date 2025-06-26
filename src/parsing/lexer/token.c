@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:55:03 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 17:38:59 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/26 14:56:19 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	add_token(t_token **head, t_token *new)
 	{
 		free_tokens(head);
 		printf("malloc error\n");
-		exit(1);
 	}
 	if (!*head)
 		*head = new;
@@ -71,6 +70,8 @@ void	set_space_to_token(t_token **head)
 {
 	t_token	*last;
 
+	if (!*head)
+		return ;
 	last = *head;
 	while (last->next)
 		last = last->next;
