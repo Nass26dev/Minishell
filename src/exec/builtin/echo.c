@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:16:17 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 13:30:52 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/26 17:40:10 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int	builtin_echo(char **data, int fd)
 	bool	n_flag;
 	int		len;
 
-	if (!data || !data[0])
-		return (1);
 	i = 1;
 	n_flag = true;
 	while (data[i] && parse_trailing_newline(data[i], 'n') == 0)

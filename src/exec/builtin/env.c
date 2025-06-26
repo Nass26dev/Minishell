@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:10:42 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 13:42:46 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/26 17:39:26 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	builtin_env(t_exec *exec)
 {
 	int	i;
-	int len;
+	int	len;
 
 	i = 0;
 	while (exec->current->command[i])
