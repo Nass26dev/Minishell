@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:05:05 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 17:26:06 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	exec_node(t_exec *exec)
 	if (!exec->current)
 		return (0);
 	ret = 0;
-	if (exec->current->tag == TOKEN_PARENTHESIS)
-		ret = exec_parenthesis(exec);
-	else if (exec->current->tag == TOKEN_AND || exec->current->tag == TOKEN_OR)
+	if (exec->current->tag == TOKEN_AND || exec->current->tag == TOKEN_OR)
 		ret = exec_operator(exec);
 	else if (exec->current->tag == TOKEN_PIPE)
 		ret = exec_pipe(exec);
