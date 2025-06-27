@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
 /*   Updated: 2025/06/27 16:24:42 by eelissal         ###   ########lyon.fr   */
@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef EXEC_H
-#define EXEC_H
+# define EXEC_H
 
 # include "minishell.h"
 # include <sys/stat.h>
@@ -49,9 +49,9 @@ int		handle_fork_error(int pipefd[2], int error, int pipe);
 void	handle_dup_error(t_exec *exec, char *cmd, int infd, int outfd);
 
 /*exec_cmd.c*/
-int		exec_cmd(t_exec *exec);
-void	is_extern_cmd(t_exec *exec, char **cmd);
-void	exec_extern_cmd(t_exec *exec, char *cmd);
+int			exec_cmd(t_exec *exec);
+void		is_extern_cmd(t_exec *exec, char **cmd);
+void		exec_extern_cmd(t_exec *exec, char *cmd);
 
 /*exec_cmd_utils.c*/
 int		cmd_is_valid(t_exec *exec);
@@ -60,8 +60,8 @@ void	close_fds(t_exec *exec);
 int		return_process(int status);
 
 /*find_cmd_path.c*/
-char	*find_cmd_path(char *cmd_name, t_vector *env);
-int		is_directory(const char *path);
+char		*find_cmd_path(char *cmd_name, t_vector *env);
+int			is_directory(const char *path);
 
 /*exec_redir.c*/
 int		handle_redir_in(t_exec *exec);
@@ -76,16 +76,16 @@ void	readline_heredoc(t_exec *exec, int fd);
 bool	reopen_fd_read(int *fd, char *tmp_path);
 
 /*exec_pipe.c*/
-int		exec_pipe(t_exec *exec);
+int			exec_pipe(t_exec *exec);
 
 /*exec_pipe_redirs.c*/
-void	handle_redirections(t_exec *exec, int pipefd[2], int fd);
-t_exec	*exec_redir_pipe(t_exec *exec);
+void		handle_redirections(t_exec *exec, int pipefd[2], int fd);
+t_exec		*exec_redir_pipe(t_exec *exec);
 
 /*exec_operator.c*/
-int		exec_operator(t_exec *exec);
+int			exec_operator(t_exec *exec);
 
 /*exec_parenthesis.c*/
-int		exec_parenthesis(t_exec *exec);
+int			exec_parenthesis(t_exec *exec);
 
 #endif

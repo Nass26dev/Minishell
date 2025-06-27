@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/25 18:19:57 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 15:17:43 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,36 @@ bool	is_error(bool *error)
 		return (0);
 }
 
+int	lexer_expander_checker(t_data *data, char *input)
+{
+	lexer(data, input);
+	if (is_error(&data->error))
+		return (1);
+	free(input);
+	expander(data);
+	if (is_error(&data->error))
+		return (1);
+	error_checker(data);
+	if (is_error(&data->error))
+		return (1);
+	return (0);
+}
+
+bool	is_only_spaces(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (ft_isspace(input[i]))
+			i++;
+		else
+			return (false);
+	}
+	return (true);
+}
+
 int	minishell_loop(t_shell *shell)
 {
 	static t_data	data;
@@ -36,20 +66,12 @@ int	minishell_loop(t_shell *shell)
 		return (1);
 	if (ret == 2)
 		data.shell->status = 130;
-	if (!input[0])
+	if (!input[0] || is_only_spaces(input))
 	{
 		free(input);
 		return (0);
 	}
-	lexer(&data, input);
-	if (is_error(&data.error))
-		return (0);
-	free(input);
-	expander(&data);
-	if (is_error(&data.error))
-		return (0);
-	error_checker(&data);
-	if (is_error(&data.error))
+	if (lexer_expander_checker(&data, input))
 		return (0);
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
 	free_tokens(&data.tokens);

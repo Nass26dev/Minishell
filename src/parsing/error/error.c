@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:29 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/24 14:49:44 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:11:35 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,6 @@ bool	tag_is_operator(t_tag tag)
 	if (tag == TOKEN_PIPE)
 		return (true);
 	return (false);
-}
-
-void	print_correct_error(t_tag tag)
-{
-	printf("syntax error near unexpected token « ");
-	if (tag == TOKEN_AND)
-		printf("&& »\n");
-	if (tag == TOKEN_APPEND)
-		printf(">> »\n");
-	if (tag == TOKEN_HEREDOC)
-		printf("<< »\n");
-	if (tag == TOKEN_OR)
-		printf("|| »\n");
-	if (tag == TOKEN_PIPE)
-		printf("| »\n");
-	if (tag == TOKEN_REDIR_IN)
-		printf("< »\n");
-	if (tag == TOKEN_REDIR_OUT)
-		printf("> »\n");
 }
 
 bool	is_operator_error(t_data *data, t_tag tag)
@@ -77,11 +58,4 @@ void	error_checker(t_data *data)
 	}
 	if (is_operator_error(data, current->tag))
 		return ;
-}
-
-void	syntax_error(t_data *data, char *error)
-{
-	free_tokens(&data->tokens);
-	printf("%s\n", error);
-	data->error = true;
 }

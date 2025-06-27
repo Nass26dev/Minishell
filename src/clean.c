@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 17:10:52 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/27 14:01:34 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,22 @@ void	free_args(char **args)
 	free(args);
 }
 
-void free_ast(t_ast *node)
+void	free_ast(t_ast *node)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!node)
 		return ;
-	if (node->tag == TOKEN_CMD || (node->tag >= TOKEN_REDIR_IN && node->tag <= TOKEN_APPEND))
+	if (node->tag == TOKEN_CMD || (node->tag >= TOKEN_REDIR_IN
+			&& node->tag <= TOKEN_APPEND))
 	{
-		while (node->command[i])
-			free(node->command[i++]);
-		free(node->command);
+		if (node->command)
+		{
+			while (node->command[i])
+				free(node->command[i++]);
+			free(node->command);
+		}
 	}
 	free_ast(node->left);
 	free_ast(node->right);

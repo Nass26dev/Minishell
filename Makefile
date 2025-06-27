@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/27 13:40:05 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/27 16:21:53 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,16 +20,25 @@ SRCS =	src/main.c \
 		src/parsing/input.c \
 		src/parsing/utils.c \
 		src/parsing/error/error.c \
+		src/parsing/error/error_type.c \
 		src/parsing/lexer/lexer.c \
 		src/parsing/lexer/extract.c \
 		src/parsing/lexer/extract_utils.c \
+		src/parsing/lexer/extract_utils2.c \
+		src/parsing/lexer/extract_quote.c \
 		src/parsing/lexer/token.c \
+		src/parsing/lexer/token_utils.c \
 		src/parsing/parser/parser.c \
+		src/parsing/parser/parser_utils.c \
 		src/parsing/parser/ast.c \
 		src/parsing/expand/expand.c \
+		src/parsing/expand/expand_token.c \
 		src/parsing/expand/expand_utils.c \
 		src/parsing/expand/concatenation.c \
+		src/parsing/expand/node_is.c \
+		src/parsing/expand/is.c \
 		src/parsing/expand/redir_value.c \
+		src/parsing/expand/cmd.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/builtin/env.c \

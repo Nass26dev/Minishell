@@ -3,109 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/20 23:26:47 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/27 16:28:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	get_operator_priority(t_tag tag)
+void	free_ast_node_on_error(t_data *data, t_ast *node, t_ast *left)
 {
-	if (tag == TOKEN_OR)
-		return (1);
-	if (tag == TOKEN_AND)
-		return (2);
-	if (tag == TOKEN_PIPE)
-		return (3);
-	if (tag == TOKEN_REDIR_IN)
-		return (4);
-	if (tag == TOKEN_REDIR_OUT)
-		return (4);
-	if (tag == TOKEN_APPEND)
-		return (4);
-	if (tag == TOKEN_HEREDOC)
-		return (4);
-	return (100);
+	int	i;
+
+	if (left)
+	{
+		i = 0;
+		while (left->command && left->command[i])
+			free(left->command[i++]);
+		free(left->command);
+		free(left);
+	}
+	if (node)
+	{
+		i = 0;
+		while (node->command && node->command[i])
+			free(node->command[i++]);
+		free(node->command);
+		free(node);
+	}
+	free_ast(data->ast);
+	malloc_error(data);
 }
 
-t_token	*find_main_operator(t_token *start, t_token *end)
+t_ast	*build_operator_node(t_data *data, t_token *start, t_token *end,
+		t_token *op)
 {
-	t_token	*current;
-	t_token	*main_op;
-	int		min_prio;
-	int		priority;
+	t_ast	*node;
 
-	current = start;
-	main_op = NULL;
-	min_prio = 100;
-	while (current)
+	node = create_ast_node(op->tag, op->value, op->cmd);
+	if (!node)
 	{
-		priority = get_operator_priority(current->tag);
-		if (priority == 3 || priority == 4)
-		{
-			if (priority < min_prio || (priority == min_prio && priority < 5))
-			{
-				min_prio = priority;
-				main_op = current;
-			}
-		}
-		else
-		{
-			if (priority < min_prio)
-			{
-				min_prio = priority;
-				main_op = current;
-			}
-		}
-		if (current == end)
-			break ;
-		current = current->next;
+		free_ast(data->ast);
+		malloc_error(data);
 	}
-	return (main_op);
-}
-
-t_token	*find_prev(t_token *node, t_token *lst)
-{
-	t_token	*current;
-
-	if (!node || !lst || node == lst)
-		return (NULL);
-	current = lst;
-	while (current && current->next)
+	node->left = parser(data, start, find_prev(op, start));
+	if (!node->left)
+		free_ast_node_on_error(data, node, NULL);
+	if (op->tag == TOKEN_REDIR_IN || op->tag == TOKEN_REDIR_OUT
+		|| op->tag == TOKEN_APPEND || op->tag == TOKEN_HEREDOC)
+		node->right = NULL;
+	else
 	{
-		if (current->next == node)
-			return (current);
-		current = current->next;
+		node->right = parser(data, op->next, end);
+		if (!node->right)
+			free_ast_node_on_error(data, node, node->left);
 	}
-	return (NULL);
+	return (node);
 }
 
 t_ast	*parser(t_data *data, t_token *start, t_token *end)
 {
 	t_token	*main_op;
-	t_ast	*node;
 
 	main_op = find_main_operator(start, end);
 	if (main_op && start && end && start != end)
-	{
-		node = create_ast_node(main_op->tag, main_op->value, main_op->cmd);
-		if (main_op->tag == TOKEN_REDIR_IN || main_op->tag == TOKEN_REDIR_OUT
-			|| main_op->tag == TOKEN_APPEND || main_op->tag == TOKEN_HEREDOC)
-		{
-			node->left = parser(data, start, find_prev(main_op, start));
-			node->right = NULL;
-		}
-		else
-		{
-			node->left = parser(data, start, find_prev(main_op, start));
-			node->right = parser(data, main_op->next, end);
-		}
-		return (node);
-	}
-	if (start->tag == TOKEN_CMD)
+		return (build_operator_node(data, start, end, main_op));
+	if (start && start->tag == TOKEN_CMD)
 		return (create_ast_node(start->tag, start->value, start->cmd));
 	if (start == end)
 		return (create_ast_node(start->tag, start->value, start->cmd));

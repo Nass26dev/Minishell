@@ -1,5 +1,5 @@
 #ifndef ENV_H
-#define ENV_H
+# define ENV_H
 
 # include "vector.h"
 
@@ -10,8 +10,8 @@ typedef struct s_shell
 }				t_shell;
 
 /*env.c*/
-bool	init_shell(t_shell *shell, char **envp);
-char	*get_env(t_vector *env, char *to_search);
-void	free_shell(t_shell *shell);
+bool			init_shell(t_shell *shell, char **envp);
+char			*get_env(t_vector *env, char *to_search);
+void			free_shell(t_shell *shell);
 
 #endif
