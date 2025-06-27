@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 17:20:55 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:35:06 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	cd_home(char *target, t_vector *env)
 	newpwd = getenv(target);
 	if (!newpwd)
 	{
-		printf("cd: %s not set\n", target);
+		write_fd("cd", target, "not set", 2);
 		return (1);
 	}
 	if (exec_cd(newpwd, env) != 0)
