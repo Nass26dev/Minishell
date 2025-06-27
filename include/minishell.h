@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 14:32:24 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 16:36:15 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,15 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define BLUE "\033[1;34m"
-# define PURPLE "\033[1;35m"
-# define RESET "\033[0m"
+# ifndef BLUE
+#  define BLUE "\033[1;34m"
+# endif
+# ifndef PURPLE
+#  define PURPLE "\033[1;35m"
+# endif
+# ifndef RESET
+#  define RESET "\033[0m"
+# endif
 
 typedef enum e_tag
 {

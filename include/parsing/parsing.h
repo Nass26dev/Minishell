@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 16:30:07 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 16:35:27 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include "minishell.h"
 
-# define PROMPT "\033[0;35mMinishell$\033[0m "
-
+# ifndef PROMPT
+#  define PROMPT "\033[0;35mMinishell$\033[0m "
+# endif
 typedef struct s_token
 {
 	t_tag			tag;
