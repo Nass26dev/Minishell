@@ -6,17 +6,18 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:35 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/26 20:28:20 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:00:39 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static void	dup_pipe_fds(int infd, int outfd, int fd)
+static void	dup_pipe_fds(t_exec *exec, int infd, int outfd, int fd)
 {
 	if (fd == 0)
 	{
-		dup2(outfd, STDOUT_FILENO);
+		if (dup2(outfd, STDOUT_FILENO) == -1)
+			handle_dup_error(exec, NULL, infd, outfd);
 		close (outfd);
 		if (infd > 2)
 		{
@@ -26,7 +27,8 @@ static void	dup_pipe_fds(int infd, int outfd, int fd)
 	}
 	else
 	{
-		dup2(infd, STDIN_FILENO);
+		if (dup2(infd, STDIN_FILENO) == -1)
+			handle_dup_error(exec, NULL, infd, outfd);
 		close (infd);
 		if (outfd > 2)
 		{
@@ -71,7 +73,7 @@ void	handle_redirections(t_exec *exec, int pipefd[2], int fd)
 		redirect_fds_left(exec, pipefd, &infd, &outfd);
 	else
 		redirect_fds_right(exec, pipefd, &infd, &outfd);
-	dup_pipe_fds(infd, outfd, fd);
+	dup_pipe_fds(exec, infd, outfd, fd);
 }
 
 t_exec	*exec_redir_pipe(t_exec *exec)

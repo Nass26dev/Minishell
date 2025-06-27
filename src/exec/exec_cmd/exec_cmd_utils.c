@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 14:32:26 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:04:53 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ void	close_fds(t_exec *exec)
 		unlink_heredoc(exec->heredoc);
 }
 
-void	dup_fds(t_exec *exec)
+void	dup_fds(t_exec *exec, char *cmd)
 {
 	if (exec->infd != STDIN_FILENO)
-		dup2(exec->infd, STDIN_FILENO);
+	{
+		if (dup2(exec->infd, STDIN_FILENO) == -1)
+			handle_dup_error(exec, cmd, -1, -1);
+	}
 	if (exec->outfd != STDOUT_FILENO)
-		dup2(exec->outfd, STDOUT_FILENO);
+	{
+		if (dup2(exec->outfd, STDOUT_FILENO) == -1)
+			handle_dup_error(exec, cmd, -1, -1);
+	}
 	close_fds(exec);
 }
 
@@ -51,28 +57,4 @@ int	return_process(int status)
 	else if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
 	return (status);
-}
-
-int	handle_fork_error(int pipefd[2], int error, int pipe)
-{
-	int		len;
-	char	*msg;
-
-	if (error == EAGAIN)
-		msg = "minishell: fork: Resource temporarily unavailable\n";
-	else if (error == ENOMEM)
-		msg = "minishell: fork: Not enough space\n";
-	else if (error == ENOSPC)
-		msg = "minishell: fork: No space left on device\n";
-	else
-		msg = "minishell: fork: Unknown error\n";
-	len = ft_strlen(msg);
-	if (len > 0)
-		write(2, msg, len);
-	if (pipe == 1)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
-	}
-	return (FAIL_FORK);
 }

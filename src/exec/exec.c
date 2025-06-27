@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 14:13:44 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:05:05 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	init_exec(t_exec *exec, t_ast *ast, t_shell *shell)
 	exec->shell = shell;
 	exec->infd = STDIN_FILENO;
 	exec->outfd = STDOUT_FILENO;
-	exec->heredoc  = NULL;
+	exec->heredoc = NULL;
 }
 
 int	execute(t_ast *ast, t_shell *shell)

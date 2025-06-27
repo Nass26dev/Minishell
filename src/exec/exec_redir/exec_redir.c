@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/26 17:52:57 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:24:25 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,40 @@ int	handle_redir_in(t_exec *exec)
 	{
 		write_fd(exec->current->command[0], NULL, strerror(errno), 2);
 		return (1);
+	}
+	if (exec->infd > 2)
+		close(exec->infd);
+	exec->infd = fd;
+	return (0);
+}
+
+/*Creates random path with prefix \tmp\, then open tmp file.
+Gets delimiter from AST node. Reads heredoc content line
+by line and write content to tmp file.
+Closes file that was in writing to reopen it in reading.
+Deletes file but keeps fd open and set infd and exec cmd*/
+int	handle_heredoc(t_exec *exec)
+{
+	char	*tmp_path;
+	int		fd;
+
+	tmp_path = NULL;
+	if (create_heredoc(&exec, &tmp_path, &fd) == 1)
+		return (1);
+	setup_child_signals();
+	readline_heredoc(exec, fd);
+	setup_interactive_signals();
+	if (reopen_fd_read(&fd, tmp_path) == false)
+		return (1);
+	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
+	free(exec->heredoc->data[exec->heredoc->count - 1]);
+	free(tmp_path);
+	exec->heredoc->count--;
+	if (exec->heredoc->count == 0)
+	{
+		free(exec->heredoc->data);
+		free(exec->heredoc);
+		exec->heredoc = NULL;
 	}
 	if (exec->infd > 2)
 		close(exec->infd);

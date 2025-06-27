@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 14:39:00 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 15:31:28 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	handle_child_process(t_exec *exec)
 
 	setup_child_signals();
 	is_extern_cmd(exec, &cmd);
-	dup_fds(exec);
+	dup_fds(exec, cmd);
 	exec_extern_cmd(exec, cmd);
 }
 
