@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:04:53 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:42:49 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	cmd_is_valid(t_exec *exec)
 	if (!exec->current->command[0] || !exec->current->command[0][0])
 	{
 		close_fds(exec);
-		printf("command not found\n");
+		write_fd(NULL, NULL, "command not found", 2);
 		return (CMD_NOT_FOUND);
 	}
 	return (0);

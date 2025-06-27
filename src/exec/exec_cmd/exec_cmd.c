@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 15:31:28 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:44:43 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	is_extern_cmd(t_exec *exec, char **cmd)
 	if (!(*cmd))
 	{
 		close_fds(exec);
-		printf("%s: command not found\n", exec->current->command[0]);
+		write_fd(exec->current->command[0], NULL, "command not found", 2);
 		free_exec(exec);
 		exit (CMD_NOT_FOUND);
 	}
 	if (is_directory(*cmd) != 0)
 	{
 		close_fds(exec);
-		printf("%s: is a directory\n", exec->current->command[0]);
+		write_fd(exec->current->command[0], NULL, "is a directory", 2);
 		free_exec(exec);
 		free(*cmd);
 		exit (FAIL_EXEC);
