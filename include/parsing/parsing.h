@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/26 15:15:51 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/27 16:30:07 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,47 @@ typedef struct s_expand
 	char			*aftervar;
 }					t_expand;
 
+typedef struct s_token_redir
+{
+	t_token			*current;
+	t_token			*prev;
+	t_token			*redir_start;
+	t_token			*redir_end;
+	t_token			*reversed;
+}					t_token_redir;
+
+typedef struct s_triple_index
+{
+	int				i;
+	int				j;
+	int				y;
+}					t_triple_index;
+
+typedef struct s_double_index
+{
+	int				start;
+	int				end;
+}					t_double_index;
+
 // line.c
 int					get_input_and_add_to_historical(char **input);
+int					extract_quoted_string(t_data *data, char *input, int i);
+int					extract_variable(t_data *data, const char *input, int i);
+int					extract_word(t_data *data, const char *input, int i);
+int					extract_space(t_data *data, const char *input, int i);
 // error_checker.c
 void				error_checker(t_data *data);
 void				syntax_error(t_data *data, char *error);
 void				print_correct_error(t_tag tag);
+void				malloc_error(t_data *data);
 // lexer.c
 void				lexer(t_data *data, char *input);
+// extract utils_2.c
+int					extract_operator(t_data *data, const char *input, int i);
+// parser_utils.c
+t_token				*find_main_operator(t_token *start, t_token *end);
+int					get_operator_priority(t_tag tag);
+t_token				*find_prev(t_token *node, t_token *lst);
 // parser.c
 t_ast				*parser(t_data *data, t_token *start, t_token *end);
 // ast.c
@@ -67,7 +100,7 @@ t_ast				*create_ast_node(t_tag tag, char *value, char **cmd);
 void				print_ast(t_ast *node, int depth);
 void				add_args_to_command(t_ast **node, char *args);
 void				free_ast(t_ast *node);
-// case_utils.c
+// extract_utils.c
 int					redir_in_heredoc(t_data *data, const char *input, int i);
 int					redir_out_append(t_data *data, const char *input, int i);
 int					ampersand(t_data *data, char *input, int i);
@@ -83,15 +116,27 @@ void				add_token(t_token **head, t_token *new);
 void				free_tokens(t_token **head);
 void				set_space_to_token(t_token **head);
 t_token				*find_last_node(t_token *head);
+// token_utils.c
+void				switch_nodes(t_token *a, t_token *b);
+void				delete_node(t_token **head, t_token *node_to_delete);
+// is.c
+bool				is_redirection(t_tag tag);
+bool				is_var(char *value);
+
 // utils.c
 char				*ft_strndup(const char *src, size_t n);
 bool				ft_isspace(char c);
+void				set_to_null(t_expand *expand);
 bool				is_operator(char c);
+char				*ft_getenv(char *search, char **env);
 // expand.c
 void				expander(t_data *data);
 bool				node_is_operator(t_token *node);
 bool				node_is_word(t_token *node);
 bool				node_is_redir(t_token *node);
+// expand_token.c
+int					expand_token_value(char *input, t_token **token,
+						t_data *data);
 // expand_utils.c
 char				*recup_beforevar(char *input);
 char				*recup_varname(char *input);
@@ -101,5 +146,9 @@ char				*recup_varvalue(char *varname, t_data *data);
 void				concatenation(t_data *data);
 // redir_value
 void				change_redir_value(t_data *data);
+// cmd.c
+void				create_cmd(t_data *data);
+// extract.c
+t_token				*split_tokens(char *content);
 
 #endif

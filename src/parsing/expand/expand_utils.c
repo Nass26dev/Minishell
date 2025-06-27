@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 23:11:14 by nass              #+#    #+#             */
-/*   Updated: 2025/06/26 15:06:30 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:25:24 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,23 @@ char	*recup_beforevar(char *input)
 	return (beforevar);
 }
 
+void	start_index(t_triple_index *ind, char *input)
+{
+	ind->i = 0;
+	ind->y = 0;
+	ind->j = 0;
+	while (input[ind->i] && input[ind->i] != '$')
+		ind->i++;
+	ind->i++;
+}
+
 char	*recup_varname(char *input)
 {
-	int		i;
-	int		j;
-	int		y;
-	char	*varname;
+	t_triple_index	ind;
+	char			*varname;
 
-	i = 0;
-	y = 0;
-	j = 0;
-	while (input[i] && input[i] != '$')
-		i++;
-	i++;
-	if (input[i] == '?')
+	start_index(&ind, input);
+	if (input[ind.i] == '?')
 	{
 		varname = malloc(2);
 		if (!varname)
@@ -56,15 +59,15 @@ char	*recup_varname(char *input)
 		varname[1] = 0;
 		return (varname);
 	}
-	j = i;
-	while (input[i] && !ft_isspace(input[i]) && input[i] != '$')
-		i++;
-	varname = malloc((i - j) + 1);
+	ind.j = ind.i;
+	while (input[ind.i] && !ft_isspace(input[ind.i]) && input[ind.i] != '$')
+		ind.i++;
+	varname = malloc((ind.i - ind.j) + 1);
 	if (!varname)
 		return (NULL);
-	while (j < i)
-		varname[y++] = input[j++];
-	varname[y] = 0;
+	while (ind.j < ind.i)
+		varname[ind.y++] = input[ind.j++];
+	varname[ind.y] = 0;
 	return (varname);
 }
 
@@ -81,8 +84,8 @@ char	*recup_aftervar(char *input)
 	while (input[i] && input[i] != '$')
 		i++;
 	i++;
-	while (input[i] && !ft_isspace(input[i]) && input[i] != '$' && input[i
-		- 1] != '?')
+	while (input[i] && !ft_isspace(input[i]) && input[i] != '$'
+		&& input[i - 1] != '?')
 		i++;
 	j = i;
 	while (input[i])
@@ -94,21 +97,6 @@ char	*recup_aftervar(char *input)
 		aftervar[y++] = input[j++];
 	aftervar[y] = 0;
 	return (aftervar);
-}
-
-char	*ft_getenv(char *search, char **env)
-{
-	int	i;
-	int	len;
-
-	i = -1;
-	len = ft_strlen(search);
-	while (env[++i])
-	{
-		if (ft_strncmp(env[i], search, len) == 0 && env[i][len] == '=')
-			return (env[i] + (len + 1));
-	}
-	return (NULL);
 }
 
 char	*recup_varvalue(char *varname, t_data *data)

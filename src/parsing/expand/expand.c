@@ -3,153 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/26 16:19:58 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:17:58 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-void	set_to_null(t_expand *expand)
-{
-	expand->aftervar = NULL;
-	expand->beforevar = NULL;
-	expand->varname = NULL;
-	expand->varvalue = NULL;
-}
-
-char	*set_empty(void)
-{
-	char	*result;
-
-	result = malloc(1);
-	if (!result)
-		return (NULL);
-	result[0] = 0;
-	return (result);
-}
-
-char	*free_strjoin(char *s1, char *s2)
-{
-	char	*str;
-	int		i;
-	int		j;
-
-	if (!s1 || !s2)
-		return (NULL);
-	i = -1;
-	str = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (!str)
-	{
-		free(s1);
-		return (NULL);
-	}
-	j = 0;
-	while (s1[j])
-		str[++i] = s1[j++];
-	j = 0;
-	while (s2[j])
-		str[++i] = s2[j++];
-	str[++i] = 0;
-	free(s1);
-	free(s2);
-	return (str);
-}
-
-int	expand_token_value(char *input, t_token **token, t_data *data)
-{
-	char		*result;
-	t_token		*tmp;
-	t_expand	expand;
-
-	set_to_null(&expand);
-	expand.beforevar = recup_beforevar(input);
-	if (!expand.beforevar)
-		return (1);
-	expand.varname = recup_varname(input);
-	if (!expand.varname)
-	{
-		free(expand.beforevar);
-		return (1);
-	}
-	expand.aftervar = recup_aftervar(input);
-	if (!expand.aftervar)
-	{
-		free(expand.beforevar);
-		free(expand.varname);	
-		return (1);
-	}
-	if (expand.varname[0] == '?')
-		expand.varvalue = ft_itoa(data->shell->status);
-	else
-		expand.varvalue = recup_varvalue(expand.varname, data);
-	free(expand.varname);
-	if (!expand.varvalue)
-	{
-		free(expand.beforevar);
-		free(expand.aftervar);
-		return (1);
-	}
-	result = set_empty();
-	if (!result)
-	{
-		free(expand.beforevar);
-		free(expand.varvalue);
-		free(expand.aftervar);
-		return (1);
-	}
-	result = free_strjoin(result, expand.beforevar);
-	if (!result)
-	{
-		free(expand.beforevar);
-		free(expand.varvalue);
-		free(expand.aftervar);
-		return (1);
-	}
-	result = free_strjoin(result, expand.varvalue);
-	if (!result)
-	{
-		free(expand.varvalue);
-		free(expand.aftervar);
-		return (1);
-	}
-	result = free_strjoin(result, expand.aftervar);
-	if (!result)
-	{
-		free(expand.aftervar);
-		return (1);
-	}
-	tmp = *token;
-	tmp->value = ft_strdup(result);
-	free(result);
-	if (!tmp->value)
-		return (1);
-	free(input);
-	tmp->tag = TOKEN_WORD;
-	return (0);
-}
-
-bool	is_var(char *value)
-{
-	int	i;
-
-	i = 0;
-	while (value[i])
-	{
-		if (value[i] == '$' && value[i + 1] && !ft_isspace(value[i + 1]))
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-bool	is_redirection(t_tag tag)
-{
-	return (tag == TOKEN_REDIR_IN || tag == TOKEN_REDIR_OUT
-		|| tag == TOKEN_APPEND || tag == TOKEN_HEREDOC);
-}
 
 t_token	*reverse_token_list(t_token *start, t_token *end)
 {
@@ -173,81 +34,37 @@ t_token	*reverse_token_list(t_token *start, t_token *end)
 	return (prev);
 }
 
-void	sort_redirections(t_token **head)
+void	main_sort(t_token_redir *tr, t_token **head)
 {
-	t_token	*current;
-	t_token	*prev;
-	t_token	*redir_start;
-	t_token	*redir_end;
-	t_token	*reversed;
-
-	current = *head;
-	prev = NULL;
-	while (current)
+	if (is_redirection(tr->current->tag))
 	{
-		if (is_redirection(current->tag))
-		{
-			redir_start = current;
-			redir_end = current;
-			while (redir_end->next && is_redirection(redir_end->next->tag))
-				redir_end = redir_end->next;
-			reversed = reverse_token_list(redir_start, redir_end);
-			if (prev)
-				prev->next = reversed;
-			else
-				*head = reversed;
-			prev = redir_start;
-			current = redir_start->next;
-		}
+		tr->redir_start = tr->current;
+		tr->redir_end = tr->current;
+		while (tr->redir_end->next && is_redirection(tr->redir_end->next->tag))
+			tr->redir_end = tr->redir_end->next;
+		tr->reversed = reverse_token_list(tr->redir_start, tr->redir_end);
+		if (tr->prev)
+			tr->prev->next = tr->reversed;
 		else
-		{
-			prev = current;
-			current = current->next;
-		}
+			*head = tr->reversed;
+		tr->prev = tr->redir_start;
+		tr->current = tr->redir_start->next;
+	}
+	else
+	{
+		tr->prev = tr->current;
+		tr->current = tr->current->next;
 	}
 }
 
-void	switch_nodes(t_token *a, t_token *b)
+void	sort_redirections(t_token **head)
 {
-	t_tag	tmp_tag;
-	char	*tmp_value;
-	bool	tmp_space;
+	t_token_redir	tr;
 
-	if (!a || !b)
-		return ;
-	tmp_tag = a->tag;
-	tmp_value = a->value;
-	tmp_space = a->space;
-	a->tag = b->tag;
-	a->value = b->value;
-	a->space = b->space;
-	b->tag = tmp_tag;
-	b->value = tmp_value;
-	b->space = tmp_space;
-}
-
-bool	node_is_redir(t_token *node)
-{
-	if (!node)
-		return (false);
-	return (node->tag == TOKEN_REDIR_IN || node->tag == TOKEN_REDIR_OUT
-		|| node->tag == TOKEN_APPEND || node->tag == TOKEN_HEREDOC);
-}
-
-bool	node_is_word(t_token *node)
-{
-	if (!node)
-		return (false);
-	return (node->tag == TOKEN_SINGLE_QUOTE || node->tag == TOKEN_DOUBLE_QUOTE
-		|| node->tag == TOKEN_WORD);
-}
-
-bool	node_is_operator(t_token *node)
-{
-	if (!node)
-		return (false);
-	return (node->tag == TOKEN_PIPE || node->tag == TOKEN_OR
-		|| node->tag == TOKEN_AND);
+	tr.current = *head;
+	tr.prev = NULL;
+	while (tr.current)
+		main_sort(&tr, head);
 }
 
 void	move_start_redir(t_token **head)
@@ -267,114 +84,6 @@ void	move_start_redir(t_token **head)
 	}
 }
 
-void	delete_node(t_token **head, t_token *node_to_delete)
-{
-	t_token	*prev;
-
-	if (!head || !*head || !node_to_delete)
-		return ;
-	if (*head == node_to_delete)
-	{
-		*head = node_to_delete->next;
-		free(node_to_delete->value);
-		free(node_to_delete);
-		return ;
-	}
-	prev = *head;
-	while (prev && prev->next != node_to_delete)
-		prev = prev->next;
-	if (prev && prev->next == node_to_delete)
-	{
-		prev->next = node_to_delete->next;
-		free(node_to_delete->value);
-		free(node_to_delete);
-	}
-}
-
-int	get_nb_args(t_token *node)
-{
-	t_token	*current;
-	int		i;
-
-	i = 0;
-	current = node;
-	while (current && !node_is_operator(current))
-	{
-		if (node_is_word(current))
-			i++;
-		current = current->next;
-	}
-	return (i);
-}
-
-int	get_cmd(t_token **node)
-{
-	t_token	*current;
-	t_token	*prev;
-	char	**cmd;
-	int		i;
-	int j;
-
-	j = 0;
-	i = 0;
-	cmd = malloc(sizeof(char *) * (get_nb_args(*node) + 1));
-	if (!cmd)
-		return (1);
-	current = *node;
-	cmd[i++] = ft_strdup(current->value);
-	if (!cmd[i - 1])
-	{
-		free(cmd);
-		return (1);
-	}
-	prev = current;
-	current = current->next;
-	while (current && !node_is_operator(current))
-	{
-		if (node_is_word(current))
-		{
-			cmd[i++] = ft_strdup(current->value);
-			if (!cmd[i - 1])
-			{
-				while (j < (i - 1))
-					free(cmd[j++]);
-				free(cmd);
-				return (1);
-			}
-			delete_node(node, current);
-			current = prev;
-		}
-		current = current->next;
-	}
-	cmd[i] = NULL;
-	current = *node;
-	current->cmd = cmd;
-	current->tag = TOKEN_CMD;
-	return (0);
-}
-
-void	create_cmd(t_data *data)
-{
-	t_token	*current;
-
-	current = data->tokens;
-	while (current)
-	{
-		if (node_is_word(current))
-		{
-			if (get_cmd(&current))
-			{
-				printf("malloc error\n");
-				free_tokens(&data->tokens);
-				free_shell(data->shell);
-				rl_clear_history();
-				exit(EXIT_FAILURE);
-			}
-		}
-		current = current->next;
-	}
-}
-
 void	expander(t_data *data)
 {
 	t_token	*tmp;
@@ -388,13 +97,7 @@ void	expander(t_data *data)
 			while (is_var(tmp->value))
 			{
 				if (expand_token_value(tmp->value, &tmp, data))
-				{
-					printf("malloc error\n");
-					free_tokens(&data->tokens);
-					free_shell(data->shell);
-					rl_clear_history();
-					exit(EXIT_FAILURE);
-				}
+					malloc_error(data);
 			}
 			tmp->tag = TOKEN_WORD;
 		}

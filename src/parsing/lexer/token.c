@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:55:03 by nass              #+#    #+#             */
-/*   Updated: 2025/06/26 16:20:44 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/27 13:57:51 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_tokens(t_token **head)
 {
 	t_token	*next;
 	t_token	*tmp;
-	int i;
+	int		i;
 
 	i = 0;
 	tmp = *head;
@@ -46,7 +46,14 @@ t_token	*create_token(char *value, t_tag tag)
 	if (!new)
 		return (NULL);
 	if (value)
+	{
 		new->value = ft_strdup(value);
+		if (!new->value)
+		{
+			free(new);
+			return (NULL);
+		}
+	}
 	else
 		new->value = NULL;
 	new->tag = tag;
@@ -63,7 +70,7 @@ void	add_token(t_token **head, t_token *new)
 	if (!new)
 	{
 		free_tokens(head);
-		printf("malloc error\n");
+		ft_putstr_fd("malloc error\n", STDERR_FILENO);
 	}
 	if (!*head)
 		*head = new;

@@ -1,16 +1,16 @@
 #ifndef VECTOR_H
-#define VECTOR_H
+# define VECTOR_H
 
-# include <stdlib.h>
-# include <stdbool.h>
 # include "libft.h"
+# include <stdbool.h>
+# include <stdlib.h>
 
 typedef struct s_vector
 {
 	char	**data;
 	int		count;
 	int		capacity;
-}       	t_vector;
+}			t_vector;
 
 /*vector.c*/
 t_vector	*vector_create(int initial_capacity);

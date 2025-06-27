@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:40:19 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 17:39:41 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 15:40:46 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ampersand(t_data *data, char *input, int i)
 		ret = 2;
 	}
 	else
-		syntax_error(data, "syntax error near unexpected token « & »");
+		syntax_error(data, "syntax error near unexpected token « & »\n");
 	return (ret);
 }
 
