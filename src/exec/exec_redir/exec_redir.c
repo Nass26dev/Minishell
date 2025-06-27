@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:24:25 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 17:03:53 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,22 @@ int	handle_append(t_exec *exec)
 
 int	exec_redir(t_exec *exec)
 {
-	int	ret;
-
-	(void)ret;
 	if (exec->current->tag == TOKEN_REDIR_IN)
-		ret = handle_redir_in(exec);
+		exec->shell->status = handle_redir_in(exec);
 	else if (exec->current->tag == TOKEN_HEREDOC)
-		ret = handle_heredoc(exec);
+		exec->shell->status = handle_heredoc(exec);
 	else if (exec->current->tag == TOKEN_REDIR_OUT)
-		ret = handle_redir_out(exec);
+		exec->shell->status = handle_redir_out(exec);
 	else if (exec->current->tag == TOKEN_APPEND)
-		ret = handle_append(exec);
+		exec->shell->status = handle_append(exec);
+	if (exec->shell->status != 0)
+	{
+		if (exec->infd > 2)
+			close(exec->infd);
+		if (exec->outfd > 2)
+			close(exec->outfd);
+		return (1);
+	}
 	exec->current = exec->current->left;
 	return (exec_node(exec));
 }
