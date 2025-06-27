@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:56:33 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/26 17:57:28 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 14:26:13 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static bool	reopen_fd_read(int *fd, char *tmp_path)
 	*fd = open(tmp_path, O_RDONLY);
 	if (*fd == -1)
 	{
-		setup_interactive_signals();
 		write_fd(tmp_path, NULL, "failed to reopen heredoc file", 2);
 		free(tmp_path);
 		return (false);
@@ -107,13 +106,29 @@ int	handle_heredoc(t_exec *exec)
 		write_fd(tmp_path, NULL, strerror(errno), 2);
 		return (1);
 	}
+	if (!exec->heredoc)
+		exec->heredoc = vector_create(1);
+	if (!exec->heredoc || vector_add(exec->heredoc, tmp_path) == false)
+	{
+		close(fd);
+		free(tmp_path);
+		return (1);
+	}
 	setup_child_signals();
 	readline_heredoc(exec);
+	setup_interactive_signals();
 	if (reopen_fd_read(&fd, tmp_path) == false)
 		return (1);
-	setup_interactive_signals();
-	unlink(tmp_path);
+	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
+	free(exec->heredoc->data[exec->heredoc->count - 1]);
 	free(tmp_path);
+	exec->heredoc->count--;
+	if (exec->heredoc->count == 0)
+	{
+		free(exec->heredoc->data);
+		free(exec->heredoc);
+		exec->heredoc = NULL;
+	}
 	if (exec->infd > 2)
 		close(exec->infd);
 	exec->infd = fd;

@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/26 16:43:04 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 14:32:41 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,20 @@ typedef struct s_exec
 	t_shell			*shell;
 	int				infd;
 	int				outfd;
+	t_vector		*heredoc;
 }	t_exec;
 
 /*exec.c*/
 void	free_all(t_exec *exec);
 void	free_exec(t_exec *exec);
+void	unlink_heredoc(t_vector *vector);
 int		exec_node(t_exec *exec);
 int		execute(t_ast *ast, t_shell *shell);
+
+/*clean_exec.c*/
+void	free_all(t_exec *exec);
+void	free_exec(t_exec *exec);
+void	unlink_heredoc(t_vector *vector);
 
 /*exec_cmd.c*/
 int		exec_cmd(t_exec *exec);
