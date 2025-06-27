@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:37:22 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:04:16 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 17:53:43 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	handle_fork_error(int pipefd[2], int error, int pipe)
 		close(pipefd[0]);
 		close(pipefd[1]);
 	}
-	return (FAIL_FORK);
+	return (FAIL_FORK + errno);
 }
 
 void	unlink_heredoc(t_vector *vector)

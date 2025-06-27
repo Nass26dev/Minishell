@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:34:07 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 14:52:39 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ int	expand_token_value(char *input, t_token **token, t_data *data)
 	if (!tmp->value)
 		return (1);
 	free(input);
-	tmp->tag = TOKEN_WORD;
+	tmp->tag = WORD;
 	return (0);
 }

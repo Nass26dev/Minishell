@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:00:35 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 16:05:52 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	handle_quoted_content(t_data *data, char *input, char quote,
 	if (quote == '"')
 		add_token(&data->tokens, split_tokens(content));
 	else
-		add_token(&data->tokens, create_token(content, TOKEN_SINGLE_QUOTE));
+		add_token(&data->tokens, create_token(content, SINGLE_QUOTE));
 	free(content);
 	return (len + 2);
 }

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:48:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/25 18:23:20 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:57:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_sigint(int signum)
 {
-	received_signal = signum;
+	g_received_signal = signum;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

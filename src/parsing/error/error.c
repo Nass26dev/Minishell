@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:29 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 14:11:35 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 bool	tag_is_operator(t_tag tag)
 {
-	if (tag == TOKEN_AND)
+	if (tag == AND)
 		return (true);
-	if (tag == TOKEN_OR)
+	if (tag == OR)
 		return (true);
-	if (tag == TOKEN_PIPE)
+	if (tag == PIPE)
 		return (true);
 	return (false);
 }

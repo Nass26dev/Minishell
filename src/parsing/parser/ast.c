@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 16:19:18 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 	if (!node)
 		return (NULL);
 	node->tag = tag;
-	if (tag == TOKEN_CMD)
+	if (tag == CMD)
 	{
 		node->command = dup_cmd(cmd);
 		if (!node->command)
@@ -117,13 +117,13 @@ t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 // 		printf("(null)\n");
 // 		return ;
 // 	}
-// 	if (node->tag == TOKEN_AND)
+// 	if (node->tag == AND)
 // 		printf("AND\n");
-// 	else if (node->tag == TOKEN_OR)
+// 	else if (node->tag == OR)
 // 		printf("OR\n");
-// 	else if (node->tag == TOKEN_PIPE)
+// 	else if (node->tag == PIPE)
 // 		printf("PIPE\n");
-// 	else if (node->tag == TOKEN_CMD)
+// 	else if (node->tag == CMD)
 // 	{
 // 		printf("CMD:");
 // 		if (node->command[0])
@@ -135,15 +135,15 @@ t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 // 		else
 // 			printf(" (null)\n");
 // 	}
-// 	else if (node->tag == TOKEN_REDIR_IN)
+// 	else if (node->tag == REDIR_IN)
 // 		printf("REDIR IN: %s\n",
 // 			node->command[0] ? node->command[0] : "(null)");
-// 	else if (node->tag == TOKEN_REDIR_OUT)
+// 	else if (node->tag == REDIR_OUT)
 // 		printf("REDIR OUT: %s\n",
 // 			node->command[0] ? node->command[0] : "(null)");
-// 	else if (node->tag == TOKEN_APPEND)
+// 	else if (node->tag == APPEND)
 // 		printf("APPEND: %s\n", node->command[0] ? node->command[0] : "(null)");
-// 	else if (node->tag == TOKEN_HEREDOC)
+// 	else if (node->tag == HEREDOC)
 // 		printf("HEREDOC: %s\n", node->command[0] ? node->command[0] : "(null)");
 // 	else
 // 		printf("UNKNOWN (%d)\n", node->tag);

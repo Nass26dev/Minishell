@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_redirs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:35 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:00:39 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	handle_redirections(t_exec *exec, int pipefd[2], int fd)
 
 t_exec	*exec_redir_pipe(t_exec *exec)
 {
-	if (exec->current->tag == TOKEN_REDIR_OUT)
+	if (exec->current->tag == REDIR_OUT)
 		exec->shell->status = handle_redir_out(exec);
-	else if (exec->current->tag == TOKEN_APPEND)
+	else if (exec->current->tag == APPEND)
 		exec->shell->status = handle_append(exec);
-	else if (exec->current->tag == TOKEN_REDIR_IN)
+	else if (exec->current->tag == REDIR_IN)
 		exec->shell->status = handle_redir_in(exec);
-	else if (exec->current->tag == TOKEN_HEREDOC)
+	else if (exec->current->tag == HEREDOC)
 		exec->shell->status = handle_heredoc(exec);
 	exec->current = exec->current->left;
 	return (exec);

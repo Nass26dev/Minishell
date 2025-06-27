@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 14:01:34 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	free_ast(t_ast *node)
 	i = 0;
 	if (!node)
 		return ;
-	if (node->tag == TOKEN_CMD || (node->tag >= TOKEN_REDIR_IN
-			&& node->tag <= TOKEN_APPEND))
+	if (node->tag == CMD || (node->tag >= REDIR_IN
+			&& node->tag <= APPEND))
 	{
 		if (node->command)
 		{

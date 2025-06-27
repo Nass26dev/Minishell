@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:04:43 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 16:28:02 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ t_ast	*build_operator_node(t_data *data, t_token *start, t_token *end,
 	node->left = parser(data, start, find_prev(op, start));
 	if (!node->left)
 		free_ast_node_on_error(data, node, NULL);
-	if (op->tag == TOKEN_REDIR_IN || op->tag == TOKEN_REDIR_OUT
-		|| op->tag == TOKEN_APPEND || op->tag == TOKEN_HEREDOC)
+	if (op->tag == REDIR_IN || op->tag == REDIR_OUT
+		|| op->tag == APPEND || op->tag == HEREDOC)
 		node->right = NULL;
 	else
 	{
@@ -69,7 +69,7 @@ t_ast	*parser(t_data *data, t_token *start, t_token *end)
 	main_op = find_main_operator(start, end);
 	if (main_op && start && end && start != end)
 		return (build_operator_node(data, start, end, main_op));
-	if (start && start->tag == TOKEN_CMD)
+	if (start && start->tag == CMD)
 		return (create_ast_node(start->tag, start->value, start->cmd));
 	if (start == end)
 		return (create_ast_node(start->tag, start->value, start->cmd));

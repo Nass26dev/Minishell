@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:25:46 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 14:25:54 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ bool	is_var(char *value)
 
 bool	is_redirection(t_tag tag)
 {
-	return (tag == TOKEN_REDIR_IN || tag == TOKEN_REDIR_OUT
-		|| tag == TOKEN_APPEND || tag == TOKEN_HEREDOC);
+	return (tag == REDIR_IN || tag == REDIR_OUT
+		|| tag == APPEND || tag == HEREDOC);
 }

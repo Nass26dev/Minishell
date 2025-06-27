@@ -6,14 +6,13 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:33:11 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 14:33:13 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:57:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-int	received_signal = 0;
+int		g_received_signal = 0;
 
 void	display_welcome_message(void)
 {
@@ -26,14 +25,13 @@ void	display_welcome_message(void)
 	printf("%s", RESET);
 }
 
-int main(int argc, char **argv, char **envp)
+bool	check_error(t_shell *shell, int argc, char **envp)
 {
-	t_shell	shell;
-
-	(void) argv;
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) || !isatty(STDERR_FILENO))
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)
+		|| !isatty(STDERR_FILENO))
 	{
-		ft_putstr_fd("minishell: This program must be run in a standard terminal\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: This program ", STDERR_FILENO);
+		ft_putstr_fd("must be run in a standard terminal\n", STDERR_FILENO);
 		return (1);
 	}
 	if (argc != 1)
@@ -41,11 +39,21 @@ int main(int argc, char **argv, char **envp)
 		ft_putstr_fd("minishell: no arguments allowed\n", STDERR_FILENO);
 		return (1);
 	}
-	if (init_shell(&shell, envp) == false)
+	if (init_shell(shell, envp) == false)
 	{
 		ft_putstr_fd("minishell: failed env initialization\n", STDERR_FILENO);
 		return (1);
 	}
+	return (0);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_shell	shell;
+
+	(void)argv;
+	if (check_error(&shell, argc, envp))
+		return (1);
 	setup_interactive_signals();
 	display_welcome_message();
 	while (1)

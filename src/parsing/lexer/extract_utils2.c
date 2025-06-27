@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 15:41:39 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 16:00:48 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	extract_variable(t_data *data, const char *input, int i)
 		free_tokens(&data->tokens);
 		return (0);
 	}
-	add_token(&data->tokens, create_token(content, TOKEN_VARIABLE));
+	add_token(&data->tokens, create_token(content, VARIABLE));
 	free(content);
 	return (len);
 }
@@ -69,7 +69,7 @@ int	extract_word(t_data *data, const char *input, int i)
 		free_tokens(&data->tokens);
 		return (0);
 	}
-	add_token(&data->tokens, create_token(content, TOKEN_WORD));
+	add_token(&data->tokens, create_token(content, WORD));
 	free(content);
 	return (len);
 }
@@ -91,7 +91,7 @@ int	extract_space(t_data *data, const char *input, int i)
 		free_tokens(&data->tokens);
 		return (0);
 	}
-	add_token(&data->tokens, create_token(content, TOKEN_WORD));
+	add_token(&data->tokens, create_token(content, WORD));
 	free(content);
 	return (len);
 }

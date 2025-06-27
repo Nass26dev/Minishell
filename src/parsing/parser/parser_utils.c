@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:19:56 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 16:24:53 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 int	get_operator_priority(t_tag tag)
 {
-	if (tag == TOKEN_OR)
+	if (tag == OR)
 		return (1);
-	if (tag == TOKEN_AND)
+	if (tag == AND)
 		return (2);
-	if (tag == TOKEN_PIPE)
+	if (tag == PIPE)
 		return (3);
-	if (tag == TOKEN_REDIR_IN)
+	if (tag == REDIR_IN)
 		return (4);
-	if (tag == TOKEN_REDIR_OUT)
+	if (tag == REDIR_OUT)
 		return (4);
-	if (tag == TOKEN_APPEND)
+	if (tag == APPEND)
 		return (4);
-	if (tag == TOKEN_HEREDOC)
+	if (tag == HEREDOC)
 		return (4);
 	return (100);
 }

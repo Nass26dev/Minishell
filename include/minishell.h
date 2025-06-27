@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 16:36:15 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:57:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,22 @@
 
 typedef enum e_tag
 {
-	TOKEN_SINGLE_QUOTE,
-	TOKEN_DOUBLE_QUOTE,
-	TOKEN_WORD,
-	TOKEN_VARIABLE,
-	TOKEN_CMD,
-	TOKEN_PIPE,
-	TOKEN_AND,
-	TOKEN_OR,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_HEREDOC,
-	TOKEN_APPEND,
-	TOKEN_PARENTHESIS,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	WORD,
+	VARIABLE,
+	CMD,
+	PIPE,
+	AND,
+	OR,
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC,
+	APPEND,
+	PARENTHESIS,
 }					t_tag;
 
-extern int			received_signal;
+extern int			g_received_signal;
 
 typedef struct s_ast
 {

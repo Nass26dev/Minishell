@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 17:26:06 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	exec_node(t_exec *exec)
 	if (!exec->current)
 		return (0);
 	ret = 0;
-	if (exec->current->tag == TOKEN_AND || exec->current->tag == TOKEN_OR)
+	if (exec->current->tag == AND || exec->current->tag == OR)
 		ret = exec_operator(exec);
-	else if (exec->current->tag == TOKEN_PIPE)
+	else if (exec->current->tag == PIPE)
 		ret = exec_pipe(exec);
-	else if (exec->current->tag >= TOKEN_REDIR_IN
-		&& exec->current->tag <= TOKEN_APPEND)
+	else if (exec->current->tag >= REDIR_IN
+		&& exec->current->tag <= APPEND)
 		ret = exec_redir(exec);
-	else if (exec->current->tag == TOKEN_CMD)
+	else if (exec->current->tag == CMD)
 		ret = exec_cmd(exec);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:56:26 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 16:29:46 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_final_segment(char *content, t_token **head, int start, int end)
 	last = ft_substr(content, start, end - start);
 	if (last)
 	{
-		add_token(head, create_token(last, TOKEN_WORD));
+		add_token(head, create_token(last, WORD));
 		free(last);
 	}
 }
@@ -34,14 +34,14 @@ void	handle_dollar_case(char *content, t_token **head, int *start, int *i)
 		before = ft_substr(content, *start, *i - *start);
 		if (before)
 		{
-			add_token(head, create_token(before, TOKEN_WORD));
+			add_token(head, create_token(before, WORD));
 			free(before);
 		}
 	}
 	dollar = ft_substr(content, *i, 1);
 	if (dollar)
 	{
-		add_token(head, create_token(dollar, TOKEN_WORD));
+		add_token(head, create_token(dollar, WORD));
 		free(dollar);
 	}
 	(*i)++;

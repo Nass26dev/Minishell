@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:12:06 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 13:48:53 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ bool	should_concatenate(t_token *current, t_token *next)
 {
 	if (!current || !next)
 		return (false);
-	if (next->tag != TOKEN_WORD && next->tag != TOKEN_DOUBLE_QUOTE
-		&& next->tag != TOKEN_SINGLE_QUOTE && next->tag != TOKEN_VARIABLE)
+	if (next->tag != WORD && next->tag != DOUBLE_QUOTE
+		&& next->tag != SINGLE_QUOTE && next->tag != VARIABLE)
 		return (false);
 	return (true);
 }
@@ -42,7 +42,7 @@ int	concatenate_nodes(t_token *current, t_token *next)
 	ft_strlcat(new_value, next->value, total_len);
 	free(current->value);
 	current->value = new_value;
-	current->tag = TOKEN_WORD;
+	current->tag = WORD;
 	current->space = next->space;
 	tmp = next->next;
 	free(next->value);
@@ -75,17 +75,17 @@ void	concatenation(t_data *data)
 	current = data->tokens;
 	while (current)
 	{
-		if ((current->tag == TOKEN_SINGLE_QUOTE
-				|| current->tag == TOKEN_DOUBLE_QUOTE
-				|| current->tag == TOKEN_VARIABLE || current->tag == TOKEN_WORD)
+		if ((current->tag == SINGLE_QUOTE
+				|| current->tag == DOUBLE_QUOTE
+				|| current->tag == VARIABLE || current->tag == WORD)
 			&& !current->space)
 		{
 			if (concatenate_nodes(current, current->next))
 				malloc_error(data);
 		}
-		if ((current->tag == TOKEN_SINGLE_QUOTE
-				|| current->tag == TOKEN_DOUBLE_QUOTE
-				|| current->tag == TOKEN_VARIABLE || current->tag == TOKEN_WORD)
+		if ((current->tag == SINGLE_QUOTE
+				|| current->tag == DOUBLE_QUOTE
+				|| current->tag == VARIABLE || current->tag == WORD)
 			&& current->space == 0 && should_concatenate(current,
 				current->next))
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:20:46 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 15:41:24 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	change_redir_value(t_data *data)
 	current = data->tokens;
 	while (current)
 	{
-		if (current->tag == TOKEN_REDIR_IN || current->tag == TOKEN_REDIR_OUT
-			|| current->tag == TOKEN_APPEND || current->tag == TOKEN_HEREDOC)
+		if (current->tag == REDIR_IN || current->tag == REDIR_OUT
+			|| current->tag == APPEND || current->tag == HEREDOC)
 			get_next_value(current, current->next, data);
 		if (data->error == true)
 			return ;

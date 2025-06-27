@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:11:01 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 14:11:47 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ void	malloc_error(t_data *data)
 
 void	print_correct_error(t_tag tag)
 {
-	printf("syntax error near unexpected token « ");
-	if (tag == TOKEN_AND)
-		printf("&& »\n");
-	if (tag == TOKEN_APPEND)
-		printf(">> »\n");
-	if (tag == TOKEN_HEREDOC)
-		printf("<< »\n");
-	if (tag == TOKEN_OR)
-		printf("|| »\n");
-	if (tag == TOKEN_PIPE)
-		printf("| »\n");
-	if (tag == TOKEN_REDIR_IN)
-		printf("< »\n");
-	if (tag == TOKEN_REDIR_OUT)
-		printf("> »\n");
+	ft_putstr_fd("syntax error near unexpected token « ", STDERR_FILENO);
+	if (tag == AND)
+		ft_putstr_fd("&& »\n", STDERR_FILENO);
+	if (tag == APPEND)
+		ft_putstr_fd(">> »\n", STDERR_FILENO);
+	if (tag == HEREDOC)
+		ft_putstr_fd("<< »\n", STDERR_FILENO);
+	if (tag == OR)
+		ft_putstr_fd("|| »\n", STDERR_FILENO);
+	if (tag == PIPE)
+		ft_putstr_fd("| »\n", STDERR_FILENO);
+	if (tag == REDIR_IN)
+		ft_putstr_fd("< »\n", STDERR_FILENO);
+	if (tag == REDIR_OUT)
+		ft_putstr_fd("> »\n", STDERR_FILENO);
 }

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:28:30 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 15:34:54 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	get_cmd(t_token **node)
 	cmd[i] = NULL;
 	current = *node;
 	current->cmd = cmd;
-	current->tag = TOKEN_CMD;
+	current->tag = CMD;
 	return (0);
 }
 

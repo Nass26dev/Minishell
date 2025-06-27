@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 15:17:58 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,15 @@ void	expander(t_data *data)
 	tmp = data->tokens;
 	while (tmp)
 	{
-		if (tmp->tag == TOKEN_VARIABLE || tmp->tag == TOKEN_DOUBLE_QUOTE
-			|| tmp->tag == TOKEN_WORD)
+		if (tmp->tag == VARIABLE || tmp->tag == DOUBLE_QUOTE
+			|| tmp->tag == WORD)
 		{
 			while (is_var(tmp->value))
 			{
 				if (expand_token_value(tmp->value, &tmp, data))
 					malloc_error(data);
 			}
-			tmp->tag = TOKEN_WORD;
+			tmp->tag = WORD;
 		}
 		tmp = tmp->next;
 	}

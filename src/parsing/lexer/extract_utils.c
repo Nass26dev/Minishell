@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:40:19 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 15:40:46 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	pipe_or(t_data *data, const char *input, int i)
 	ret = 0;
 	if (input[i + 1] == '|')
 	{
-		add_token(&data->tokens, create_token(NULL, TOKEN_OR));
+		add_token(&data->tokens, create_token(NULL, OR));
 		ret = 2;
 	}
 	else
 	{
-		add_token(&data->tokens, create_token(NULL, TOKEN_PIPE));
+		add_token(&data->tokens, create_token(NULL, PIPE));
 		ret = 1;
 	}
 	return (ret);
@@ -37,7 +37,7 @@ int	ampersand(t_data *data, char *input, int i)
 	ret = 0;
 	if (input[i + 1] == '&')
 	{
-		add_token(&data->tokens, create_token(NULL, TOKEN_AND));
+		add_token(&data->tokens, create_token(NULL, AND));
 		ret = 2;
 	}
 	else
@@ -52,12 +52,12 @@ int	redir_out_append(t_data *data, const char *input, int i)
 	ret = 0;
 	if (input[i + 1] == '>')
 	{
-		add_token(&data->tokens, create_token(">>", TOKEN_APPEND));
+		add_token(&data->tokens, create_token(">>", APPEND));
 		ret = 2;
 	}
 	else
 	{
-		add_token(&data->tokens, create_token(">", TOKEN_REDIR_OUT));
+		add_token(&data->tokens, create_token(">", REDIR_OUT));
 		ret = 1;
 	}
 	return (ret);
@@ -70,12 +70,12 @@ int	redir_in_heredoc(t_data *data, const char *input, int i)
 	ret = 0;
 	if (input[i + 1] == '<')
 	{
-		add_token(&data->tokens, create_token("<<", TOKEN_HEREDOC));
+		add_token(&data->tokens, create_token("<<", HEREDOC));
 		ret = 2;
 	}
 	else
 	{
-		add_token(&data->tokens, create_token("<", TOKEN_REDIR_IN));
+		add_token(&data->tokens, create_token("<", REDIR_IN));
 		ret = 1;
 	}
 	return (ret);

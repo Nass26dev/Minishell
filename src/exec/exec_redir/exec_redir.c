@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 17:03:53 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int	handle_append(t_exec *exec)
 
 int	exec_redir(t_exec *exec)
 {
-	if (exec->current->tag == TOKEN_REDIR_IN)
+	if (exec->current->tag == REDIR_IN)
 		exec->shell->status = handle_redir_in(exec);
-	else if (exec->current->tag == TOKEN_HEREDOC)
+	else if (exec->current->tag == HEREDOC)
 		exec->shell->status = handle_heredoc(exec);
-	else if (exec->current->tag == TOKEN_REDIR_OUT)
+	else if (exec->current->tag == REDIR_OUT)
 		exec->shell->status = handle_redir_out(exec);
-	else if (exec->current->tag == TOKEN_APPEND)
+	else if (exec->current->tag == APPEND)
 		exec->shell->status = handle_append(exec);
 	if (exec->shell->status != 0)
 	{
