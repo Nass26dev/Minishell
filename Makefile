@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/24 18:15:24 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/27 13:40:05 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRCS =	src/main.c \
 		src/exec/exec_pipe/exec_pipe_redirs.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/exec_parenthesis/exec_parenthesis.c \
+		src/exec/clean_exec.c \
 		src/signal.c \
 		src/env.c \
 		src/vector.c \

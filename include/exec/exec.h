@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 17:58:36 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:24:42 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,22 @@ typedef struct s_exec
 	t_shell			*shell;
 	int				infd;
 	int				outfd;
+	t_vector		*heredoc;
 }	t_exec;
 
 /*exec.c*/
 void	free_all(t_exec *exec);
 void	free_exec(t_exec *exec);
+void	unlink_heredoc(t_vector *vector);
 int		exec_node(t_exec *exec);
 int		execute(t_ast *ast, t_shell *shell);
+
+/*clean_exec.c*/
+void	free_all(t_exec *exec);
+void	free_exec(t_exec *exec);
+void	unlink_heredoc(t_vector *vector);
+int		handle_fork_error(int pipefd[2], int error, int pipe);
+void	handle_dup_error(t_exec *exec, char *cmd, int infd, int outfd);
 
 /*exec_cmd.c*/
 int		exec_cmd(t_exec *exec);
@@ -46,9 +55,9 @@ void	exec_extern_cmd(t_exec *exec, char *cmd);
 
 /*exec_cmd_utils.c*/
 int		cmd_is_valid(t_exec *exec);
-void	dup_fds(t_exec *exec);
+void	dup_fds(t_exec *exec, char *cmd);
 void	close_fds(t_exec *exec);
-int		return_process(t_exec *exec);
+int		return_process(int status);
 
 /*find_cmd_path.c*/
 char	*find_cmd_path(char *cmd_name, t_vector *env);
@@ -56,12 +65,15 @@ int		is_directory(const char *path);
 
 /*exec_redir.c*/
 int		handle_redir_in(t_exec *exec);
+int		handle_heredoc(t_exec *exec);
 int		handle_redir_out(t_exec *exec);
 int		handle_append(t_exec *exec);
 int		exec_redir(t_exec *exec);
 
 /*heredoc.c*/
-int		handle_heredoc(t_exec *exec);
+int		create_heredoc(t_exec **exec, char **tmp_path, int *fd);
+void	readline_heredoc(t_exec *exec, int fd);
+bool	reopen_fd_read(int *fd, char *tmp_path);
 
 /*exec_pipe.c*/
 int		exec_pipe(t_exec *exec);

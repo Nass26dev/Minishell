@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/20 22:50:06 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/27 17:03:53 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,44 @@ int	handle_redir_in(t_exec *exec)
 	fd = open(exec->current->command[0], O_RDONLY);
 	if (fd == -1)
 	{
-		printf("%s: %s\n", exec->current->command[0], strerror(errno));
-		return (1); //TODO to check again
+		write_fd(exec->current->command[0], NULL, strerror(errno), 2);
+		return (1);
 	}
-	if (exec->infd != STDIN_FILENO)
+	if (exec->infd > 2)
+		close(exec->infd);
+	exec->infd = fd;
+	return (0);
+}
+
+/*Creates random path with prefix \tmp\, then open tmp file.
+Gets delimiter from AST node. Reads heredoc content line
+by line and write content to tmp file.
+Closes file that was in writing to reopen it in reading.
+Deletes file but keeps fd open and set infd and exec cmd*/
+int	handle_heredoc(t_exec *exec)
+{
+	char	*tmp_path;
+	int		fd;
+
+	tmp_path = NULL;
+	if (create_heredoc(&exec, &tmp_path, &fd) == 1)
+		return (1);
+	setup_child_signals();
+	readline_heredoc(exec, fd);
+	setup_interactive_signals();
+	if (reopen_fd_read(&fd, tmp_path) == false)
+		return (1);
+	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
+	free(exec->heredoc->data[exec->heredoc->count - 1]);
+	free(tmp_path);
+	exec->heredoc->count--;
+	if (exec->heredoc->count == 0)
+	{
+		free(exec->heredoc->data);
+		free(exec->heredoc);
+		exec->heredoc = NULL;
+	}
+	if (exec->infd > 2)
 		close(exec->infd);
 	exec->infd = fd;
 	return (0);
@@ -36,10 +70,10 @@ int	handle_redir_out(t_exec *exec)
 	fd = open(exec->current->command[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		printf("%s: %s\n", exec->current->command[0], strerror(errno));
-		return (1); //TODO to check again
+		write_fd(exec->current->command[0], NULL, strerror(errno), 2);
+		return (1);
 	}
-	if (exec->outfd != STDOUT_FILENO)
+	if (exec->outfd > 2)
 		close(exec->outfd);
 	exec->outfd = fd;
 	return (0);
@@ -52,10 +86,10 @@ int	handle_append(t_exec *exec)
 	fd = open(exec->current->command[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		printf("%s: %s\n", exec->current->command[0], strerror(errno));
-		return (128 + errno); //TODO to check again
+		write_fd(exec->current->command[0], NULL, strerror(errno), 2);
+		return (1);
 	}
-	if (exec->outfd != STDOUT_FILENO)
+	if (exec->outfd > 2)
 		close(exec->outfd);
 	exec->outfd = fd;
 	return (0);
@@ -63,17 +97,22 @@ int	handle_append(t_exec *exec)
 
 int	exec_redir(t_exec *exec)
 {
-	int	ret;
-
-	(void)ret;
 	if (exec->current->tag == TOKEN_REDIR_IN)
-		ret = handle_redir_in(exec);
+		exec->shell->status = handle_redir_in(exec);
 	else if (exec->current->tag == TOKEN_HEREDOC)
-		ret = handle_heredoc(exec);
+		exec->shell->status = handle_heredoc(exec);
 	else if (exec->current->tag == TOKEN_REDIR_OUT)
-		ret = handle_redir_out(exec);
+		exec->shell->status = handle_redir_out(exec);
 	else if (exec->current->tag == TOKEN_APPEND)
-		ret = handle_append(exec);
+		exec->shell->status = handle_append(exec);
+	if (exec->shell->status != 0)
+	{
+		if (exec->infd > 2)
+			close(exec->infd);
+		if (exec->outfd > 2)
+			close(exec->outfd);
+		return (1);
+	}
 	exec->current = exec->current->left;
 	return (exec_node(exec));
 }

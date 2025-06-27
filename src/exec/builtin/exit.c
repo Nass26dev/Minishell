@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:59:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 13:43:22 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:38:05 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static bool	exit_with_args(t_exec *exec, int i, int status)
 			result = ft_atoi(exec->current->command[1]);
 			status = check_overflow(result);
 			free_all(exec);
+			printf("exit\n");
 			exit (status);
 		}
 	}

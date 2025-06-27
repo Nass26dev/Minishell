@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/25 17:23:55 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:42:49 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,22 @@ void	close_fds(t_exec *exec)
 		close(exec->infd);
 	if (exec->outfd > 2)
 		close(exec->outfd);
+	if (exec->heredoc)
+		unlink_heredoc(exec->heredoc);
 }
 
-void	dup_fds(t_exec *exec)
+void	dup_fds(t_exec *exec, char *cmd)
 {
 	if (exec->infd != STDIN_FILENO)
-		dup2(exec->infd, STDIN_FILENO);
+	{
+		if (dup2(exec->infd, STDIN_FILENO) == -1)
+			handle_dup_error(exec, cmd, -1, -1);
+	}
 	if (exec->outfd != STDOUT_FILENO)
-		dup2(exec->outfd, STDOUT_FILENO);
+	{
+		if (dup2(exec->outfd, STDOUT_FILENO) == -1)
+			handle_dup_error(exec, cmd, -1, -1);
+	}
 	close_fds(exec);
 }
 
@@ -36,17 +44,17 @@ int	cmd_is_valid(t_exec *exec)
 	if (!exec->current->command[0] || !exec->current->command[0][0])
 	{
 		close_fds(exec);
-		printf("command not found\n");
+		write_fd(NULL, NULL, "command not found", 2);
 		return (CMD_NOT_FOUND);
 	}
 	return (0);
 }
 
-int	return_process(t_exec *exec)
+int	return_process(int status)
 {
-	if (WIFEXITED(exec->shell->status))
-		return (WEXITSTATUS(exec->shell->status));
-	else if (WIFSIGNALED(exec->shell->status))
-		return (128 + WTERMSIG(exec->shell->status));
-	return (exec->shell->status);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (status);
 }
