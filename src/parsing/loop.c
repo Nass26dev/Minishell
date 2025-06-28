@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 15:17:43 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/28 12:52:28 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,56 @@ bool	is_only_spaces(char *input)
 	return (true);
 }
 
+bool	is_only_quotes(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '"' || input[i] == '\'')
+			i++;
+		else
+			return (false);
+	}
+	return (true);
+}
+
+bool check_redir_error(char *input)
+{
+	int i;
+
+	i = 0;
+	while(input[i])
+	{
+		if (input[i] == '"')
+		{
+			i++;
+			while (input[i] != '"' && input[i])
+				i++;
+		}
+		if (input[i] == '\'')
+		{
+			i++;
+			while (input[i] != '\'' && input[i])
+				i++;
+		}
+		if (input[i] == '<' || input[i] == '>')
+		{
+			if (input[i + 1] == '|' || input[i + 1] == '&')
+			{
+				if (input[i] == '>')
+					print_correct_error(REDIR_OUT);
+				if (input[i] == '<')
+					print_correct_error(REDIR_IN);
+				return (true);
+			}
+		}
+		i++;	
+	}
+	return (false);
+}
+
 int	minishell_loop(t_shell *shell)
 {
 	static t_data	data;
@@ -65,14 +115,22 @@ int	minishell_loop(t_shell *shell)
 	if (ret == 1)
 		return (1);
 	if (ret == 2)
+	{
+		g_received_signal = 0;
 		data.shell->status = 130;
-	if (!input[0] || is_only_spaces(input))
+	}
+	if (!input[0] || is_only_spaces(input) || is_only_quotes(input) || check_redir_error(input))
 	{
 		free(input);
 		return (0);
 	}
 	if (lexer_expander_checker(&data, input))
 		return (0);
+	if (!data.tokens->next && !data.tokens->value[0])
+	{
+		free_tokens(&data.tokens);
+		return (0);
+	}
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
 	free_tokens(&data.tokens);
 	if (data.ast)

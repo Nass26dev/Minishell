@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/28 13:01:38 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	expander(t_data *data)
 	t_token	*tmp;
 
 	tmp = data->tokens;
+	change_heredoc_value(data);
 	while (tmp)
 	{
 		if (tmp->tag == VARIABLE || tmp->tag == DOUBLE_QUOTE

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 17:55:29 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/28 12:57:50 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void				expander(t_data *data);
 bool				node_is_operator(t_token *node);
 bool				node_is_word(t_token *node);
 bool				node_is_redir(t_token *node);
+void	get_next_value(t_token *current, t_token *next, t_data *data);
 // expand_token.c
 int					expand_token_value(char *input, t_token **token,
 						t_data *data);
@@ -148,6 +149,7 @@ char				*recup_varvalue(char *varname, t_data *data);
 void				concatenation(t_data *data);
 // redir_value
 void				change_redir_value(t_data *data);
+void	change_heredoc_value(t_data *data);
 // cmd.c
 void				create_cmd(t_data *data);
 // extract.c
