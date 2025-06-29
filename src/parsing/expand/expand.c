@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/28 13:01:38 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/30 00:37:47 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ void	move_start_redir(t_token **head)
 	}
 }
 
+t_token *delete_empty_node(t_data *data, t_token *tmp)
+{
+	t_token *tmp2;
+
+	tmp2 = tmp->next;
+	delete_node(&data->tokens, tmp);
+	return (tmp2);
+}
+
 void	expander(t_data *data)
 {
 	t_token	*tmp;
@@ -99,9 +108,17 @@ void	expander(t_data *data)
 			{
 				if (expand_token_value(tmp->value, &tmp, data))
 					malloc_error(data);
+				if (!tmp->value[0])
+					tmp = delete_empty_node(data, tmp);
 			}
 			tmp->tag = WORD;
 		}
+		tmp = tmp->next;
+	}
+	tmp = data->tokens;
+	while (tmp)
+	{
+		printf("tag = %d, value = %s\n", tmp->tag, tmp->value);
 		tmp = tmp->next;
 	}
 	change_redir_value(data);
