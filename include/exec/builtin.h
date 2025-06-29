@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:30:55 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 14:32:41 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/29 20:57:52 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	builtin_cd(t_exec *exec);
 int	builtin_pwd(t_exec *exec);
 
 /*export.c*/
-int	builtin_export(t_shell *shell, char **data, int fd);
+int	builtin_export(t_exec *exec);
 
 /*export_utils.c*/
 int	export_var(t_vector *env, char *var);

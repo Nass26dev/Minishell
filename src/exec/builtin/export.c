@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:29:41 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/24 12:27:13 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/29 20:57:47 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,26 +99,26 @@ static int	display_sorted_var(t_vector *env, int fd)
 	return (0);
 }
 
-int	builtin_export(t_shell *shell, char **data, int fd)
+int	builtin_export(t_exec *exec)
 {
 	int	ret;
 	int	i;
 
 	i = 0;
-	while (data[i])
+	while (exec->current->command[i])
 		i++;
 	if (i == 1)
 	{
-		ret = display_sorted_var(shell->env, fd);
+		ret = display_sorted_var(exec->shell->env, exec->outfd);
 		if (ret != 0)
 			write_fd("export", NULL, "env cannot be displayed", 2);
 	}
 	else
 	{
 		i = 1;
-		while (data[i])
+		while (exec->current->command[i])
 		{
-			ret = export_var(shell->env, data[i]);
+			ret = export_var(exec->shell->env, exec->current->command[i]);
 			i++;
 		}
 	}

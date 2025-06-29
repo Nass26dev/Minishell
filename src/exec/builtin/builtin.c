@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:17:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 13:48:08 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/29 20:58:40 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exec_builtin(t_exec *exec, int builtin)
 	else if (builtin == EXIT)
 		ret = builtin_exit(exec);
 	else if (builtin == EXPORT)
-		ret = builtin_export(exec->shell, exec->current->command, exec->outfd);
+		ret = builtin_export(exec);
 	else if (builtin == PWD)
 		ret = builtin_pwd(exec);
 	else if (builtin == UNSET)
