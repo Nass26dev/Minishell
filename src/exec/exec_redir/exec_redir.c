@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/29 22:18:58 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int	handle_heredoc(t_exec *exec)
 	tmp_path = NULL;
 	if (create_heredoc(&exec, &tmp_path, &fd) == 1)
 		return (1);
-	setup_child_signals();
 	readline_heredoc(exec, fd);
-	setup_interactive_signals();
 	if (reopen_fd_read(&fd, tmp_path) == false)
 		return (1);
 	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
