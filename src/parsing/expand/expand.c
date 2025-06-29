@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/30 00:37:47 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/30 00:49:20 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,6 @@ void	expander(t_data *data)
 			}
 			tmp->tag = WORD;
 		}
-		tmp = tmp->next;
-	}
-	tmp = data->tokens;
-	while (tmp)
-	{
-		printf("tag = %d, value = %s\n", tmp->tag, tmp->value);
 		tmp = tmp->next;
 	}
 	change_redir_value(data);
