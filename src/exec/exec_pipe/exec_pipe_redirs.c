@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:35 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/29 22:09:22 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/29 22:16:20 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	handle_redirections(t_exec *exec, int pipefd[2], int side)
 	int		outfd;
 
 	if (side == 0)
-		redirect_fds_left (exec, pipefd, &infd,&outfd);
+		redirect_fds_left(exec, pipefd, &infd, &outfd);
 	else
-		redirect_fds_right(exec, pipefd, &infd,&outfd);
+		redirect_fds_right(exec, pipefd, &infd, &outfd);
 	dup_pipe_fds(exec, infd, outfd, side);
 	if (side == 0 && exec->outfd > 2)
 		exec->outfd = STDOUT_FILENO;
