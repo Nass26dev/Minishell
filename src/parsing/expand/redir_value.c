@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_value.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:20:46 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/28 13:01:21 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,21 @@ void	get_next_value(t_token *current, t_token *next, t_data *data)
 	current->next = tmp;
 }
 
+void	change_heredoc_value(t_data *data)
+{
+	t_token	*current;
+
+	current = data->tokens;
+	while (current)
+	{
+		if (current->tag == HEREDOC)
+			get_next_value(current, current->next, data);
+		if (data->error == true)
+			return ;
+		current = current->next;
+	}
+}
+
 void	change_redir_value(t_data *data)
 {
 	t_token	*current;
@@ -38,7 +53,7 @@ void	change_redir_value(t_data *data)
 	while (current)
 	{
 		if (current->tag == REDIR_IN || current->tag == REDIR_OUT
-			|| current->tag == APPEND || current->tag == HEREDOC)
+			|| current->tag == APPEND)
 			get_next_value(current, current->next, data);
 		if (data->error == true)
 			return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 23:11:14 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 15:25:24 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/28 12:27:18 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ char	*recup_varname(char *input)
 		return (varname);
 	}
 	ind.j = ind.i;
-	while (input[ind.i] && !ft_isspace(input[ind.i]) && input[ind.i] != '$')
+	while (input[ind.i] && !ft_isspace(input[ind.i]) && input[ind.i] != '$'
+		&& input[ind.i] != '"' && input[ind.i] != '\'')
 		ind.i++;
 	varname = malloc((ind.i - ind.j) + 1);
 	if (!varname)
@@ -85,7 +86,7 @@ char	*recup_aftervar(char *input)
 		i++;
 	i++;
 	while (input[i] && !ft_isspace(input[i]) && input[i] != '$'
-		&& input[i - 1] != '?')
+		&& input[i - 1] != '?' && input[i] != '"' && input[i] != '\'')
 		i++;
 	j = i;
 	while (input[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 00:49:20 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,21 @@ void	move_start_redir(t_token **head)
 	}
 }
 
+t_token *delete_empty_node(t_data *data, t_token *tmp)
+{
+	t_token *tmp2;
+
+	tmp2 = tmp->next;
+	delete_node(&data->tokens, tmp);
+	return (tmp2);
+}
+
 void	expander(t_data *data)
 {
 	t_token	*tmp;
 
 	tmp = data->tokens;
+	change_heredoc_value(data);
 	while (tmp)
 	{
 		if (tmp->tag == VARIABLE || tmp->tag == DOUBLE_QUOTE
@@ -98,6 +108,8 @@ void	expander(t_data *data)
 			{
 				if (expand_token_value(tmp->value, &tmp, data))
 					malloc_error(data);
+				if (!tmp->value[0])
+					tmp = delete_empty_node(data, tmp);
 			}
 			tmp->tag = WORD;
 		}
