@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:34:07 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 15:18:55 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/29 21:13:35 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	write_fd(char *cmd1, char *cmd2, char *msg, int fd)
 	ft_putstr_fd("minishell: ", fd);
 	ft_putstr_fd(cmd1, fd);
 	if (cmd1)
-		write(fd, ": ", 2);
+		write(fd, ": ", STDERR_FILENO);
 	ft_putstr_fd(cmd2, fd);
 	if (cmd2)
-		write(fd, ": ", 2);
+		write(fd, ": ", STDERR_FILENO);
 	ft_putendl_fd(msg, fd);
 }
 
