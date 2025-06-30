@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/27 17:25:37 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/06/30 10:41:11 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,7 +131,7 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(MESSAGE_COLOR_GREEN)libft built! ✅$(MESSAGE_RESET)"
 
-$(OBJDIR)/%.o: src/%.c $(HEADER)
+$(OBJDIR)/%.o: src/%.c $(HEADER) $(LIBFT_DIR)
 	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
 	@mkdir -p $(OBJDIR) $(DEPDIR) $(SUBOBJDIR) $(SUBDEPDIR)
 	@$(CC) $(CFLAGS) -I$(LIBFT_DIR)/includes -Iinclude -Iinclude/parsing -Iinclude/exec -c $< -o $@
