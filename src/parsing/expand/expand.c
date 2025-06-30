@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/30 00:49:20 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/30 13:27:03 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,29 +93,57 @@ t_token *delete_empty_node(t_data *data, t_token *tmp)
 	return (tmp2);
 }
 
+void concatenate_redirections_args(t_data *data)
+{
+	t_token	*tmp;
+
+	tmp = data->tokens;
+	while (tmp)
+	{
+		if (node_is_redir(tmp) && tmp->next && !tmp->space)
+		{
+			tmp->value = ft_strjoin(tmp->value, tmp->next->value);
+			if (!tmp->value)
+				malloc_error(data);
+			tmp->space = tmp->next->space;
+			delete_node(&data->tokens, tmp->next);
+		}
+		else
+			tmp = tmp->next;
+	}
+}
+
 void	expander(t_data *data)
 {
 	t_token	*tmp;
 
 	tmp = data->tokens;
 	change_heredoc_value(data);
+	t_token *tmp2;
+	tmp2 = data->tokens;
+	while (tmp2)
+	{
+		printf("tag = %d, value = '%s', space = %d\n", tmp2->tag, tmp2->value, tmp2->space);
+		tmp2 = tmp2->next;
+	}
 	while (tmp)
 	{
 		if (tmp->tag == VARIABLE || tmp->tag == DOUBLE_QUOTE
 			|| tmp->tag == WORD)
-		{
-			while (is_var(tmp->value))
+			{
+				while (is_var(tmp->value))
 			{
 				if (expand_token_value(tmp->value, &tmp, data))
-					malloc_error(data);
+				malloc_error(data);
 				if (!tmp->value[0])
-					tmp = delete_empty_node(data, tmp);
+				tmp = delete_empty_node(data, tmp);
 			}
 			tmp->tag = WORD;
 		}
 		tmp = tmp->next;
 	}
 	change_redir_value(data);
+	concatenate_redirections_args(data);
 	concatenation(data);
 	move_start_redir(&data->tokens);
 	sort_redirections(&data->tokens);

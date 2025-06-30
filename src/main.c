@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:33:11 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 17:57:02 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 11:54:28 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ bool	check_error(t_shell *shell, int argc, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
+	int		status;
 
 	(void)argv;
 	if (check_error(&shell, argc, envp))
@@ -61,7 +62,8 @@ int	main(int argc, char **argv, char **envp)
 		if (minishell_loop(&shell) == 1)
 			break ;
 	}
+	status = shell.status;
 	free_shell(&shell);
 	rl_clear_history();
-	return (0);
+	return (status);
 }

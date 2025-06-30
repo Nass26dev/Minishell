@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
 /*   Updated: 2025/06/30 14:43:40 by eelissal         ###   ########lyon.fr   */
@@ -69,9 +69,9 @@ int	exec_cmd(t_exec *exec)
 	pid_t	pid;
 	int		ret;
 
-	ret = cmd_is_valid(exec);
-	if (ret != 0)
-		return (ret);
+	exec->shell->status = cmd_is_valid(exec);
+	if (exec->shell->status != 0)
+		return (exec->shell->status);
 	ret = is_builtin(exec);
 	if (ret >= 0 && ret < 7)
 	{
