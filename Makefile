@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/30 10:41:11 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/30 15:19:43 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
 SRCS =	src/main.c \
 		src/parsing/loop.c \
+		src/parsing/loop_utils.c \
 		src/parsing/input.c \
 		src/parsing/utils.c \
 		src/parsing/error/error.c \
@@ -34,6 +35,7 @@ SRCS =	src/main.c \
 		src/parsing/expand/expand.c \
 		src/parsing/expand/expand_token.c \
 		src/parsing/expand/expand_utils.c \
+		src/parsing/expand/expand_utils2.c \
 		src/parsing/expand/concatenation.c \
 		src/parsing/expand/node_is.c \
 		src/parsing/expand/is.c \
@@ -59,11 +61,12 @@ SRCS =	src/main.c \
 		src/exec/exec_pipe/exec_pipe_redirs.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/clean_exec.c \
+		src/utils.c \
+		src/utils2.c \
 		src/signal.c \
 		src/env.c \
 		src/vector.c \
 		src/clean.c \
-		src/utils.c \
 
 MAKEDIR = make
 OBJDIR = make/objs
