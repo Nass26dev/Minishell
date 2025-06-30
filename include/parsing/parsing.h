@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/28 12:57:50 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/30 15:23:42 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ typedef struct s_double_index
 	int				end;
 }					t_double_index;
 
+// loop_utils.c
+bool				is_error(bool *error);
+t_tag				find_correct_tag(char c);
+bool				is_only_quotes(char *input);
+bool				is_only_spaces(char *input);
 // line.c
 int					get_input_and_add_to_historical(char **input);
 int					extract_quoted_string(t_data *data, char *input, int i);
@@ -124,32 +129,47 @@ void				delete_node(t_token **head, t_token *node_to_delete);
 // is.c
 bool				is_redirection(t_tag tag);
 bool				is_var(char *value);
-
+// utils.c
+void				write_fd(char *cmd1, char *cmd2, char *msg, int fd);
+void				set_to_null(t_expand *expand);
+char				*set_empty(void);
+char				*free_strjoin(char *s1, char *s2);
+char				*ft_getenv(char *search, char **env);
 // utils.c
 char				*ft_strndup(const char *src, size_t n);
 bool				ft_isspace(char c);
 void				set_to_null(t_expand *expand);
 bool				is_operator(char c);
 char				*ft_getenv(char *search, char **env);
+// utils2.c
+char				*one_free_strjoin(char *s1, char *s2);
 // expand.c
 void				expander(t_data *data);
 bool				node_is_operator(t_token *node);
 bool				node_is_word(t_token *node);
 bool				node_is_redir(t_token *node);
-void	get_next_value(t_token *current, t_token *next, t_data *data);
+void				get_next_value(t_token *current, t_token *next,
+						t_data *data);
 // expand_token.c
 int					expand_token_value(char *input, t_token **token,
 						t_data *data);
+// expand_utils2.c
+t_token				*reverse_token_list(t_token *start, t_token *end);
+void				main_sort(t_token_redir *tr, t_token **head);
+void				sort_redirections(t_token **head);
+void				move_start_redir(t_token **head);
+t_token				*delete_empty_node(t_data *data, t_token *tmp);
 // expand_utils.c
 char				*recup_beforevar(char *input);
 char				*recup_varname(char *input);
 char				*recup_aftervar(char *input);
 char				*recup_varvalue(char *varname, t_data *data);
 // concatenation.c
+void				concatenate_redirections_args(t_data *data);
 void				concatenation(t_data *data);
 // redir_value
 void				change_redir_value(t_data *data);
-void	change_heredoc_value(t_data *data);
+void				change_heredoc_value(t_data *data);
 // cmd.c
 void				create_cmd(t_data *data);
 // extract.c

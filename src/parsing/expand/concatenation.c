@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:12:06 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 15:20:05 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,25 @@ void	concatenation(t_data *data)
 				current->next))
 			continue ;
 		current = current->next;
+	}
+}
+
+void	concatenate_redirections_args(t_data *data)
+{
+	t_token	*tmp;
+
+	tmp = data->tokens;
+	while (tmp)
+	{
+		if (node_is_redir(tmp) && tmp->next && !tmp->space)
+		{
+			tmp->value = one_free_strjoin(tmp->value, tmp->next->value);
+			if (!tmp->value)
+				malloc_error(data);
+			tmp->space = tmp->next->space;
+			delete_node(&data->tokens, tmp->next);
+		}
+		else
+			tmp = tmp->next;
 	}
 }

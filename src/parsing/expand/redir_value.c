@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:20:46 by nass              #+#    #+#             */
-/*   Updated: 2025/06/30 13:28:29 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 13:31:52 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	get_next_value(t_token *current, t_token *next, t_data *data)
 	current->next = tmp;
 }
 
-void concatenate_heredoc_args(t_data *data)
+void	concatenate_heredoc_args(t_data *data)
 {
 	t_token	*tmp;
 
