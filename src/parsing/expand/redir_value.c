@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_value.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:20:46 by nass              #+#    #+#             */
-/*   Updated: 2025/06/28 13:01:21 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/30 13:28:29 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,30 @@ void	get_next_value(t_token *current, t_token *next, t_data *data)
 	}
 	tmp = next->next;
 	free(current->value);
+	current->space = next->space;
 	current->value = next->value;
 	free(next);
 	current->next = tmp;
+}
+
+void concatenate_heredoc_args(t_data *data)
+{
+	t_token	*tmp;
+
+	tmp = data->tokens;
+	while (tmp)
+	{
+		if (tmp->tag == HEREDOC && tmp->next && !tmp->space)
+		{
+			tmp->value = ft_strjoin(tmp->value, tmp->next->value);
+			if (!tmp->value)
+				malloc_error(data);
+			tmp->space = tmp->next->space;
+			delete_node(&data->tokens, tmp->next);
+		}
+		else
+			tmp = tmp->next;
+	}
 }
 
 void	change_heredoc_value(t_data *data)
@@ -43,6 +64,7 @@ void	change_heredoc_value(t_data *data)
 			return ;
 		current = current->next;
 	}
+	concatenate_heredoc_args(data);
 }
 
 void	change_redir_value(t_data *data)

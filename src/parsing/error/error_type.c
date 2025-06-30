@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:11:01 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 12:07:59 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,6 @@ void	print_correct_error(t_tag tag)
 		ft_putstr_fd("< »\n", STDERR_FILENO);
 	if (tag == REDIR_OUT)
 		ft_putstr_fd("> »\n", STDERR_FILENO);
+	if (tag == 13)
+	ft_putstr_fd("& »\n", STDERR_FILENO);		
 }
