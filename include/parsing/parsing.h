@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 16:00:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:35:31 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ t_token				*find_prev(t_token *node, t_token *lst);
 t_ast				*parser(t_data *data, t_token *start, t_token *end);
 // ast.c
 t_ast				*create_ast_node(t_tag tag, char *value, char **cmd);
-void				print_ast(t_ast *node, int depth);
-void				add_args_to_command(t_ast **node, char *args);
 void				free_ast(t_ast *node);
 // extract_utils.c
 int					redir_in_heredoc(t_data *data, const char *input, int i);

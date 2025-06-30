@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/30 16:59:01 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 18:29:15 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ void	close_pipes(t_exec *exec, int pipefd[2], int pipe);
 int		exec_operator(t_exec *exec);
 
 /*parsing*/
-bool	is_redirection(t_tag tag);
+bool			is_redirection(t_tag tag);
 
 #endif
