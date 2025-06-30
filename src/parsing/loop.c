@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 00:30:41 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/30 12:54:20 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,23 @@ bool	is_only_quotes(char *input)
 	return (true);
 }
 
+t_tag	find_correct_tag(char c)
+{
+	if (c == '|')
+		return (PIPE);
+	if (c == '&')
+		return (AND);
+	if (c == '>')
+		return (REDIR_OUT);
+	if (c == '<')
+		return (REDIR_IN);
+	if (c == '"')
+		return (DOUBLE_QUOTE);
+	if (c == '\'')
+		return (SINGLE_QUOTE);
+	return (WORD);
+}
+
 bool check_redir_error(char *input)
 {
 	int i;
@@ -76,6 +93,11 @@ bool check_redir_error(char *input)
 	i = 0;
 	while(input[i])
 	{
+		if (is_operator(input[i]) && input[i + 1] && input[i + 1] == ' ' && input[i + 2] && is_operator(input[i + 2]))
+		{
+			print_correct_error(find_correct_tag(input[i]));
+			return (true);
+		}
 		if (input[i] == '"')
 		{
 			i++;
@@ -92,10 +114,12 @@ bool check_redir_error(char *input)
 		{
 			if (input[i + 1] == '|' || input[i + 1] == '&')
 			{
-				if (input[i] == '>')
-					print_correct_error(REDIR_OUT);
-				if (input[i] == '<')
-					print_correct_error(REDIR_IN);
+				if (input[i + 1] == '|')
+					print_correct_error(PIPE);
+				if (input[i] == '&' && input[i + 1] == '&')
+					print_correct_error(AND);
+				if (input[i] == '&')
+					print_correct_error(13);
 				return (true);
 			}
 		}
