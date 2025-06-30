@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 13:49:52 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 16:01:07 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ bool	check_redir_error(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (is_operator(input[i]) && input[i + 1] && input[i + 1] == ' '
+		if (char_is_redir(input[i]) && char_is_redir(input[i + 1]))
+			i++;
+		if (char_is_redir(input[i]) && input[i + 1] && input[i + 1] == ' '
 			&& input[i + 2] && is_operator(input[i + 2]))
 		{
 			print_correct_error(find_correct_tag(input[i]));

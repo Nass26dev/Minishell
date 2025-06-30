@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 13:04:34 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 16:17:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,7 @@ void	lexer(t_data *data, char *input)
 	i = 0;
 	while (input[i] != 0)
 	{
-		if (ft_isspace(input[i]))
-		{
-			set_space_to_token(&data->tokens);
-			i++;
-		}
-		else if (is_operator(input[i]))
+		if (is_operator(input[i]))
 			i += extract_operator(data, input, i);
 		else if (input[i] == '\'' || input[i] == '"')
 			i += extract_quoted_string(data, input, i);
@@ -41,7 +36,12 @@ void	lexer(t_data *data, char *input)
 			i += extract_word(data, input, i);
 		if (data->error == true)
 			return ;
-		if (!data->tokens)
+		if (ft_isspace(input[i]))
+		{
+			set_space_to_token(&data->tokens);
+			i++;
+		}	
+		else if (!data->tokens)
 			lexer_error(data);
 	}
 }

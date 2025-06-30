@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/30 15:10:25 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 16:12:50 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_exec			*exec_redir_pipe(t_exec *exec);
 /*exec_operator.c*/
 int				exec_operator(t_exec *exec);
 
-/*exec_parenthesis.c*/
-int				exec_parenthesis(t_exec *exec);
+/*parsing*/
+bool				is_redirection(t_tag tag);
 
 #endif

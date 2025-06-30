@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 15:14:18 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 15:24:45 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 15:59:55 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,11 @@ char	*one_free_strjoin(char *s1, char *s2)
 	str[++i] = 0;
 	free(s1);
 	return (str);
+}
+
+bool char_is_redir(char c)
+{
+	if (c == '<' || c == '>')
+		return (true);
+	return (false);
 }

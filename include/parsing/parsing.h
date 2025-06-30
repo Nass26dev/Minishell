@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 15:23:42 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 16:00:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void				set_to_null(t_expand *expand);
 bool				is_operator(char c);
 char				*ft_getenv(char *search, char **env);
 // utils2.c
+bool				char_is_redir(char c);
 char				*one_free_strjoin(char *s1, char *s2);
 // expand.c
 void				expander(t_data *data);
