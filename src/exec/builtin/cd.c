@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:35:06 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 17:24:07 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,10 @@ int	cd_get_path(char *target, t_vector *env)
 
 int	cd_home(char *target, t_vector *env)
 {
-	char	oldpwd[PATH_MAX];
 	char	*newpwd;
 	int		ret;
 
-	if (!getcwd(oldpwd, sizeof(oldpwd)))
-	{
-		perror("getcwd error");
-		return (1);
-	}
-	newpwd = getenv(target);
+	newpwd = get_env(env, "HOME");
 	if (!newpwd)
 	{
 		write_fd("cd", target, "not set", 2);
@@ -105,7 +99,8 @@ int	cd_home(char *target, t_vector *env)
 		free(newpwd);
 		return (1);
 	}
-	ret = add_env_var(env, "OLDPWD", oldpwd);
+	ret = add_env_var(env, "PWD", newpwd);
+	free(newpwd);
 	if (ret != 0)
 		write_fd("cd", "PWD", "not exported", 2);
 	return (ret);
