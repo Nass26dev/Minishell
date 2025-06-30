@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 16:17:02 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:37:17 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	lexer(t_data *data, char *input)
 		{
 			set_space_to_token(&data->tokens);
 			i++;
-		}	
+		}
 		else if (!data->tokens)
 			lexer_error(data);
 	}
