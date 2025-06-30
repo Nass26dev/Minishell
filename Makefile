@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/30 15:19:43 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/06/30 16:59:39 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRCS =	src/main.c \
 		src/exec/exec_redir/heredoc.c \
 		src/exec/exec_pipe/exec_pipe.c \
 		src/exec/exec_pipe/exec_pipe_redirs.c \
+		src/exec/exec_pipe/exec_pipe_utils.c \
 		src/exec/exec_operator/exec_operator.c \
 		src/exec/clean_exec.c \
 		src/utils.c \
