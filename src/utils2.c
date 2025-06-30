@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 15:14:18 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 15:59:55 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:01:26 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*one_free_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-bool char_is_redir(char c)
+bool	char_is_redir(char c)
 {
 	if (c == '<' || c == '>')
 		return (true);
