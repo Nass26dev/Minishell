@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:29 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 18:23:39 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ bool	is_operator_error(t_data *data, t_tag tag)
 	if (tag_is_operator(tag))
 	{
 		print_correct_error(tag);
+		data->shell->status = 2;
 		free_tokens(&data->tokens);
 		data->error = true;
 		return (true);
@@ -49,6 +50,7 @@ void	error_checker(t_data *data)
 			if (tag_is_operator(current->next->tag))
 			{
 				print_correct_error(current->next->tag);
+				data->shell->status = 2;
 				free_tokens(&data->tokens);
 				data->error = true;
 				return ;

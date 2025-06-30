@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:20:46 by nass              #+#    #+#             */
-/*   Updated: 2025/06/30 13:31:52 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 18:25:00 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	get_next_value(t_token *current, t_token *next, t_data *data)
 	if (!next)
 	{
 		print_correct_error(current->tag);
+		data->shell->status = 2;
 		free_tokens(&data->tokens);
 		data->error = true;
 		return ;

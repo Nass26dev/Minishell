@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             *
-/*   Updated: 2025/06/30 18:28:38 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/06/30 18:32:24 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	lexer_error(t_data *data)
 {
+	int status;
+
+	status = data->shell->status;
 	free_shell(data->shell);
 	rl_clear_history();
-	exit(EXIT_FAILURE);
+	exit(status);
 }
 
 void	lexer(t_data *data, char *input)

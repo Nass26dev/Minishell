@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_quote.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:00:35 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 00:48:40 by nass             ###   ########.fr       */
+/*   Updated: 2025/06/30 18:15:45 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	extract_quoted_string(t_data *data, char *input, int i)
 	{
 		free(input);
 		syntax_error(data, "syntax error : unclosed quote\n");
+		data->shell->status = 2;
 		return (0);
 	}
 	id.start = start;
