@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/30 14:03:05 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 15:31:04 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	close_pipes(t_exec *exec, int pipefd[2], int pipe)
 	}
 }
 
-static int	pipe_waitpid_process(int pid[2])
+static int	pipe_waitpid_process(pid_t pid[2])
 {
 	int	ret;
 	int	status1;
@@ -36,8 +36,6 @@ static int	pipe_waitpid_process(int pid[2])
 	waitpid(pid[0], &status1, 0);
 	waitpid(pid[1], &status2, 0);
 	ret = return_process(status2);
-	if (ret == 0)
-		ret = return_process(status1);
 	setup_interactive_signals();
 	return (ret);
 }
@@ -68,7 +66,7 @@ static void	handle_pipe_process(t_exec *exec)
 	}
 }
 
-static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
+static int	exec_pipe_fork(t_exec *exec, int pipefd[2], pid_t pid[2], int fd)
 {
 	while (exec->current && exec->current->tag == HEREDOC)
 		exec = exec_redir_pipe(exec);
@@ -83,7 +81,7 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 	{
 		setup_child_signals();
 		while (exec->current && (exec->current->tag == REDIR_IN
-			|| exec->current->tag == REDIR_OUT || exec->current->tag == APPEND))
+				|| exec->current->tag == REDIR_OUT || exec->current->tag == APPEND))
 			exec = exec_redir_pipe(exec);
 		if (exec->current)
 			handle_redirections(exec, pipefd, fd);
@@ -100,7 +98,7 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 int	exec_pipe(t_exec *exec)
 {
 	int		pipefd[2];
-	int		pid[2];
+	pid_t	pid[2];
 	t_ast	*current;
 
 	if (pipe(pipefd) == -1)

@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:42:49 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 14:56:07 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,18 @@ int	cmd_is_valid(t_exec *exec)
 
 int	return_process(int status)
 {
+	int	signal;
+
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
+	{
+		signal = WTERMSIG(status);
+		if (signal == SIGINT)
+			write(2, "\n", 1);
+		if (signal == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+		return (128 + signal);
+	}
 	return (status);
 }

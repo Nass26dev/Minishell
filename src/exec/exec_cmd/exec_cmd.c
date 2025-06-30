@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:44:43 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 14:43:40 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	waitpid_process(t_exec	*exec, pid_t pid)
 	setup_waitpid_signals();
 	waitpid(pid, &exec->shell->status, 0);
 	ret = return_process(exec->shell->status);
+	exec->shell->status = ret;
 	setup_interactive_signals();
 	return (ret);
 }
