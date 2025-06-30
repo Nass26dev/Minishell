@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 17:54:37 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:03:05 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static void	handle_pipe_process(t_exec *exec)
 
 static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 {
+	while (exec->current && exec->current->tag == HEREDOC)
+		exec = exec_redir_pipe(exec);
 	pid[fd] = fork();
 	if (pid[fd] == -1)
 	{
@@ -80,8 +82,8 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], int pid[2], int fd)
 	if (pid[fd] == 0)
 	{
 		setup_child_signals();
-		while (exec->current && exec->current->tag >= REDIR_IN
-			&& exec->current->tag <= APPEND)
+		while (exec->current && (exec->current->tag == REDIR_IN
+			|| exec->current->tag == REDIR_OUT || exec->current->tag == APPEND))
 			exec = exec_redir_pipe(exec);
 		if (exec->current)
 			handle_redirections(exec, pipefd, fd);
