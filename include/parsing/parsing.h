@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 17:35:31 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:17:05 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int					extract_space(t_data *data, const char *input, int i);
 // error_checker.c
 void				error_checker(t_data *data);
 void				syntax_error(t_data *data, char *error);
-void				print_correct_error(t_tag tag);
+void				print_correct_error(t_tag tag, t_data *data);
 void				malloc_error(t_data *data);
 // lexer.c
 void				lexer(t_data *data, char *input);
