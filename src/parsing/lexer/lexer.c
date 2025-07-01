@@ -14,9 +14,12 @@
 
 void	lexer_error(t_data *data)
 {
+	int status;
+
+	status = data->shell->status;
 	free_shell(data->shell);
 	rl_clear_history();
-	exit(EXIT_FAILURE);
+	exit(status);
 }
 
 void	lexer(t_data *data, char *input)

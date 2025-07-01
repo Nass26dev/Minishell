@@ -47,7 +47,7 @@ void	error_checker(t_data *data)
 		if (tag_is_operator(current->tag) && current->next)
 		{
 			if (tag_is_operator(current->next->tag))
-			{
+      {
 				print_correct_error(current->next->tag, data);
 				free_tokens(&data->tokens);
 				data->error = true;

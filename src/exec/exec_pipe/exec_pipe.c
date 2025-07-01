@@ -3,27 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/30 16:11:42 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 16:55:25 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
-
-static void	close_pipes(t_exec *exec, int pipefd[2], int pipe)
-{
-	close_fds(exec);
-	exec->infd = STDIN_FILENO;
-	exec->outfd = STDOUT_FILENO;
-	if (pipe == 1)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
-	}
-}
 
 static int	pipe_waitpid_process(pid_t pid[2])
 {
@@ -66,10 +54,28 @@ static void	handle_pipe_process(t_exec *exec)
 	}
 }
 
+static void	handle_pipe_child_process(t_exec *exec, int pipefd[2], int fd)
+{
+	setup_child_signals();
+	while (exec->current && (is_redirection(exec->current->tag)
+			&& exec->current->tag != HEREDOC))
+		exec = exec_redir_pipe(exec);
+	if (exec->current)
+		handle_redirections(exec, pipefd, fd);
+	if (exec-> current && exec->current->tag == CMD)
+		handle_pipe_process(exec);
+	else if (exec-> current && exec->current->tag == PIPE && fd == 0)
+		exec->shell->status = exec_node(exec);
+	free_exec(exec);
+	exit(exec->shell->status);
+}
+
 static int	exec_pipe_fork(t_exec *exec, int pipefd[2], pid_t pid[2], int fd)
 {
 	while (exec->current && exec->current->tag == HEREDOC)
 		exec = exec_redir_pipe(exec);
+	if (!exec->current)
+		close_pipes(exec, pipefd, 1);
 	pid[fd] = fork();
 	if (pid[fd] == -1)
 	{
@@ -78,20 +84,7 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], pid_t pid[2], int fd)
 		return (handle_fork_error(pipefd, errno, 1));
 	}
 	if (pid[fd] == 0)
-	{
-		setup_child_signals();
-		while (exec->current && (is_redirection(exec->current->tag)
-				&& exec->current->tag != HEREDOC))
-			exec = exec_redir_pipe(exec);
-		if (exec->current)
-			handle_redirections(exec, pipefd, fd);
-		if (exec-> current && exec->current->tag == CMD)
-			handle_pipe_process(exec);
-		else if (exec-> current && exec->current->tag == PIPE && fd == 0)
-			exec->shell->status = exec_node(exec);
-		free_exec(exec);
-		exit(exec->shell->status);
-	}
+		handle_pipe_child_process(exec, pipefd, fd);
 	return (0);
 }
 
