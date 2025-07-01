@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 14:18:24 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 14:36:58 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,31 @@ bool	else_case(char *input, int *index, t_data *data)
 	return (false);
 }
 
+bool nb_redir(char *input, int i, t_data *data)
+{
+	if (input[i] == '<' || input[i] == '>')
+	{
+		if (input[i + 1] && input[i + 1] == '<')
+		{
+			if (input[i + 2] && input[i + 2] == '<')
+			{
+				print_correct_error(HEREDOC, data);	
+				return (true);
+			}
+		}
+		else if (input[i + 1] && input[i + 1] == '>')
+		{
+			if (input[i + 2] && input[i + 2] == '>')
+			{
+				print_correct_error(APPEND, data);	
+				return (true);
+			}
+		}
+		i++;
+	}
+	return (false);
+}
+
 bool	check_redir_error(char *input, t_data *data)
 {
 	int	i;
@@ -76,7 +101,7 @@ bool	check_redir_error(char *input, t_data *data)
 			while (input[i] != '"' && input[i])
 				i++;
 		}
-		if (else_case(input, &i, data))
+		if (else_case(input, &i, data) || nb_redir(input, i, data))
 			return (true);
 		i++;
 	}
