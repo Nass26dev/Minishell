@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 16:01:07 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:18:41 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	lexer_expander_checker(t_data *data, char *input)
 	return (0);
 }
 
-bool	else_case(char *input, int *index)
+bool	else_case(char *input, int *index, t_data *data)
 {
 	int	i;
 
@@ -44,18 +44,18 @@ bool	else_case(char *input, int *index)
 		if (input[i + 1] == '|' || input[i + 1] == '&')
 		{
 			if (input[i + 1] == '|')
-				print_correct_error(PIPE);
-			if (input[i] == '&' && input[i + 1] == '&')
-				print_correct_error(AND);
-			if (input[i] == '&')
-				print_correct_error(13);
+				print_correct_error(PIPE, data);
+			else if (input[i] == '&' && input[i + 1] == '&')
+				print_correct_error(AND, data);
+			else if (input[i] == '&')
+				print_correct_error(13, data);
 			return (true);
 		}
 	}
 	return (false);
 }
 
-bool	check_redir_error(char *input)
+bool	check_redir_error(char *input, t_data *data)
 {
 	int	i;
 
@@ -67,7 +67,7 @@ bool	check_redir_error(char *input)
 		if (char_is_redir(input[i]) && input[i + 1] && input[i + 1] == ' '
 			&& input[i + 2] && is_operator(input[i + 2]))
 		{
-			print_correct_error(find_correct_tag(input[i]));
+			print_correct_error(find_correct_tag(input[i]), data);
 			return (true);
 		}
 		if (input[i] == '"')
@@ -76,7 +76,7 @@ bool	check_redir_error(char *input)
 			while (input[i] != '"' && input[i])
 				i++;
 		}
-		if (else_case(input, &i))
+		if (else_case(input, &i, data))
 			return (true);
 		i++;
 	}
@@ -86,7 +86,7 @@ bool	check_redir_error(char *input)
 bool	mltpl_check(t_data *data, char *input)
 {
 	if (!input[0] || is_only_spaces(input) || is_only_quotes(input)
-		|| check_redir_error(input))
+		|| check_redir_error(input, data))
 	{
 		free(input);
 		return (true);

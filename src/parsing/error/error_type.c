@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:11:01 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 13:40:07 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:16:41 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	malloc_error(t_data *data)
 	exit(EXIT_FAILURE);
 }
 
-void	print_correct_error(t_tag tag)
+void	print_correct_error(t_tag tag, t_data *data)
 {
 	ft_putstr_fd("syntax error near unexpected token « ", STDERR_FILENO);
 	if (tag == AND)
@@ -47,4 +47,5 @@ void	print_correct_error(t_tag tag)
 		ft_putstr_fd("> »\n", STDERR_FILENO);
 	if (tag == 13)
 		ft_putstr_fd("& »\n", STDERR_FILENO);
+	data->shell->status = 2;
 }
