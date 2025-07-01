@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 19:06:08 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:18:24 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ bool	else_case(char *input, int *index)
 bool	mltpl_check(t_data *data, char *input)
 {
 	if (!input[0] || is_only_spaces(input) || is_only_quotes(input))
-	{	
+	{
 		free(input);
 		return (true);
 	}

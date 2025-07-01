@@ -6,14 +6,14 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/30 16:55:25 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 14:16:18 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "builtin.h"
 
-static int	pipe_waitpid_process(pid_t pid[2])
+static int	pipe_waitpid_process(pid_t pid[2], int last_pipe)
 {
 	int	ret;
 	int	status1;
@@ -23,7 +23,9 @@ static int	pipe_waitpid_process(pid_t pid[2])
 	setup_waitpid_signals();
 	waitpid(pid[0], &status1, 0);
 	waitpid(pid[1], &status2, 0);
-	ret = return_process(status2);
+	ret = return_process(status2, last_pipe);
+	if (ret == 0)
+		ret = return_process(status1, last_pipe);
 	setup_interactive_signals();
 	return (ret);
 }
@@ -65,7 +67,7 @@ static void	handle_pipe_child_process(t_exec *exec, int pipefd[2], int fd)
 	if (exec-> current && exec->current->tag == CMD)
 		handle_pipe_process(exec);
 	else if (exec-> current && exec->current->tag == PIPE && fd == 0)
-		exec->shell->status = exec_node(exec);
+		exec->shell->status = exec_pipe(exec, 0);
 	free_exec(exec);
 	exit(exec->shell->status);
 }
@@ -88,7 +90,7 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], pid_t pid[2], int fd)
 	return (0);
 }
 
-int	exec_pipe(t_exec *exec)
+int	exec_pipe(t_exec *exec, int last_pipe)
 {
 	int		pipefd[2];
 	pid_t	pid[2];
@@ -110,6 +112,6 @@ int	exec_pipe(t_exec *exec)
 		return (FAIL_FORK + errno);
 	exec->current = current;
 	close_pipes(exec, pipefd, 1);
-	exec->shell->status = pipe_waitpid_process(pid);
+	exec->shell->status = pipe_waitpid_process(pid, last_pipe);
 	return (exec->shell->status);
 }

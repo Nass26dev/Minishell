@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/30 18:29:15 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:18:37 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	exec_extern_cmd(t_exec *exec, char *cmd);
 int		cmd_is_valid(t_exec *exec);
 void	dup_fds(t_exec *exec, char *cmd);
 void	close_fds(t_exec *exec);
-int		return_process(int status);
+int		return_process(int status, int last_pipe);
 
 /*find_cmd_path.c*/
 char	*find_cmd_path(char *cmd_name, t_vector *env);
@@ -83,7 +83,7 @@ void	readline_heredoc(t_exec *exec, int fd);
 bool	reopen_fd_read(int *fd, char *tmp_path);
 
 /*exec_pipe.c*/
-int		exec_pipe(t_exec *exec);
+int		exec_pipe(t_exec *exec, int last_pipe);
 
 /*exec_pipe_redirs.c*/
 void	handle_redirections(t_exec *exec, int pipefd[2], int fd);
@@ -96,6 +96,6 @@ void	close_pipes(t_exec *exec, int pipefd[2], int pipe);
 int		exec_operator(t_exec *exec);
 
 /*parsing*/
-bool			is_redirection(t_tag tag);
+bool	is_redirection(t_tag tag);
 
 #endif

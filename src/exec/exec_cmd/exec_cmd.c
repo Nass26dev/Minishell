@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/30 14:43:40 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 14:00:08 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	waitpid_process(t_exec	*exec, pid_t pid)
 
 	setup_waitpid_signals();
 	waitpid(pid, &exec->shell->status, 0);
-	ret = return_process(exec->shell->status);
+	ret = return_process(exec->shell->status, 1);
 	exec->shell->status = ret;
 	setup_interactive_signals();
 	return (ret);
