@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 14:18:01 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 18:33:33 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	lexer(t_data *data, char *input)
 	i = 0;
 	while (input[i] != 0)
 	{
+		while (ft_isspace(input[i]))
+		{
+			set_space_to_token(&data->tokens);
+			i++;
+		}
 		if (is_operator(input[i]))
 			i += extract_operator(data, input, i);
 		else if (input[i] == '\'' || input[i] == '"')
@@ -39,12 +44,7 @@ void	lexer(t_data *data, char *input)
 			i += extract_word(data, input, i);
 		if (data->error == true)
 			return ;
-		if (ft_isspace(input[i]))
-		{
-			set_space_to_token(&data->tokens);
-			i++;
-		}
-		else if (!data->tokens)
+		if (!data->tokens)
 			lexer_error(data);
 	}
 }

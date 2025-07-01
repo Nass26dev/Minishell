@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/01 13:59:20 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 18:11:22 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	return_process(int status, int last_pipe)
 	else if (WIFSIGNALED(status))
 	{
 		signal = WTERMSIG(status);
-		if (signal == SIGINT && last_pipe == 1)
+		if (signal == SIGINT)
 			write(2, "\n", 1);
 		if (signal == SIGQUIT && last_pipe == 1)
 			write(2, "Quit (core dumped)\n", 20);
