@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/01 14:16:18 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 14:27:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	pipe_waitpid_process(pid_t pid[2], int last_pipe)
 	waitpid(pid[0], &status1, 0);
 	waitpid(pid[1], &status2, 0);
 	ret = return_process(status2, last_pipe);
-	if (ret == 0)
+	if (ret == 0 && WTERMSIG(status1) == SIGINT)
 		ret = return_process(status1, last_pipe);
 	setup_interactive_signals();
 	return (ret);
