@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 15:36:43 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 15:54:16 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ bool nb_redir(char *input, t_data *data)
 	{
 		if (input[i] == '>' && input[i + 1] == '<')
 			return (true_exit(REDIR_IN, data));
+		if (input[i] == '<' && input[i + 1] == '>')
+			return (true_exit(REDIR_IN, data));	
 		if (input[i] == '<' || input[i] == '>')
 		{
 			if (input[i + 1] && (input[i + 1] == '<' || input[i + 1] == '>'))
