@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 14:36:58 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 15:36:43 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,27 @@ bool	else_case(char *input, int *index, t_data *data)
 	return (false);
 }
 
-bool nb_redir(char *input, int i, t_data *data)
+bool true_exit(t_tag tag, t_data *data)
 {
-	if (input[i] == '<' || input[i] == '>')
+	print_correct_error(tag, data);	
+	return (true);	
+}
+
+bool nb_redir(char *input, t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (input[i])
 	{
-		if (input[i + 1] && input[i + 1] == '<')
+		if (input[i] == '>' && input[i + 1] == '<')
+			return (true_exit(REDIR_IN, data));
+		if (input[i] == '<' || input[i] == '>')
 		{
-			if (input[i + 2] && input[i + 2] == '<')
+			if (input[i + 1] && (input[i + 1] == '<' || input[i + 1] == '>'))
 			{
-				print_correct_error(HEREDOC, data);	
-				return (true);
-			}
-		}
-		else if (input[i + 1] && input[i + 1] == '>')
-		{
-			if (input[i + 2] && input[i + 2] == '>')
-			{
-				print_correct_error(APPEND, data);	
-				return (true);
+				if (input[i + 2] && (input[i + 2] == '<' || input[i + 2] == '>'))
+					return (true_exit(find_correct_tag(input[i]), data));
 			}
 		}
 		i++;
@@ -101,7 +104,7 @@ bool	check_redir_error(char *input, t_data *data)
 			while (input[i] != '"' && input[i])
 				i++;
 		}
-		if (else_case(input, &i, data) || nb_redir(input, i, data))
+		if (else_case(input, &i, data))
 			return (true);
 		i++;
 	}
@@ -111,7 +114,7 @@ bool	check_redir_error(char *input, t_data *data)
 bool	mltpl_check(t_data *data, char *input)
 {
 	if (!input[0] || is_only_spaces(input) || is_only_quotes(input)
-		|| check_redir_error(input, data))
+		|| check_redir_error(input, data) || nb_redir(input, data))
 	{
 		free(input);
 		return (true);
