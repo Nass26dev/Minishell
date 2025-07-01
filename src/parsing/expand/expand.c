@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:18:39 by nass              #+#    #+#             */
-/*   Updated: 2025/06/30 13:39:59 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/30 19:25:28 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	expander(t_data *data)
 			{
 				if (expand_token_value(tmp->value, &tmp, data))
 					malloc_error(data);
-				if (!tmp->value[0])
+				if (!tmp && !tmp->value[0])
 					tmp = delete_empty_node(data, tmp);
 			}
 			tmp->tag = WORD;

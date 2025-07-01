@@ -28,7 +28,7 @@ int	lexer_expander_checker(t_data *data, char *input)
 	return (0);
 }
 
-bool	else_case(char *input, int *index)
+bool	else_case(char *input, int *index, t_data *data)
 {
 	int	i;
 
@@ -44,100 +44,49 @@ bool	else_case(char *input, int *index)
 		if (input[i + 1] == '|' || input[i + 1] == '&')
 		{
 			if (input[i + 1] == '|')
-				print_correct_error(PIPE);
-			if (input[i] == '&' && input[i + 1] == '&')
-				print_correct_error(AND);
-			if (input[i] == '&')
-				print_correct_error(13);
+				print_correct_error(PIPE, data);
+			else if (input[i] == '&' && input[i + 1] == '&')
+				print_correct_error(AND, data);
+			else if (input[i] == '&')
+				print_correct_error(13, data);
 			return (true);
 		}
 	}
 	return (false);
 }
 
-// bool	check_redir_error(char *input, t_data *data)
-// {
-// 	int	i;
-// 	int count;
+bool	check_redir_error(char *input, t_data *data)
+{
+	int	i;
 
-// 	count = 0;
-// 	i = 0;
-// 	while (input[i])
-// 	{
-// 		count = 0;
-// 		if (input[i] == '<')
-// 		{
-// 			while (input[i] == '<')
-// 			{
-// 				count++;
-// 				i++;
-// 			}
-// 			if (count > 2)
-// 			{
-// 				print_correct_error(HEREDOC);
-// 				data->shell->status = 2;
-// 				return (true);
-// 			}
-// 		}
-// 		else if (input[i] == '>')
-// 		{
-// 			while (input[i] == '>')
-// 			{
-// 				count++;
-// 				i++;
-// 			}
-// 			if (count > 2)
-// 			{
-// 				print_correct_error(APPEND);
-// 				data->shell->status = 2;
-// 				return (true);
-// 			}
-// 		}
-// 		else
-// 			i++;
-// 	}
-// 	i = 0;
-// 	while (input[i])
-// 	{
-// 		// if (input[i] == '<' && input[i + 1] == '<' && input[i + 2] && !input[i + 2])
-// 		// {
-// 		// 	print_correct_error(HEREDOC);
-// 		// 	data->shell->status = 2;
-// 		// 	return (true);
-// 		// }
-// 		// {
-// 		// 	print_correct_error(HEREDOC);
-// 		// 	data->shell->status = 2;
-// 		// 	return (true);
-// 		// }
-// 		if (char_is_redir(input[i]) && char_is_redir(input[i + 1]))
-// 			i++;
-// 		if (char_is_redir(input[i]) && input[i + 1] && input[i + 1] == ' '
-// 			&& input[i + 2] && is_operator(input[i + 2]))
-// 		{
-// 			print_correct_error(find_correct_tag(input[i]));
-// 			data->shell->status = 2;
-// 			return (true);
-// 		}
-// 		if (input[i] == '"')
-// 		{
-// 			i++;
-// 			while (input[i] != '"' && input[i])
-// 				i++;
-// 		}
-// 		if (else_case(input, &i))
-// 		{
-// 			data->shell->status = 2;
-// 			return (true);
-// 		}
-// 		i++;
-// 	}
-// 	return (false);
-// }
+	i = 0;
+	while (input[i])
+	{
+		if (char_is_redir(input[i]) && char_is_redir(input[i + 1]))
+			i++;
+		if (char_is_redir(input[i]) && input[i + 1] && input[i + 1] == ' '
+			&& input[i + 2] && is_operator(input[i + 2]))
+		{
+			print_correct_error(find_correct_tag(input[i]), data);
+			return (true);
+		}
+		if (input[i] == '"')
+		{
+			i++;
+			while (input[i] != '"' && input[i])
+				i++;
+		}
+		if (else_case(input, &i, data))
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 bool	mltpl_check(t_data *data, char *input)
 {
-	if (!input[0] || is_only_spaces(input) || is_only_quotes(input))
+	if (!input[0] || is_only_spaces(input) || is_only_quotes(input)
+		|| check_redir_error(input, data))
 	{
 		free(input);
 		return (true);
