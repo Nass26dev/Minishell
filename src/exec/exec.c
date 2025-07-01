@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/01 14:02:54 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 17:53:03 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	exec_node(t_exec *exec)
 	int	ret;
 
 	if (!exec->current)
-		return (0);
+		return (exec->shell->status);
 	ret = 0;
 	if (exec->current->tag == AND || exec->current->tag == OR)
 		ret = exec_operator(exec);
