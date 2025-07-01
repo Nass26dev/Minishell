@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/30 17:37:17 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:18:01 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	lexer_error(t_data *data)
 {
-	int status;
+	int	status;
 
 	status = data->shell->status;
 	free_shell(data->shell);

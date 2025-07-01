@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:40:19 by nass              #+#    #+#             */
-/*   Updated: 2025/06/30 18:15:55 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:17:44 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ampersand(t_data *data, char *input, int i)
 	else
 	{
 		syntax_error(data, "syntax error near unexpected token « & »\n");
-		data->shell->status = 2;		
+		data->shell->status = 2;
 	}
 	return (ret);
 }
