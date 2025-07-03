@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:11:01 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 14:16:41 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:27:25 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,32 @@ void	print_correct_error(t_tag tag, t_data *data)
 	if (tag == 13)
 		ft_putstr_fd("& »\n", STDERR_FILENO);
 	data->shell->status = 2;
+}
+
+bool	check_redir_error(char *input, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (char_is_redir(input[i]) && char_is_redir(input[i + 1]))
+			i++;
+		if (char_is_redir(input[i]) && input[i + 1] && input[i + 1] == ' '
+			&& input[i + 2] && is_operator(input[i + 2]))
+		{
+			print_correct_error(find_correct_tag(input[i]), data);
+			return (true);
+		}
+		if (input[i] == '"')
+		{
+			i++;
+			while (input[i] != '"' && input[i])
+				i++;
+		}
+		if (else_case(input, &i, data))
+			return (true);
+		i++;
+	}
+	return (false);
 }

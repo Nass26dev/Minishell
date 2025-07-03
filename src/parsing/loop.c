@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 15:56:19 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:28:57 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,9 @@ bool	else_case(char *input, int *index, t_data *data)
 	return (false);
 }
 
-bool true_exit(t_tag tag, t_data *data)
+bool	nb_redir(char *input, t_data *data)
 {
-	print_correct_error(tag, data);	
-	return (true);	
-}
-
-bool nb_redir(char *input, t_data *data)
-{
-	int i;
+	int	i;
 
 	i = 0;
 	while (input[i])
@@ -71,43 +65,16 @@ bool nb_redir(char *input, t_data *data)
 		if (input[i] == '>' && input[i + 1] == '<')
 			return (true_exit(REDIR_OUT, data));
 		if (input[i] == '<' && input[i + 1] == '>')
-			return (true_exit(REDIR_IN, data));	
+			return (true_exit(REDIR_IN, data));
 		if (input[i] == '<' || input[i] == '>')
 		{
 			if (input[i + 1] && (input[i + 1] == '<' || input[i + 1] == '>'))
 			{
-				if (input[i + 2] && (input[i + 2] == '<' || input[i + 2] == '>'))
+				if (input[i + 2] && (input[i + 2] == '<' || input[i
+							+ 2] == '>'))
 					return (true_exit(find_correct_tag(input[i]), data));
 			}
 		}
-		i++;
-	}
-	return (false);
-}
-
-bool	check_redir_error(char *input, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (char_is_redir(input[i]) && char_is_redir(input[i + 1]))
-			i++;
-		if (char_is_redir(input[i]) && input[i + 1] && input[i + 1] == ' '
-			&& input[i + 2] && is_operator(input[i + 2]))
-		{
-			print_correct_error(find_correct_tag(input[i]), data);
-			return (true);
-		}
-		if (input[i] == '"')
-		{
-			i++;
-			while (input[i] != '"' && input[i])
-				i++;
-		}
-		if (else_case(input, &i, data))
-			return (true);
 		i++;
 	}
 	return (false);

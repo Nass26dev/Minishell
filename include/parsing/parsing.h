@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 14:17:05 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:29:08 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,15 @@ int					extract_quoted_string(t_data *data, char *input, int i);
 int					extract_variable(t_data *data, const char *input, int i);
 int					extract_word(t_data *data, const char *input, int i);
 int					extract_space(t_data *data, const char *input, int i);
+// error_type.c
+bool				check_redir_error(char *input, t_data *data);
 // error_checker.c
 void				error_checker(t_data *data);
 void				syntax_error(t_data *data, char *error);
 void				print_correct_error(t_tag tag, t_data *data);
 void				malloc_error(t_data *data);
+// loop.c
+bool				else_case(char *input, int *index, t_data *data);
 // lexer.c
 void				lexer(t_data *data, char *input);
 // extract utils_2.c
@@ -128,6 +132,7 @@ void				delete_node(t_token **head, t_token *node_to_delete);
 bool				is_redirection(t_tag tag);
 bool				is_var(char *value);
 // utils.c
+bool				true_exit(t_tag tag, t_data *data);
 void				write_fd(char *cmd1, char *cmd2, char *msg, int fd);
 void				set_to_null(t_expand *expand);
 char				*set_empty(void);
