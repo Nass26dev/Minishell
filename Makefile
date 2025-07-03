@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/07/03 15:57:11 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/07/03 16:05:01 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,8 +134,8 @@ $(NAME): $(LIBFT) $(OBJS) $(LIBFT_ALL)
 $(LIBFT): $(LIBFT_ALL)
 	@echo "$(MESSAGE_COLOR_YELLOW)Building libft... 🛠️$(MESSAGE_RESET)"
 	@$(MAKE) -C $(LIBFT_DIR)
-	@printf "\033[1;35mwaiting for minishell to compile... ["
-	@for i in $$(seq 1 6); do \
+	@printf "\033[1;35mwaiting for compile minishell... ["
+	@for i in $$(seq 1 10); do \
 		printf "#"; \
 		sleep 0.5; \
 	done; \
