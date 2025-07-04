@@ -6,12 +6,17 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:56:33 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 14:56:51 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 15:24:59 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <fcntl.h>
+
+int	event_hook(void)
+{
+	return (1);
+}
 
 int	readline_heredoc(t_exec *exec, int fd, char *tmp_path)
 {
@@ -53,72 +58,28 @@ bool	reopen_fd_read(int *fd, char *tmp_path)
 	return (true);
 }
 
-static char	*add_num(int i)
+void	unlink_one_heredoc(t_exec *exec)
 {
-	char	*temp;
-	char	*filename;
-
-	temp = ft_itoa(i);
-	if (!temp)
-		return (NULL);
-	filename = ft_strjoin(BASE_FILENAME, temp);
-	if (!filename)
+	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
+	free(exec->heredoc->data[exec->heredoc->count - 1]);
+	exec->heredoc->count--;
+	if (exec->heredoc->count == 0)
 	{
-		free(temp);
-		return (NULL);
+		free(exec->heredoc->data);
+		free(exec->heredoc);
+		exec->heredoc = NULL;
 	}
-	free(temp);
-	return (filename);
 }
 
-static char	*create_file(void)
+void	set_new_infd(t_exec *exec, int fd)
 {
-	int		fd;
-	char	*filename;
-	int		i;
-
-	i = 1;
-	while (i <= MAX_TRIES)
+	if (exec->infd > 2)
+		close(exec->infd);
+	if (exec->current->left)
+		exec->infd = fd;
+	else
 	{
-		if (i == 1)
-			filename = ft_strdup(BASE_FILENAME);
-		else
-			filename = add_num(i);
-		if (!filename)
-			return (NULL);
-		fd = open(filename, O_CREAT | O_EXCL, 0777);
-		if (fd != -1)
-		{
-			close(fd);
-			return (filename);
-		}
-		i++;
-		free(filename);
+		close(fd);
+		exec->infd = STDIN_FILENO;
 	}
-	return (NULL);
-}
-
-int	create_heredoc(t_exec **exec, char **tmp_path, int *fd)
-{
-	*tmp_path = create_file();
-	if (!*tmp_path)
-	{
-		write_fd(*tmp_path, NULL, "Failed to create random path in heredoc", 2);
-		return (1);
-	}
-	*fd = open(*tmp_path, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
-	if (*fd == -1)
-	{
-		write_fd(*tmp_path, NULL, strerror(errno), 2);
-		return (1);
-	}
-	if (!(*exec)->heredoc)
-		(*exec)->heredoc = vector_create(1);
-	if (!(*exec)->heredoc || vector_add((*exec)->heredoc, *tmp_path) == false)
-	{
-		close(*fd);
-		free(*tmp_path);
-		return (1);
-	}
-	return (0);
 }

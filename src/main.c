@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:33:11 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/04 15:00:47 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 15:15:09 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	display_welcome_message(void)
 
 bool	check_error(t_shell *shell, int argc, char **envp)
 {
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)
-		|| !isatty(STDERR_FILENO))
-	{
-		ft_putstr_fd("minishell: This program ", STDERR_FILENO);
-		ft_putstr_fd("must be run in a standard terminal\n", STDERR_FILENO);
-		return (1);
-	}
+	// if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)
+	// 	|| !isatty(STDERR_FILENO))
+	// {
+	// 	ft_putstr_fd("minishell: This program ", STDERR_FILENO);
+	// 	ft_putstr_fd("must be run in a standard terminal\n", STDERR_FILENO);
+	// 	return (1);
+	// }
 	if (argc != 1)
 	{
 		ft_putstr_fd("minishell: no arguments allowed\n", STDERR_FILENO);

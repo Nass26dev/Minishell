@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/07/04 14:45:37 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/07/04 15:25:39 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRCS =	src/main.c \
 		src/exec/exec_cmd/exec_cmd_utils.c \
 		src/exec/exec_redir/exec_redir.c \
 		src/exec/exec_redir/heredoc.c \
+		src/exec/exec_redir/heredoc_creation.c \
 		src/exec/exec_pipe/exec_pipe.c \
 		src/exec/exec_pipe/exec_pipe_redirs.c \
 		src/exec/exec_pipe/exec_pipe_utils.c \

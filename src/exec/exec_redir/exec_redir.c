@@ -6,17 +6,12 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 14:57:06 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 15:25:51 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <fcntl.h>
-
-static int	event_hook(void)
-{
-	return (1);
-}
 
 int	handle_redir_in(t_exec *exec)
 {
@@ -32,32 +27,6 @@ int	handle_redir_in(t_exec *exec)
 		close(exec->infd);
 	exec->infd = fd;
 	return (0);
-}
-
-static void	unlink_one_heredoc(t_exec *exec)
-{
-	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
-	free(exec->heredoc->data[exec->heredoc->count - 1]);
-	exec->heredoc->count--;
-	if (exec->heredoc->count == 0)
-	{
-		free(exec->heredoc->data);
-		free(exec->heredoc);
-		exec->heredoc = NULL;
-	}
-}
-
-static void	set_new_infd(t_exec *exec, int fd)
-{
-	if (exec->infd > 2)
-		close(exec->infd);
-	if (exec->current->left)
-		exec->infd = fd;
-	else
-	{
-		close(fd);
-		exec->infd = STDIN_FILENO;
-	}
 }
 
 /*Creates random path with prefix \tmp\, then open tmp file.
