@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/07/04 18:35:49 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/07/04 18:48:47 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS =	src/main.c \
 		src/parsing/expand/is.c \
 		src/parsing/expand/redir_value.c \
 		src/parsing/expand/cmd.c \
+		src/parsing/heredoc.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/builtin/env.c \

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/03 15:29:08 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/04 19:02:36 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 
 # ifndef PROMPT
 #  define PROMPT "\033[0;35mMinishell$\033[0m "
+# endif
+# ifndef BASE_FILENAME
+#  define BASE_FILENAME "/tmp/heredoc"
+# endif
+# ifndef MAX_TRIES
+#  define MAX_TRIES INT_MAX
 # endif
 
 typedef struct s_token
@@ -178,5 +184,8 @@ void				change_heredoc_value(t_data *data);
 void				create_cmd(t_data *data);
 // extract.c
 t_token				*split_tokens(char *content);
+// heredoc.c
+void change_heredoc(t_data *data);
+int		event_hook(void);
 
 #endif
