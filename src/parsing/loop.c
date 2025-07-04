@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 14:36:58 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/04 14:12:16 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int	minishell_loop(t_shell *shell)
 	if (mltpl_check(&data, input))
 		return (0);
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
+	// print_ast(data.ast, 0);
 	free_tokens(&data.tokens);
 	if (data.ast)
 		data.shell->status = execute(data.ast, data.shell);

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/04 14:11:10 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,63 +104,63 @@ t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 	return (node);
 }
 
-// void	print_indent(int depth)
-// {
-// 	for (int i = 0; i < depth; i++)
-// 		printf(" ");
-// }
+void	print_indent(int depth)
+{
+	for (int i = 0; i < depth; i++)
+		printf(" ");
+}
 
-// void	print_node(t_ast *node)
-// {
-// 	if (!node)
-// 	{
-// 		printf("(null)\n");
-// 		return ;
-// 	}
-// 	if (node->tag == AND)
-// 		printf("AND\n");
-// 	else if (node->tag == OR)
-// 		printf("OR\n");
-// 	else if (node->tag == PIPE)
-// 		printf("PIPE\n");
-// 	else if (node->tag == CMD)
-// 	{
-// 		printf("CMD:");
-// 		if (node->command[0])
-// 		{
-// 			for (int i = 0; node->command[i]; i++)
-// 				printf(" | %s", node->command[i]);
-// 			printf("\n");
-// 		}
-// 		else
-// 			printf(" (null)\n");
-// 	}
-// 	else if (node->tag == REDIR_IN)
-// 		printf("REDIR IN: %s\n",
-// 			node->command[0] ? node->command[0] : "(null)");
-// 	else if (node->tag == REDIR_OUT)
-// 		printf("REDIR OUT: %s\n",
-// 			node->command[0] ? node->command[0] : "(null)");
-// 	else if (node->tag == APPEND)
-// 		printf("APPEND: %s\n", node->command[0] ? node->command[0] : "(null)");
-// 	else if (node->tag == HEREDOC)
-// 		printf("HEREDOC: %s\n", node->command[0] ? node->command[0] : "(null)");
-// 	else
-// 		printf("UNKNOWN (%d)\n", node->tag);
-// }
+void	print_node(t_ast *node)
+{
+	if (!node)
+	{
+		printf("(null)\n");
+		return ;
+	}
+	if (node->tag == AND)
+		printf("AND\n");
+	else if (node->tag == OR)
+		printf("OR\n");
+	else if (node->tag == PIPE)
+		printf("PIPE\n");
+	else if (node->tag == CMD)
+	{
+		printf("CMD:");
+		if (node->command[0])
+		{
+			for (int i = 0; node->command[i]; i++)
+				printf(" | %s", node->command[i]);
+			printf("\n");
+		}
+		else
+			printf(" (null)\n");
+	}
+	else if (node->tag == REDIR_IN)
+		printf("REDIR IN: %s\n",
+			node->command[0] ? node->command[0] : "(null)");
+	else if (node->tag == REDIR_OUT)
+		printf("REDIR OUT: %s\n",
+			node->command[0] ? node->command[0] : "(null)");
+	else if (node->tag == APPEND)
+		printf("APPEND: %s\n", node->command[0] ? node->command[0] : "(null)");
+	else if (node->tag == HEREDOC)
+		printf("HEREDOC: %s\n", node->command[0] ? node->command[0] : "(null)");
+	else
+		printf("UNKNOWN (%d)\n", node->tag);
+}
 
-// #define INDENT_STEP 4
+#define INDENT_STEP 4
 
-// void	print_ast(t_ast *node, int depth)
-// {
-// 	if (!node)
-// 		return ;
-// 	if (depth == 0)
-// 		printf("vers le haut = droite , vers le bas = gauche\n");
-// 	if (node->right)
-// 		print_ast(node->right, depth + INDENT_STEP);
-// 	print_indent(depth);
-// 	print_node(node);
-// 	if (node->left)
-// 		print_ast(node->left, depth + INDENT_STEP);
-// }
+void	print_ast(t_ast *node, int depth)
+{
+	if (!node)
+		return ;
+	if (depth == 0)
+		printf("vers le haut = droite , vers le bas = gauche\n");
+	if (node->right)
+		print_ast(node->right, depth + INDENT_STEP);
+	print_indent(depth);
+	print_node(node);
+	if (node->left)
+		print_ast(node->left, depth + INDENT_STEP);
+}

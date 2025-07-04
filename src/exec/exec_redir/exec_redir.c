@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 13:15:34 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 14:34:25 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	handle_heredoc(t_exec *exec)
 		return (1);
 	setup_heredoc_signals();
 	rl_event_hook = event_hook;
-	ret = readline_heredoc(exec, fd, tmp_path) != 0;
+	ret = readline_heredoc(exec, fd, tmp_path);
 	rl_event_hook = NULL;
 	setup_interactive_signals();
-	if (ret != 0)
+	if (ret != 0 && ret != 130)
 			return (exec->shell->status);
 	if (reopen_fd_read(&fd, tmp_path) == false)
 		return (1);
@@ -76,7 +76,7 @@ int	handle_heredoc(t_exec *exec)
 		close(fd);
 		exec->infd = STDIN_FILENO;
 	}
-	return (0);
+	return (exec->shell->status);
 }
 
 int	handle_redir_out(t_exec *exec)
