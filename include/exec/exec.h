@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/01 14:18:37 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 15:25:17 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		execute(t_ast *ast, t_shell *shell);
 void	free_all(t_exec *exec);
 void	free_exec(t_exec *exec);
 void	unlink_heredoc(t_vector *vector);
-int		handle_fork_error(int pipefd[2], int error, int pipe);
+int		handle_fork_error(t_exec *exec, int pipefd[2], int error, int pipe);
 void	handle_dup_error(t_exec *exec, char *cmd, int infd, int outfd);
 
 /*exec_cmd.c*/
@@ -78,9 +78,14 @@ int		handle_append(t_exec *exec);
 int		exec_redir(t_exec *exec);
 
 /*heredoc.c*/
-int		create_heredoc(t_exec **exec, char **tmp_path, int *fd);
-void	readline_heredoc(t_exec *exec, int fd);
+int		event_hook(void);
+int		readline_heredoc(t_exec *exec, int fd, char *tmp_path);
 bool	reopen_fd_read(int *fd, char *tmp_path);
+void	unlink_one_heredoc(t_exec *exec);
+void	set_new_infd(t_exec *exec, int fd);
+
+/*heredoc_creation.c*/
+int		create_heredoc(t_exec **exec, char **tmp_path, int *fd);
 
 /*exec_pipe.c*/
 int		exec_pipe(t_exec *exec, int last_pipe);

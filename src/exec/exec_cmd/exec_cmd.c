@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/01 14:00:08 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 12:52:27 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	exec_cmd(t_exec *exec)
 	{
 		pid = fork();
 		if (pid == -1)
-			return (handle_fork_error(NULL, errno, 0));
+			return (handle_fork_error(exec, NULL, errno, 0));
 		if (pid == 0)
 			handle_child_process(exec);
 		close_fds(exec);
