@@ -6,12 +6,17 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/29 22:18:58 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 12:40:04 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <fcntl.h>
+
+static int	event_hook(void)
+{
+	return (1);
+}
 
 int	handle_redir_in(t_exec *exec)
 {
@@ -38,11 +43,18 @@ int	handle_heredoc(t_exec *exec)
 {
 	char	*tmp_path;
 	int		fd;
+	int		ret;
 
 	tmp_path = NULL;
 	if (create_heredoc(&exec, &tmp_path, &fd) == 1)
 		return (1);
-	readline_heredoc(exec, fd);
+	setup_heredoc_signals();
+	rl_event_hook = event_hook;
+	ret = readline_heredoc(exec, fd, tmp_path) != 0;
+	rl_event_hook = NULL;
+	setup_interactive_signals();
+	if (ret != 0)
+			return (exec->shell->status);
 	if (reopen_fd_read(&fd, tmp_path) == false)
 		return (1);
 	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
@@ -109,7 +121,7 @@ int	exec_redir(t_exec *exec)
 			close(exec->infd);
 		if (exec->outfd > 2)
 			close(exec->outfd);
-		return (1);
+		return (exec->shell->status);
 	}
 	exec->current = exec->current->left;
 	return (exec_node(exec));

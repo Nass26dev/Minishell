@@ -6,14 +6,14 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:56:33 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 16:25:35 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 12:31:45 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <fcntl.h>
 
-void	readline_heredoc(t_exec *exec, int fd)
+int	readline_heredoc(t_exec *exec, int fd, char *tmp_path)
 {
 	char	*delimiter;
 	char	*line;
@@ -24,15 +24,22 @@ void	readline_heredoc(t_exec *exec, int fd)
 	{
 		line = readline("> ");
 		if (!line || ft_strcmp(line, delimiter) == 0)
+			break ;
+		if (g_received_signal == SIGINT)
 		{
-			free(line);
+			free(tmp_path);
+			close(fd);
+			unlink_heredoc(exec->heredoc);
+			g_received_signal = 0;
+			exec->shell->status = 130;
 			break ;
 		}
-		len = strlen(line);
+		len = ft_strlen(line);
 		write(fd, line, len);
 		write(fd, "\n", 1);
 		free(line);
 	}
+	return (exec->shell->status);
 }
 
 bool	reopen_fd_read(int *fd, char *tmp_path)
@@ -57,6 +64,11 @@ static char	*add_num(int i)
 	if (!temp)
 		return (NULL);
 	filename = ft_strjoin(BASE_FILENAME, temp);
+	if (!filename)
+	{
+		free(temp);
+		return (NULL);
+	}
 	free(temp);
 	return (filename);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:37:22 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 17:53:43 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:50:15 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_dup_error(t_exec *exec, char *cmd, int infd, int outfd)
 	exit (1);
 }
 
-int	handle_fork_error(int pipefd[2], int error, int pipe)
+int	handle_fork_error(t_exec *exec, int pipefd[2], int error, int pipe)
 {
 	int		len;
 	char	*msg;
@@ -46,7 +46,8 @@ int	handle_fork_error(int pipefd[2], int error, int pipe)
 		close(pipefd[0]);
 		close(pipefd[1]);
 	}
-	return (FAIL_FORK + errno);
+	exec->shell->status = FAIL_FORK + errno;
+	return (exec->shell->status);
 }
 
 void	unlink_heredoc(t_vector *vector)
@@ -70,25 +71,22 @@ void	unlink_heredoc(t_vector *vector)
 		free(vector->data);
 	}
 	free(vector);
+	vector = NULL;
 }
 
 void	free_exec(t_exec *exec)
 {
+	if (!exec)
+		return ;
 	if (exec->shell)
 		free_shell(exec->shell);
 	if (exec->root)
 		free_ast(exec->root);
-	if (exec->heredoc)
-		unlink_heredoc(exec->heredoc);
 }
 
 void	free_all(t_exec *exec)
 {
-	if (exec->shell)
-		free_shell(exec->shell);
-	if (exec->root)
-		free_ast(exec->root);
-	if (exec->heredoc)
-		unlink_heredoc(exec->heredoc);
+	if (exec)
+		free_exec(exec);
 	rl_clear_history();
 }

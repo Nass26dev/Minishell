@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:35 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/30 13:32:51 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 12:35:14 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ t_exec	*exec_redir_pipe(t_exec *exec)
 			close(exec->infd);
 		if (exec->outfd > 2)
 			close(exec->outfd);
-		free_exec(exec);
 		return (exec);
 	}
 	exec->current = exec->current->left;
