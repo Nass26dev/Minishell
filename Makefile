@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
 #    Updated: 2025/07/04 15:25:39 by eelissal         ###   ########lyon.fr    #
@@ -115,6 +115,7 @@ HEADER =	include/minishell.h \
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_ALL := $(filter-out $(LIBFT), $(shell find $(LIBFT_DIR) -type f))
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m
@@ -130,16 +131,16 @@ all: $(NAME)
 		echo "$(MESSAGE_COLOR_BLUE)everything is already up to date 😉$(MESSAGE_RESET)"; \
 	fi
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS) $(LIBFT_ALL)
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
 	@$(eval COMPILED := 1)
 
-$(LIBFT):
+$(LIBFT): $(LIBFT_ALL)
 	@echo "$(MESSAGE_COLOR_YELLOW)Building libft... 🛠️$(MESSAGE_RESET)"
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(MESSAGE_COLOR_GREEN)libft built! ✅$(MESSAGE_RESET)"
 
-$(OBJDIR)/%.o: src/%.c $(HEADER) $(LIBFT_DIR)
+$(OBJDIR)/%.o: src/%.c $(HEADER)
 	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
 	@mkdir -p $(OBJDIR) $(DEPDIR) $(SUBOBJDIR) $(SUBDEPDIR)
 	@$(CC) $(CFLAGS) -I$(LIBFT_DIR)/includes -Iinclude -Iinclude/parsing -Iinclude/exec -c $< -o $@
