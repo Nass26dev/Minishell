@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 12:40:04 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 13:15:34 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,13 @@ int	handle_heredoc(t_exec *exec)
 	}
 	if (exec->infd > 2)
 		close(exec->infd);
-	exec->infd = fd;
+	if (exec->current->left)
+		exec->infd = fd;
+	else
+	{
+		close(fd);
+		exec->infd = STDIN_FILENO;
+	}
 	return (0);
 }
 
