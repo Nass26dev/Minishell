@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/01 14:27:29 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 14:26:08 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,14 @@ static void	handle_pipe_child_process(t_exec *exec, int pipefd[2], int fd)
 static int	exec_pipe_fork(t_exec *exec, int pipefd[2], pid_t pid[2], int fd)
 {
 	while (exec->current && exec->current->tag == HEREDOC)
+	{
 		exec = exec_redir_pipe(exec);
+		if (exec->shell->status == 130)
+		{
+			close_pipes(exec, pipefd, 1);
+			return (exec->shell->status);
+		}
+	}
 	if (!exec->current)
 		close_pipes(exec, pipefd, 1);
 	pid[fd] = fork();
@@ -83,7 +90,7 @@ static int	exec_pipe_fork(t_exec *exec, int pipefd[2], pid_t pid[2], int fd)
 	{
 		if (fd == 1 && pid[0] > 0)
 			waitpid(pid[0], NULL, 0);
-		return (handle_fork_error(pipefd, errno, 1));
+		return (handle_fork_error(exec, pipefd, errno, 1));
 	}
 	if (pid[fd] == 0)
 		handle_pipe_child_process(exec, pipefd, fd);
@@ -104,12 +111,12 @@ int	exec_pipe(t_exec *exec, int last_pipe)
 	current = exec->current;
 	exec->current = exec->current->left;
 	if (exec_pipe_fork(exec, pipefd, pid, 0) != 0)
-		return (FAIL_FORK + errno);
+		return (exec->shell->status);
 	exec->current = current;
 	close_pipes(exec, pipefd, 0);
 	exec->current = exec->current->right;
 	if (exec_pipe_fork(exec, pipefd, pid, 1) != 0)
-		return (FAIL_FORK + errno);
+		return (exec->shell->status);
 	exec->current = current;
 	close_pipes(exec, pipefd, 1);
 	exec->shell->status = pipe_waitpid_process(pid, last_pipe);

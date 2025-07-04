@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:48:28 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 17:57:02 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/04 15:18:08 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	setup_child_signals(void)
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGPIPE, &sa, NULL);
 }
 
 void	setup_waitpid_signals(void)
