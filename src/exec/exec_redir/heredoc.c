@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:56:33 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 14:15:35 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/04 14:56:51 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ int	readline_heredoc(t_exec *exec, int fd, char *tmp_path)
 			break ;
 		if (g_received_signal == SIGINT)
 		{
-			// free(tmp_path);
-			// close(fd);
-			// unlink_heredoc(exec->heredoc);
 			g_received_signal = 0;
 			exec->shell->status = 130;
 			break ;

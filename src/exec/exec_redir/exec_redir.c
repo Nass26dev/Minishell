@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 14:34:25 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/04 14:57:06 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,32 @@ int	handle_redir_in(t_exec *exec)
 	return (0);
 }
 
+static void	unlink_one_heredoc(t_exec *exec)
+{
+	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
+	free(exec->heredoc->data[exec->heredoc->count - 1]);
+	exec->heredoc->count--;
+	if (exec->heredoc->count == 0)
+	{
+		free(exec->heredoc->data);
+		free(exec->heredoc);
+		exec->heredoc = NULL;
+	}
+}
+
+static void	set_new_infd(t_exec *exec, int fd)
+{
+	if (exec->infd > 2)
+		close(exec->infd);
+	if (exec->current->left)
+		exec->infd = fd;
+	else
+	{
+		close(fd);
+		exec->infd = STDIN_FILENO;
+	}
+}
+
 /*Creates random path with prefix \tmp\, then open tmp file.
 Gets delimiter from AST node. Reads heredoc content line
 by line and write content to tmp file.
@@ -54,28 +80,12 @@ int	handle_heredoc(t_exec *exec)
 	rl_event_hook = NULL;
 	setup_interactive_signals();
 	if (ret != 0 && ret != 130)
-			return (exec->shell->status);
+		return (exec->shell->status);
 	if (reopen_fd_read(&fd, tmp_path) == false)
 		return (1);
-	unlink(exec->heredoc->data[exec->heredoc->count - 1]);
-	free(exec->heredoc->data[exec->heredoc->count - 1]);
 	free(tmp_path);
-	exec->heredoc->count--;
-	if (exec->heredoc->count == 0)
-	{
-		free(exec->heredoc->data);
-		free(exec->heredoc);
-		exec->heredoc = NULL;
-	}
-	if (exec->infd > 2)
-		close(exec->infd);
-	if (exec->current->left)
-		exec->infd = fd;
-	else
-	{
-		close(fd);
-		exec->infd = STDIN_FILENO;
-	}
+	unlink_one_heredoc(exec);
+	set_new_infd(exec, fd);
 	return (exec->shell->status);
 }
 

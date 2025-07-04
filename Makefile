@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/30 16:59:39 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/07/04 14:45:37 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ SRCS =	src/main.c \
 		src/exec/clean_exec.c \
 		src/utils.c \
 		src/utils2.c \
-		src/signal.c \
+		src/signals/signal.c \
+		src/signals/heredoc_signal.c \
 		src/env.c \
 		src/vector.c \
 		src/clean.c \
@@ -73,6 +74,7 @@ MAKEDIR = make
 OBJDIR = make/objs
 SUBOBJDIR = make/objs/parsing \
 			make/objs/exec \
+			make/objs/signals \
 			make/objs/parsing/error \
 			make/objs/parsing/lexer \
 			make/objs/parsing/parser \
@@ -88,6 +90,7 @@ SUBOBJDIR = make/objs/parsing \
 DEPDIR = make/deps
 SUBDEPDIR = make/deps/parsing \
 			make/deps/exec \
+			make/deps/signals \
 			make/deps/parsing/error \
 			make/deps/parsing/lexer \
 			make/deps/parsing/parser \

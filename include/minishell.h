@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/04 11:53:53 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/04 14:43:30 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void				handle_sigint(int signum);
 void				setup_interactive_signals(void);
 void				setup_child_signals(void);
 void				setup_waitpid_signals(void);
+
+/*heredoc_signal.c*/
 void				handle_sigint_heredoc(int signum);
 void				setup_heredoc_signals(void);
 
