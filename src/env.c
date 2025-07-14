@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:13 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 18:56:43 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/14 19:22:34 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ bool	init_shell(t_shell *shell, char **envp)
 {
 	int		i;
 
-	shell->heredoc = NULL;
 	shell->status = 0;
 	shell->env = vector_create(1);
 	if (!shell->env)

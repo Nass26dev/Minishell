@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 17:52:06 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/04 18:44:06 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/14 19:21:22 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,9 @@
 
 # include "vector.h"
 
-typedef struct s_hd_token
-{
-	char			*filename;
-	struct s_hd_token	*next;
-}				t_hd_token;
-
 typedef struct s_shell
 {
 	t_vector	*env;
-	t_hd_token	*heredoc;
 	int			status;
 }				t_shell;
 

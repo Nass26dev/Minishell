@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:38:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/04 19:09:42 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/14 19:22:57 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void change_node(t_token **current, t_data *data, char *delimiter)
 	char *filename;
 
 	filename = create_file();
-	add_filename_to_lst(&data->shell->heredoc, filename);
+	add_filename_to_lst(&data->heredoc, filename);
 	node = *current;
 	setup_heredoc_signals();
 	rl_event_hook = event_hook;
@@ -124,6 +124,7 @@ void change_heredoc(t_data *data)
 {
 	t_token	*current;
 
+	data->heredoc = NULL;
 	current = data->tokens;
 	while (current)
 	{
