@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 18:53:22 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/14 16:17:25 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int		execute(t_ast *ast, t_shell *shell);
 /*clean_exec.c*/
 void	free_all(t_exec *exec);
 void	free_exec(t_exec *exec);
-void	unlink_heredoc(t_vector *vector);
 int		handle_fork_error(t_exec *exec, int pipefd[2], int error, int pipe);
 void	handle_dup_error(t_exec *exec, char *cmd, int infd, int outfd);
 

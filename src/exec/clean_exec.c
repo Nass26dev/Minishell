@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:37:22 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 12:50:15 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/14 16:16:41 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,6 @@ int	handle_fork_error(t_exec *exec, int pipefd[2], int error, int pipe)
 	}
 	exec->shell->status = FAIL_FORK + errno;
 	return (exec->shell->status);
-}
-
-void	unlink_heredoc(t_vector *vector)
-{
-	int	i;
-
-	if (!vector)
-		return ;
-	if (vector->data)
-	{
-		i = 0;
-		while (i < vector->count)
-		{
-			if (vector->data[i])
-			{
-				unlink(vector->data[i]);
-				free(vector->data[i]);
-			}
-			i++;
-		}
-		free(vector->data);
-	}
-	free(vector);
-	vector = NULL;
 }
 
 void	free_exec(t_exec *exec)
