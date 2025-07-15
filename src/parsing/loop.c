@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/13 15:14:38 by nass             ###   ########.fr       */
+/*   Updated: 2025/07/15 16:45:34 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	minishell_loop(t_shell *shell)
 	char			*input;
 	int				ret;
 
+	data.heredoc = NULL;
 	data.shell = shell;
 	ret = get_input_and_add_to_historical(&input);
 	if (ret == 1)
@@ -121,18 +122,11 @@ int	minishell_loop(t_shell *shell)
 		free_tokens(&data.tokens);
 		return (data.shell->status);
 	}
-	t_token *current;
-
-	current = data.tokens;
-	while (current)
-	{
-		printf("value = %s , tag = %d\n", current->value, current->tag);
-		current = current->next;
-	}
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
 	free_tokens(&data.tokens);
 	if (data.ast)
 		data.shell->status = execute(data.ast, data.shell);
 	free_ast(data.ast);
+	free_heredoc(&data.heredoc);
 	return (0);
 }

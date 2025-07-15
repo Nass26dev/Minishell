@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/14 19:21:39 by nass             ###   ########.fr       */
+/*   Updated: 2025/07/15 16:39:28 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ typedef struct s_token
 	bool			space;
 	struct s_token	*next;
 }					t_token;
-
-typedef struct s_hd_token
-{
-	char			*filename;
-	struct s_hd_token	*next;
-}				t_hd_token;
 
 typedef struct s_data
 {

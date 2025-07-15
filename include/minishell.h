@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/04 18:40:46 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:39:33 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ typedef struct s_ast
 	struct s_ast	*right;
 }					t_ast;
 
+typedef struct s_hd_token
+{
+	char			*filename;
+	struct s_hd_token	*next;
+}				t_hd_token;
+
 // loop.c
 int					minishell_loop(t_shell *shell);
 
@@ -82,6 +88,7 @@ void				setup_heredoc_signals(void);
 /*clean.c*/
 void				free_args(char **args);
 void				free_ast(t_ast *ast);
+void free_heredoc(t_hd_token **heredoc);
 
 /*utils.c*/
 void				write_fd(char *cmd1, char *cmd2, char *msg, int fd);

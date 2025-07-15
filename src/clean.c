@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:44:01 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,23 @@ void	free_ast(t_ast *node)
 	free_ast(node->left);
 	free_ast(node->right);
 	free(node);
+}
+
+void free_heredoc(t_hd_token **heredoc)
+{
+	t_hd_token	*current;
+	t_hd_token	*next;
+
+	if (!heredoc || !*heredoc)
+		return ;
+	current = *heredoc;
+	while (current)
+	{
+		next = current->next;
+		unlink(current->filename);
+		free(current->filename);
+		free(current);
+		current = next;
+	}
+	*heredoc = NULL;
 }
