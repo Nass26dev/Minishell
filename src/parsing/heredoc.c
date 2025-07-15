@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:38:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 19:02:27 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/15 21:45:35 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	fill_heredoc(t_data *data, char *filename, char *delimiter)
 		write(fd, "\n", 1);
 		free(line);
 	}
+	free(delimiter);
 	close(fd);
 }
 
@@ -85,7 +86,7 @@ bool	change_node(t_token **current, t_data *data, char *delimiter)
 	filename = create_file();
 	if (!filename)
 		return (true);
-	if (!add_filename_to_lst(&data->heredoc, filename))
+	if (add_filename_to_lst(&data->heredoc, filename))
 	{
 		free(filename);
 		return (true);
@@ -97,7 +98,7 @@ bool	change_node(t_token **current, t_data *data, char *delimiter)
 	rl_event_hook = NULL;
 	setup_interactive_signals();
 	node->tag = REDIR_IN;
-	node->value = ft_strdup(filename);
+	node->value = filename;
 	return (false);
 }
 
@@ -110,7 +111,7 @@ void	change_heredoc(t_data *data)
 	{
 		if (current->tag == HEREDOC)
 		{
-			if (!change_node(&current, data, current->value))
+			if (change_node(&current, data, current->value))
 				malloc_error(data);
 		}
 		current = current->next;
