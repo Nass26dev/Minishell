@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 16:39:33 by nass             ###   ########.fr       */
+/*   Updated: 2025/07/15 18:24:03 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,26 @@ typedef struct s_hd_token
 }				t_hd_token;
 
 // loop.c
-int					minishell_loop(t_shell *shell);
+int		minishell_loop(t_shell *shell);
 
 /*signal.c*/
-void				handle_sigint(int signum);
-void				setup_interactive_signals(void);
-void				setup_child_signals(void);
-void				setup_waitpid_signals(void);
+void	handle_sigint(int signum);
+void	setup_interactive_signals(void);
+void	setup_child_signals(void);
+void	setup_waitpid_signals(void);
 
 /*heredoc_signal.c*/
-void				handle_sigint_heredoc(int signum);
-void				setup_heredoc_signals(void);
+void	handle_sigint_heredoc(int signum);
+void	setup_heredoc_signals(void);
 
 /*clean.c*/
-void				free_args(char **args);
-void				free_ast(t_ast *ast);
-void free_heredoc(t_hd_token **heredoc);
+void	free_args(char **args);
+void	free_ast(t_ast *ast);
+void	free_heredoc(t_hd_token **heredoc);
 
 /*utils.c*/
-void				write_fd(char *cmd1, char *cmd2, char *msg, int fd);
-char				*free_strjoin(char *s1, char *s2);
-char				*set_empty(void);
+void	write_fd(char *cmd1, char *cmd2, char *msg, int fd);
+char	*free_strjoin(char *s1, char *s2);
+char	*set_empty(void);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 12:41:49 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/15 18:25:44 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ int	exec_node(t_exec *exec)
 	return (ret);
 }
 
-static void	init_exec(t_exec *exec, t_ast *ast, t_shell *shell)
+static void	init_exec(t_exec *exec, t_ast *ast, t_shell *shell, t_hd_token *heredoc)
 {
 	exec->root = ast;
 	exec->current = ast;
 	exec->shell = shell;
 	exec->infd = STDIN_FILENO;
 	exec->outfd = STDOUT_FILENO;
-	exec->heredoc = NULL;
+	exec->heredoc = heredoc;
 }
 
-int	execute(t_ast *ast, t_shell *shell)
+int	execute(t_ast *ast, t_shell *shell, t_hd_token *heredoc)
 {
 	t_exec	exec;
 	int		ret;
 
-	init_exec(&exec, ast, shell);
+	init_exec(&exec, ast, shell, heredoc);
 	ret = exec_node(&exec);
 	return (ret);
 }

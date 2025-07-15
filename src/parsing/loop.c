@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 16:45:34 by nass             ###   ########.fr       */
+/*   Updated: 2025/07/15 18:28:55 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ int	minishell_loop(t_shell *shell)
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
 	free_tokens(&data.tokens);
 	if (data.ast)
-		data.shell->status = execute(data.ast, data.shell);
-	free_ast(data.ast);
-	free_heredoc(&data.heredoc);
+		data.shell->status = execute(data.ast, data.shell, data.heredoc);
+	// free_ast(data.ast);
+	// free_heredoc(&data.heredoc);
 	return (0);
 }
