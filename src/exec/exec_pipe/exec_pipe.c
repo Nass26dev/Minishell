@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 14:26:08 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/14 17:02:09 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ static void	handle_pipe_process(t_exec *exec)
 static void	handle_pipe_child_process(t_exec *exec, int pipefd[2], int fd)
 {
 	setup_child_signals();
-	while (exec->current && (is_redirection(exec->current->tag)
-			&& exec->current->tag != HEREDOC))
+	while (exec->current && (is_redirection(exec->current->tag)))
 		exec = exec_redir_pipe(exec);
 	if (exec->current)
 		handle_redirections(exec, pipefd, fd);
@@ -74,17 +73,17 @@ static void	handle_pipe_child_process(t_exec *exec, int pipefd[2], int fd)
 
 static int	exec_pipe_fork(t_exec *exec, int pipefd[2], pid_t pid[2], int fd)
 {
-	while (exec->current && exec->current->tag == HEREDOC)
-	{
-		exec = exec_redir_pipe(exec);
-		if (exec->shell->status == 130)
-		{
-			close_pipes(exec, pipefd, 1);
-			return (exec->shell->status);
-		}
-	}
-	if (!exec->current)
-		close_pipes(exec, pipefd, 1);
+	// while (exec->current && exec->current->tag == HEREDOC)
+	// {
+	// 	exec = exec_redir_pipe(exec);
+	// 	if (exec->shell->status == 130)
+	// 	{
+	// 		close_pipes(exec, pipefd, 1);
+	// 		return (exec->shell->status);
+	// 	}
+	// }
+	// if (!exec->current)
+	// 	close_pipes(exec, pipefd, 1);
 	pid[fd] = fork();
 	if (pid[fd] == -1)
 	{
