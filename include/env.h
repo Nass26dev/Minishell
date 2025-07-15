@@ -15,16 +15,9 @@
 
 # include "vector.h"
 
-typedef struct s_hd_token
-{
-	char			*filename;
-	struct s_hd_token	*next;
-}				t_hd_token;
-
 typedef struct s_shell
 {
 	t_vector	*env;
-	t_hd_token	*heredoc;
 	int			status;
 }				t_shell;
 

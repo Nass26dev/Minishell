@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/07/04 18:48:47 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/07/13 15:10:17 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -139,13 +139,6 @@ $(NAME): $(LIBFT) $(OBJS) $(LIBFT_ALL)
 $(LIBFT): $(LIBFT_ALL)
 	@echo "$(MESSAGE_COLOR_YELLOW)Building libft... 🛠️$(MESSAGE_RESET)"
 	@$(MAKE) -C $(LIBFT_DIR)
-	@printf "\033[1;35mwaiting for compile minishell... ["
-	@for i in $$(seq 1 10); do \
-		printf "#"; \
-		sleep 0.5; \
-	done; \
-	printf "]\033[0m"
-	@sleep 1;
 	@echo "$(MESSAGE_COLOR_GREEN)libft built! ✅$(MESSAGE_RESET)"
 
 $(OBJDIR)/%.o: src/%.c $(HEADER)

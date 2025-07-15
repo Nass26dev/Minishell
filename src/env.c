@@ -7,7 +7,6 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:13 by eelissal          #+#    #+#             */
 /*   Updated: 2025/07/14 16:16:47 by eelissal         ###   ########lyon.fr   */
-/*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
@@ -16,7 +15,6 @@ bool	init_shell(t_shell *shell, char **envp)
 {
 	int		i;
 
-	shell->heredoc = NULL;
 	shell->status = 0;
 	shell->env = vector_create(1);
 	if (!shell->env)
