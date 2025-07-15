@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
+#    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/07/13 15:10:17 by nass             ###   ########.fr        #
+#    Updated: 2025/07/15 18:50:20 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS =	src/main.c \
 		src/parsing/expand/redir_value.c \
 		src/parsing/expand/cmd.c \
 		src/parsing/heredoc.c \
+		src/parsing/heredoc_creation.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/builtin/env.c \
@@ -57,8 +58,6 @@ SRCS =	src/main.c \
 		src/exec/exec_cmd/find_cmd_path.c \
 		src/exec/exec_cmd/exec_cmd_utils.c \
 		src/exec/exec_redir/exec_redir.c \
-		src/exec/exec_redir/heredoc.c \
-		src/exec/exec_redir/heredoc_creation.c \
 		src/exec/exec_pipe/exec_pipe.c \
 		src/exec/exec_pipe/exec_pipe_redirs.c \
 		src/exec/exec_pipe/exec_pipe_utils.c \

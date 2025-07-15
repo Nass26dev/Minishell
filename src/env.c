@@ -6,10 +6,11 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:58:13 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/14 16:16:47 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/15 19:03:53 by eelissal         ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "minishell.h"
 
 bool	init_shell(t_shell *shell, char **envp)
 {
@@ -52,35 +53,10 @@ char	*get_env(t_vector *env, char *to_search)
 	return (NULL);
 }
 
-void	unlink_heredoc(t_hd_token *heredoc)
-{
-	t_hd_token	*current;
-	t_hd_token	*next;
-
-	if (!heredoc)
-		return ;
-	current = heredoc;
-	while (current)
-	{
-		next = current->next;
-		if (current->filename)
-		{
-			unlink(current->filename);
-			free(current->filename);
-		}
-		free(current);
-		current = next;
-	}
-	free(heredoc);
-	heredoc = NULL;
-}
-
 void	free_shell(t_shell *shell)
 {
 	if (!shell)
 		return ;
-	if (shell->heredoc)
-		unlink_heredoc(shell->heredoc);
 	if (shell->env)
 		free_vector(shell->env);
 }

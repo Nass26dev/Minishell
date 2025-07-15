@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/15 18:24:50 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/15 19:00:33 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ typedef struct s_exec
 	t_shell		*shell;
 	int			infd;
 	int			outfd;
-	t_hd_token	*heredoc;
+	t_hd	*heredoc;
 }				t_exec;
 
 /*exec.c*/
 int		exec_node(t_exec *exec);
-int		execute(t_ast *ast, t_shell *shell, t_hd_token *heredoc);
+int		execute(t_ast *ast, t_shell *shell, t_hd *heredoc);
 
 /*clean_exec.c*/
 void	free_all(t_exec *exec);
@@ -71,20 +71,9 @@ int		is_directory(const char *path);
 
 /*exec_redir.c*/
 int		handle_redir_in(t_exec *exec);
-int		handle_heredoc(t_exec *exec);
 int		handle_redir_out(t_exec *exec);
 int		handle_append(t_exec *exec);
 int		exec_redir(t_exec *exec);
-
-/*heredoc.c*/
-int		event_hook(void);
-int		readline_heredoc(t_exec *exec, int fd, char *tmp_path);
-bool	reopen_fd_read(int *fd, char *tmp_path);
-void	unlink_one_heredoc(t_exec *exec);
-void	set_new_infd(t_exec *exec, int fd);
-
-/*heredoc_creation.c*/
-int		create_heredoc(t_exec **exec, char **tmp_path, int *fd);
 
 /*exec_pipe.c*/
 int		exec_pipe(t_exec *exec, int last_pipe);

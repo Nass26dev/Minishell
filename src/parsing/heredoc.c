@@ -3,66 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:38:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 16:48:42 by nass             ###   ########.fr       */
+/*   Updated: 2025/07/15 19:02:27 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "parsing.h"
+#include "parsing.h"
 
-static char	*add_num(int i)
+int	event_hook(void)
 {
-	char	*temp;
-	char	*filename;
-
-	temp = ft_itoa(i);
-	if (!temp)
-		return (NULL);
-	filename = ft_strjoin(BASE_FILENAME, temp);
-	if (!filename)
-	{
-		free(temp);
-		return (NULL);
-	}
-	free(temp);
-	return (filename);
+	return (1);
 }
 
-static char	*create_file(void)
+bool	add_filename_to_lst(t_hd **heredoc, char *filename)
 {
-	int		fd;
-	char	*filename;
-	int		i;
+	t_hd	*new_node;
+	t_hd	*current;
 
-	i = 1;
-	while (i <= MAX_TRIES)
-	{
-		if (i == 1)
-			filename = ft_strdup(BASE_FILENAME);
-		else
-			filename = add_num(i);
-		if (!filename)
-			return (NULL);
-		fd = open(filename, O_CREAT | O_EXCL, 0777);
-		if (fd != -1)
-		{
-			close(fd);
-			return (filename);
-		}
-		i++;
-		free(filename);
-	}
-	return (NULL);
-}
-
-bool add_filename_to_lst(t_hd_token **heredoc, char *filename)
-{
-	t_hd_token	*new_node;
-	t_hd_token	*current;
-
-	new_node = malloc(sizeof(t_hd_token));
+	new_node = malloc(sizeof(t_hd));
 	if (!new_node)
 		return (true);
 	new_node->filename = ft_strdup(filename);
@@ -84,11 +44,11 @@ bool add_filename_to_lst(t_hd_token **heredoc, char *filename)
 	return (false);
 }
 
-void fill_heredoc(t_data *data, char *filename, char *delimiter)
+void	fill_heredoc(t_data *data, char *filename, char *delimiter)
 {
 	int		fd;
-	char *line;
-	int len;
+	char	*line;
+	int		len;
 
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR, 0777);
 	if (fd < 0)
@@ -116,10 +76,11 @@ void fill_heredoc(t_data *data, char *filename, char *delimiter)
 	}
 	close(fd);
 }
-bool change_node(t_token **current, t_data *data, char *delimiter)
+
+bool	change_node(t_token **current, t_data *data, char *delimiter)
 {
 	t_token	*node;
-	char *filename;
+	char	*filename;
 
 	filename = create_file();
 	if (!filename)
@@ -140,7 +101,7 @@ bool change_node(t_token **current, t_data *data, char *delimiter)
 	return (false);
 }
 
-void change_heredoc(t_data *data)
+void	change_heredoc(t_data *data)
 {
 	t_token	*current;
 

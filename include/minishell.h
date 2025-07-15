@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 18:24:03 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/15 19:05:27 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ typedef struct s_ast
 	struct s_ast	*right;
 }					t_ast;
 
-typedef struct s_hd_token
+typedef struct s_hd
 {
 	char			*filename;
-	struct s_hd_token	*next;
-}				t_hd_token;
+	struct s_hd	*next;
+}	t_hd;
 
 // loop.c
 int		minishell_loop(t_shell *shell);
@@ -88,7 +88,8 @@ void	setup_heredoc_signals(void);
 /*clean.c*/
 void	free_args(char **args);
 void	free_ast(t_ast *ast);
-void	free_heredoc(t_hd_token **heredoc);
+void	unlink_heredoc(t_hd *heredoc);
+void	free_all_heredocs(t_hd **heredoc);
 
 /*utils.c*/
 void	write_fd(char *cmd1, char *cmd2, char *msg, int fd);

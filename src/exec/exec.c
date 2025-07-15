@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:09:39 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/15 18:25:44 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/15 19:00:33 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	exec_node(t_exec *exec)
 	return (ret);
 }
 
-static void	init_exec(t_exec *exec, t_ast *ast, t_shell *shell, t_hd_token *heredoc)
+static void	init_exec(t_exec *exec, t_ast *ast, t_shell *shell, t_hd *heredoc)
 {
 	exec->root = ast;
 	exec->current = ast;
@@ -41,7 +41,7 @@ static void	init_exec(t_exec *exec, t_ast *ast, t_shell *shell, t_hd_token *here
 	exec->heredoc = heredoc;
 }
 
-int	execute(t_ast *ast, t_shell *shell, t_hd_token *heredoc)
+int	execute(t_ast *ast, t_shell *shell, t_hd *heredoc)
 {
 	t_exec	exec;
 	int		ret;

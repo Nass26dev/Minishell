@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:11:01 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 16:36:20 by nass             ###   ########.fr       */
+/*   Updated: 2025/07/15 19:05:27 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	syntax_error(t_data *data, char *error)
 
 void	malloc_error(t_data *data)
 {
-	free_heredoc(&data->heredoc);
+	free_all_heredocs(&data->heredoc);
 	ft_putstr_fd("malloc error\n", STDERR_FILENO);
 	free_tokens(&data->tokens);
 	free_shell(data->shell);
