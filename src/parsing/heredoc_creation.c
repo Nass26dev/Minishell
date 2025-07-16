@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_creation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:21:24 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/15 18:51:05 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 09:22:37 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "parsing.h"
 #include <fcntl.h>
 
 static char	*add_num(int i)

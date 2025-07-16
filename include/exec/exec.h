@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/15 19:00:33 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 09:24:40 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@
 # endif
 # ifndef FAIL_FORK
 #  define FAIL_FORK 128
-# endif
-# ifndef BASE_FILENAME
-#  define BASE_FILENAME "/tmp/heredoc"
-# endif
-# ifndef MAX_TRIES
-#  define MAX_TRIES INT_MAX
 # endif
 
 typedef struct s_exec
