@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
 /*   Updated: 2025/07/16 11:25:30 by nyousfi          ###   ########.fr       */
@@ -29,14 +29,14 @@
 
 typedef struct s_exec
 {
-	pid_t	pid;
-	t_ast	*root;
-	t_ast	*current;
-	t_shell	*shell;
-	int		infd;
-	int		outfd;
-	t_hd	*heredoc;
-}			t_exec;
+	pid_t		pid;
+	t_ast		*root;
+	t_ast		*current;
+	t_shell		*shell;
+	int			infd;
+	int			outfd;
+	t_hd		*heredoc;
+}				t_exec;
 
 /*exec.c*/
 int			exec_node(t_exec *exec);
