@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:08:54 by nass              #+#    #+#             */
-/*   Updated: 2025/07/03 15:26:03 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/16 12:57:45 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,9 @@ bool	true_exit(t_tag tag, t_data *data)
 {
 	print_correct_error(tag, data);
 	return (true);
+}
+
+int	event_hook(void)
+{
+	return (1);
 }

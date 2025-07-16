@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/16 11:25:40 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/16 12:59:21 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void				set_to_null(t_expand *expand);
 char				*set_empty(void);
 char				*free_strjoin(char *s1, char *s2);
 char				*ft_getenv(char *search, char **env);
+int					event_hook(void);
 
 /*utils.c*/
 char				*ft_strndup(const char *src, size_t n);

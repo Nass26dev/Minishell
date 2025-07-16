@@ -6,16 +6,11 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:38:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/16 09:18:46 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/16 12:59:05 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-int	event_hook(void)
-{
-	return (1);
-}
 
 bool	add_filename_to_lst(t_hd **heredoc, char *filename)
 {
@@ -44,11 +39,30 @@ bool	add_filename_to_lst(t_hd **heredoc, char *filename)
 	return (false);
 }
 
-void	fill_heredoc(t_data *data, char *filename, char *delimiter)
+bool	readline_loop(int fd, char *delimiter)
 {
-	int		fd;
 	char	*line;
 	int		len;
+
+	line = readline("> ");
+	if (!line || ft_strcmp(line, delimiter) == 0)
+		return (true);
+	if (g_received_signal == SIGINT)
+	{
+		free(line);
+		g_received_signal = 0;
+		return (true);
+	}
+	len = ft_strlen(line);
+	write(fd, line, len);
+	write(fd, "\n", 1);
+	free(line);
+	return (false);
+}
+
+void	fill_heredoc(t_data *data, char *filename, char *delimiter)
+{
+	int	fd;
 
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR, 0777);
 	if (fd < 0)
@@ -59,20 +73,8 @@ void	fill_heredoc(t_data *data, char *filename, char *delimiter)
 	}
 	while (1)
 	{
-		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		if (readline_loop(fd, delimiter))
 			break ;
-		if (g_received_signal == SIGINT)
-		{
-			free(line);
-			g_received_signal = 0;
-			data->shell->status = 130;
-			break ;
-		}
-		len = ft_strlen(line);
-		write(fd, line, len);
-		write(fd, "\n", 1);
-		free(line);
 	}
 	free(delimiter);
 	close(fd);
