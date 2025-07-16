@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:36:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/16 11:12:56 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 11:18:37 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_exec
 	t_shell		*shell;
 	int			infd;
 	int			outfd;
-	t_hd	*heredoc;
+	t_hd		*heredoc;
 }				t_exec;
 
 /*exec.c*/
