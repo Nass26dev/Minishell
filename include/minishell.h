@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 19:05:27 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 11:25:45 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "env.h"
 # include "libft.h"
 # include <errno.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -28,7 +29,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
 
 # ifndef BLUE
 #  define BLUE "\033[1;34m"
@@ -69,31 +69,31 @@ typedef struct s_ast
 typedef struct s_hd
 {
 	char			*filename;
-	struct s_hd	*next;
-}	t_hd;
+	struct s_hd		*next;
+}					t_hd;
 
 // loop.c
-int		minishell_loop(t_shell *shell);
+int					minishell_loop(t_shell *shell);
 
 /*signal.c*/
-void	handle_sigint(int signum);
-void	setup_interactive_signals(void);
-void	setup_child_signals(void);
-void	setup_waitpid_signals(void);
+void				handle_sigint(int signum);
+void				setup_interactive_signals(void);
+void				setup_child_signals(void);
+void				setup_waitpid_signals(void);
 
 /*heredoc_signal.c*/
-void	handle_sigint_heredoc(int signum);
-void	setup_heredoc_signals(void);
+void				handle_sigint_heredoc(int signum);
+void				setup_heredoc_signals(void);
 
 /*clean.c*/
-void	free_args(char **args);
-void	free_ast(t_ast *ast);
-void	unlink_heredoc(t_hd *heredoc);
-void	free_all_heredocs(t_hd **heredoc);
+void				free_args(char **args);
+void				free_ast(t_ast *ast);
+void				unlink_heredoc(t_hd *heredoc);
+void				free_all_heredocs(t_hd **heredoc);
 
 /*utils.c*/
-void	write_fd(char *cmd1, char *cmd2, char *msg, int fd);
-char	*free_strjoin(char *s1, char *s2);
-char	*set_empty(void);
+void				write_fd(char *cmd1, char *cmd2, char *msg, int fd);
+char				*free_strjoin(char *s1, char *s2);
+char				*set_empty(void);
 
 #endif
