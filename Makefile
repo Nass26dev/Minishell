@@ -6,7 +6,7 @@
 #    By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 10:53:23 by nyousfi           #+#    #+#              #
-#    Updated: 2025/06/20 12:25:38 by eelissal         ###   ########lyon.fr    #
+#    Updated: 2025/07/15 18:50:20 by eelissal         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,19 +17,32 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
 SRCS =	src/main.c \
 		src/parsing/loop.c \
+		src/parsing/loop_utils.c \
 		src/parsing/input.c \
 		src/parsing/utils.c \
 		src/parsing/error/error.c \
+		src/parsing/error/error_type.c \
 		src/parsing/lexer/lexer.c \
 		src/parsing/lexer/extract.c \
 		src/parsing/lexer/extract_utils.c \
+		src/parsing/lexer/extract_utils2.c \
+		src/parsing/lexer/extract_quote.c \
 		src/parsing/lexer/token.c \
+		src/parsing/lexer/token_utils.c \
 		src/parsing/parser/parser.c \
+		src/parsing/parser/parser_utils.c \
 		src/parsing/parser/ast.c \
 		src/parsing/expand/expand.c \
+		src/parsing/expand/expand_token.c \
 		src/parsing/expand/expand_utils.c \
+		src/parsing/expand/expand_utils2.c \
 		src/parsing/expand/concatenation.c \
+		src/parsing/expand/node_is.c \
+		src/parsing/expand/is.c \
 		src/parsing/expand/redir_value.c \
+		src/parsing/expand/cmd.c \
+		src/parsing/heredoc.c \
+		src/parsing/heredoc_creation.c \
 		src/exec/exec.c \
 		src/exec/builtin/builtin.c \
 		src/exec/builtin/env.c \
@@ -45,21 +58,24 @@ SRCS =	src/main.c \
 		src/exec/exec_cmd/find_cmd_path.c \
 		src/exec/exec_cmd/exec_cmd_utils.c \
 		src/exec/exec_redir/exec_redir.c \
-		src/exec/exec_redir/heredoc.c \
 		src/exec/exec_pipe/exec_pipe.c \
 		src/exec/exec_pipe/exec_pipe_redirs.c \
+		src/exec/exec_pipe/exec_pipe_utils.c \
 		src/exec/exec_operator/exec_operator.c \
-		src/exec/exec_parenthesis/exec_parenthesis.c \
-		src/signal.c \
+		src/exec/clean_exec.c \
+		src/utils.c \
+		src/utils2.c \
+		src/signals/signal.c \
+		src/signals/heredoc_signal.c \
 		src/env.c \
 		src/vector.c \
 		src/clean.c \
-		src/utils.c \
 
 MAKEDIR = make
 OBJDIR = make/objs
 SUBOBJDIR = make/objs/parsing \
 			make/objs/exec \
+			make/objs/signals \
 			make/objs/parsing/error \
 			make/objs/parsing/lexer \
 			make/objs/parsing/parser \
@@ -75,6 +91,7 @@ SUBOBJDIR = make/objs/parsing \
 DEPDIR = make/deps
 SUBDEPDIR = make/deps/parsing \
 			make/deps/exec \
+			make/deps/signals \
 			make/deps/parsing/error \
 			make/deps/parsing/lexer \
 			make/deps/parsing/parser \
@@ -98,6 +115,7 @@ HEADER =	include/minishell.h \
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_ALL := $(filter-out $(LIBFT), $(shell find $(LIBFT_DIR) -type f))
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m
@@ -113,11 +131,11 @@ all: $(NAME)
 		echo "$(MESSAGE_COLOR_BLUE)everything is already up to date 😉$(MESSAGE_RESET)"; \
 	fi
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS) $(LIBFT_ALL)
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
 	@$(eval COMPILED := 1)
 
-$(LIBFT):
+$(LIBFT): $(LIBFT_ALL)
 	@echo "$(MESSAGE_COLOR_YELLOW)Building libft... 🛠️$(MESSAGE_RESET)"
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(MESSAGE_COLOR_GREEN)libft built! ✅$(MESSAGE_RESET)"
@@ -150,7 +168,6 @@ clean:
 		echo "$(MESSAGE_COLOR_GREEN)files already deleted 😉$(MESSAGE_RESET)"; \
 	fi
 	@$(MAKE) -C $(LIBFT_DIR) clean
-
 
 fclean: clean
 	@rm -f $(NAME)

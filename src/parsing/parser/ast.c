@@ -6,44 +6,102 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 17:38:20 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/04 14:11:10 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_ast	*create_ast_node(t_tag tag, char *value)
+int	fill_cmd_copy(char **cmd, char **copy, int count)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < count)
+	{
+		copy[i] = strdup(cmd[i]);
+		if (!copy[i])
+		{
+			j = 0;
+			while (j < i)
+				free(copy[j++]);
+			free(copy);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+char	**dup_cmd(char **cmd)
+{
+	char	**copy;
+	int		count;
+
+	if (!cmd)
+		return (NULL);
+	count = 0;
+	while (cmd[count])
+		count++;
+	copy = malloc(sizeof(char *) * (count + 1));
+	if (!copy)
+		return (NULL);
+	if (fill_cmd_copy(cmd, copy, count))
+		return (NULL);
+	copy[count] = NULL;
+	return (copy);
+}
+
+bool	no_command(t_ast **n, char *value)
+{
+	t_ast	*node;
+
+	node = *n;
+	node->command = malloc(sizeof(char *) * 2);
+	if (!node->command)
+	{
+		free(node);
+		return (1);
+	}
+	node->command[0] = ft_strdup(value);
+	if (!node->command[0])
+	{
+		free(node->command);
+		free(node);
+		return (1);
+	}
+	node->command[1] = NULL;
+	return (0);
+}
+
+t_ast	*create_ast_node(t_tag tag, char *value, char **cmd)
 {
 	t_ast	*node;
 
 	node = malloc(sizeof(t_ast));
 	if (!node)
 		return (NULL);
-	if (tag == TOKEN_WORD || tag == TOKEN_DOUBLE_QUOTE || tag == TOKEN_SINGLE_QUOTE)
-		node->tag = TOKEN_CMD;
-	else
-		node->tag = tag;
-	if (value)
+	node->tag = tag;
+	if (tag == CMD)
 	{
-		node->command[0] = ft_strdup(value);
-		node->command[1] = NULL;
-		node->command[2] = NULL;
-		if (!node->command[0])
+		node->command = dup_cmd(cmd);
+		if (!node->command)
+		{
+			free(node);
+			return (NULL);
+		}
+	}
+	else if (value)
+	{
+		if (no_command(&node, value))
 			return (NULL);
 	}
 	else
-		node->command[0] = NULL;
+		node->command = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
-}
-
-void	add_args_to_command(t_ast **node, char *args)
-{
-	t_ast	*tmp;
-
-	tmp = *node;
-	tmp->command[1] = ft_strdup(args);
 }
 
 void	print_indent(int depth)
@@ -59,37 +117,33 @@ void	print_node(t_ast *node)
 		printf("(null)\n");
 		return ;
 	}
-	if (node->tag == TOKEN_AND)
+	if (node->tag == AND)
 		printf("AND\n");
-	else if (node->tag == TOKEN_OR)
+	else if (node->tag == OR)
 		printf("OR\n");
-	else if (node->tag == TOKEN_PIPE)
+	else if (node->tag == PIPE)
 		printf("PIPE\n");
-	else if (node->tag == TOKEN_CMD)
+	else if (node->tag == CMD)
 	{
 		printf("CMD:");
 		if (node->command[0])
 		{
 			for (int i = 0; node->command[i]; i++)
-			{
-				if (i == 1)
-					printf(" ,");
-				printf(" %s", node->command[i]);
-			}
+				printf(" | %s", node->command[i]);
 			printf("\n");
 		}
 		else
 			printf(" (null)\n");
 	}
-	else if (node->tag == TOKEN_REDIR_IN)
+	else if (node->tag == REDIR_IN)
 		printf("REDIR IN: %s\n",
 			node->command[0] ? node->command[0] : "(null)");
-	else if (node->tag == TOKEN_REDIR_OUT)
+	else if (node->tag == REDIR_OUT)
 		printf("REDIR OUT: %s\n",
 			node->command[0] ? node->command[0] : "(null)");
-	else if (node->tag == TOKEN_APPEND)
+	else if (node->tag == APPEND)
 		printf("APPEND: %s\n", node->command[0] ? node->command[0] : "(null)");
-	else if (node->tag == TOKEN_HEREDOC)
+	else if (node->tag == HEREDOC)
 		printf("HEREDOC: %s\n", node->command[0] ? node->command[0] : "(null)");
 	else
 		printf("UNKNOWN (%d)\n", node->tag);
@@ -103,15 +157,10 @@ void	print_ast(t_ast *node, int depth)
 		return ;
 	if (depth == 0)
 		printf("vers le haut = droite , vers le bas = gauche\n");
-	// D’abord le sous-arbre droit (en haut)
 	if (node->right)
 		print_ast(node->right, depth + INDENT_STEP);
-	// Affiche le nœud courant
 	print_indent(depth);
 	print_node(node);
-	// Puis le sous-arbre gauche (en bas)
 	if (node->left)
 		print_ast(node->left, depth + INDENT_STEP);
 }
-
-

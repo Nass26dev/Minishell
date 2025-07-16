@@ -6,29 +6,11 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:43:34 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 16:49:16 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 11:15:57 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-char	*ft_strcut(const char *s, size_t start)
-{
-	size_t	len;
-	char	*new;
-
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s);
-	if (start > len)
-		start = len;
-	new = malloc(sizeof(char) * (start + 1));
-	if (!new)
-		return (NULL);
-	ft_memcpy(new, s, start);
-	new[start] = '\0';
-	return (new);
-}
 
 /*
 - cd avec ., se deplacer la ou on est: prendre pwd (ne fait rien sauf rafraîchir
@@ -45,12 +27,12 @@ int	exec_cd(char *newpwd, t_vector *env)
 
 	if (access(newpwd, F_OK | X_OK) != 0)
 	{
-		printf("cd: %s: %s\n", newpwd, strerror(errno));
+		write_fd("cd", newpwd, strerror(errno), 2);
 		return (1);
 	}
 	if (is_directory(newpwd) == 0)
 	{
-		printf("cd: %s: %s\n", newpwd, strerror(ENOTDIR));
+		write_fd("cd", newpwd, strerror(ENOTDIR), 2);
 		return (1);
 	}
 	if (chdir(newpwd) != 0)
@@ -64,11 +46,23 @@ int	exec_cd(char *newpwd, t_vector *env)
 	return (ret);
 }
 
+int	update_pwd(t_vector *env, char oldpwd[PATH_MAX], char newpwd[PATH_MAX])
+{
+	int	ret;
+
+	ret = add_env_var(env, "PWD", newpwd);
+	if (ret != 0)
+		write_fd("cd", "PWD", "not exported", 2);
+	ret = add_env_var(env, "OLDPWD", oldpwd);
+	if (ret != 0)
+		write_fd("cd", "PWD", "not exported", 2);
+	return (ret);
+}
+
 int	cd_get_path(char *target, t_vector *env)
 {
 	char	oldpwd[PATH_MAX];
 	char	newpwd[PATH_MAX];
-	int		ret;
 
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
 	{
@@ -77,7 +71,7 @@ int	cd_get_path(char *target, t_vector *env)
 	}
 	if (chdir(target) != 0)
 	{
-		printf("cd: %s: %s\n", target, strerror(errno));
+		write_fd("cd", target, strerror(errno), 2);
 		return (1);
 	}
 	if (!getcwd(newpwd, sizeof(newpwd)))
@@ -86,29 +80,18 @@ int	cd_get_path(char *target, t_vector *env)
 		chdir(oldpwd);
 		return (1);
 	}
-	if (add_env_var(env, "PWD", newpwd) != 0)
-		write_fd("cd", "PWD", "not exported", 2);
-	ret = add_env_var(env, "OLDPWD", oldpwd);
-	if (ret != 0)
-		write_fd("cd", "PWD", "not exported", 2);
-	return (ret);
+	return (update_pwd(env, oldpwd, newpwd));
 }
 
 int	cd_home(char *target, t_vector *env)
 {
-	char	oldpwd[PATH_MAX];
 	char	*newpwd;
 	int		ret;
 
-	if (!getcwd(oldpwd, sizeof(oldpwd)))
-	{
-		perror("getcwd error");
-		return (1);
-	}
-	newpwd = getenv(target);
+	newpwd = get_env(env, "HOME");
 	if (!newpwd)
 	{
-		printf("cd: %s not set\n", target);
+		write_fd("cd", target, "not set", 2);
 		return (1);
 	}
 	if (exec_cd(newpwd, env) != 0)
@@ -116,7 +99,8 @@ int	cd_home(char *target, t_vector *env)
 		free(newpwd);
 		return (1);
 	}
-	ret = add_env_var(env, "OLDPWD", oldpwd);
+	ret = add_env_var(env, "PWD", newpwd);
+	free(newpwd);
 	if (ret != 0)
 		write_fd("cd", "PWD", "not exported", 2);
 	return (ret);

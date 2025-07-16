@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:08:54 by nass              #+#    #+#             */
-/*   Updated: 2025/06/19 15:42:04 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:26:03 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,10 @@ char	*ft_strndup(const char *src, size_t n)
 	}
 	dup[i] = '\0';
 	return (dup);
+}
+
+bool	true_exit(t_tag tag, t_data *data)
+{
+	print_correct_error(tag, data);
+	return (true);
 }

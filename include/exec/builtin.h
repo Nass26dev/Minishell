@@ -6,12 +6,12 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:30:55 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 13:46:48 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/29 21:15:07 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
-#define BUILTIN_H
+# define BUILTIN_H
 
 # include "exec.h"
 
@@ -31,7 +31,7 @@ int	is_builtin(t_exec *exec);
 int	exec_builtin(t_exec *exec, int ret);
 
 /*env.c*/
-int	builtin_env(t_exec *exec);
+int	builtin_env(t_exec *exec, int i);
 
 /*echo.c*/
 int	builtin_echo(char **data, int fd);
@@ -43,7 +43,7 @@ int	builtin_cd(t_exec *exec);
 int	builtin_pwd(t_exec *exec);
 
 /*export.c*/
-int	builtin_export(t_shell *shell, char **data, int fd);
+int	builtin_export(t_exec *exec);
 
 /*export_utils.c*/
 int	export_var(t_vector *env, char *var);

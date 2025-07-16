@@ -1,32 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 11:03:10 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/16 08:58:40 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/06/30 15:14:18 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/06/30 17:37:06 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	get_input_and_add_to_historical(char **input)
+char	*one_free_strjoin(char *s1, char *s2)
 {
-	*input = readline(PROMPT);
-	if (*input == NULL)
+	char	*str;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	i = -1;
+	str = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!str)
 	{
-		printf("exit\n");
-		return (1);
+		free(s1);
+		return (NULL);
 	}
-	if (g_received_signal == SIGINT)
-	{
-		if (*input && *input[0] != 0)
-			add_history(*input);
-		return (2);
-	}
-	if (*input && *input[0] != 0)
-		add_history(*input);
-	return (0);
+	j = 0;
+	while (s1[j])
+		str[++i] = s1[j++];
+	j = 0;
+	while (s2[j])
+		str[++i] = s2[j++];
+	str[++i] = 0;
+	free(s1);
+	return (str);
+}
+
+bool	char_is_redir(char c)
+{
+	if (c == '<' || c == '>')
+		return (true);
+	return (false);
 }

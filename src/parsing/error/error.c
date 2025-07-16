@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:03:29 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/19 16:45:59 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:24:48 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,20 @@
 
 bool	tag_is_operator(t_tag tag)
 {
-	if (tag == TOKEN_AND)
+	if (tag == AND)
 		return (true);
-	if (tag == TOKEN_OR)
+	if (tag == OR)
 		return (true);
-	if (tag == TOKEN_PIPE)
+	if (tag == PIPE)
 		return (true);
 	return (false);
-}
-
-void	print_correct_error(t_tag tag)
-{
-	printf("syntax error near unexpected token « ");
-	if (tag == TOKEN_AND)
-		printf("&& »\n");
-	if (tag == TOKEN_APPEND)
-		printf(">> »\n");
-	if (tag == TOKEN_HEREDOC)
-		printf("<< »\n");
-	if (tag == TOKEN_OR)
-		printf("|| »\n");
-	if (tag == TOKEN_PIPE)
-		printf("| »\n");
-	if (tag == TOKEN_REDIR_IN)
-		printf("< »\n");
-	if (tag == TOKEN_REDIR_OUT)
-		printf("> »\n");
 }
 
 bool	is_operator_error(t_data *data, t_tag tag)
 {
 	if (tag_is_operator(tag))
 	{
-		print_correct_error(tag);
+		print_correct_error(tag, data);
 		free_tokens(&data->tokens);
 		data->error = true;
 		return (true);
@@ -67,7 +48,7 @@ void	error_checker(t_data *data)
 		{
 			if (tag_is_operator(current->next->tag))
 			{
-				print_correct_error(current->next->tag);
+				print_correct_error(current->next->tag, data);
 				free_tokens(&data->tokens);
 				data->error = true;
 				return ;
@@ -77,11 +58,4 @@ void	error_checker(t_data *data)
 	}
 	if (is_operator_error(data, current->tag))
 		return ;
-}
-
-void	syntax_error(t_data *data, char *error)
-{
-	free_tokens(&data->tokens);
-	printf("%s\n", error);
-	data->error = true;
 }

@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.h                                           :+:      :+:    :+:   */
+/*   is.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/27 17:51:55 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/27 17:51:56 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/06/27 14:25:46 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/06/27 17:41:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_H
-# define VECTOR_H
+#include "parsing.h"
 
-# include "libft.h"
-# include <stdbool.h>
-# include <stdlib.h>
-
-typedef struct s_vector
+bool	is_var(char *value)
 {
-	char	**data;
-	int		count;
-	int		capacity;
-}			t_vector;
+	int	i;
 
-/*vector.c*/
-t_vector	*vector_create(int initial_capacity);
-bool		vector_add(t_vector *vector, char *str);
-void		free_vector(t_vector *vector);
+	i = 0;
+	while (value[i])
+	{
+		if (value[i] == '$' && value[i + 1] && !ft_isspace(value[i + 1]))
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
-#endif
+bool	is_redirection(t_tag tag)
+{
+	return (tag == REDIR_IN || tag == REDIR_OUT
+		|| tag == APPEND || tag == HEREDOC);
+}

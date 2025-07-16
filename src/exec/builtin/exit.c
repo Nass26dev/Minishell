@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:59:00 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/23 10:48:01 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:38:05 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	arg_is_digit(t_exec *exec)
 		if (ft_isdigit(data[j]) == 0)
 		{
 			printf("exit\n");
-			printf("minishell: exit: %s: numeric argument required\n", data);
+			write_fd("exit", data, "numeric argument required", 2);
 			exec->shell->status = 2;
 			return (1);
 		}
@@ -55,7 +55,7 @@ static bool	exit_with_args(t_exec *exec, int i, int status)
 		if (arg_is_digit(exec) != 0)
 		{
 			free_all(exec);
-			exit(status);
+			exit(2);
 		}
 		if (i > 2)
 		{
@@ -68,6 +68,7 @@ static bool	exit_with_args(t_exec *exec, int i, int status)
 			result = ft_atoi(exec->current->command[1]);
 			status = check_overflow(result);
 			free_all(exec);
+			printf("exit\n");
 			exit (status);
 		}
 	}

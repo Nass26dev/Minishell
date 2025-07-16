@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:59:45 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 15:40:59 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:28:00 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "vector.h"
+#include "vector.h"
 
 t_vector	*vector_create(int initial_capacity)
 {
@@ -37,7 +37,7 @@ t_vector	*vector_create(int initial_capacity)
 	return (vector);
 }
 
-static bool vector_resize(t_vector *vector)
+static bool	vector_resize(t_vector *vector)
 {
 	char	**new_data;
 	int		i;

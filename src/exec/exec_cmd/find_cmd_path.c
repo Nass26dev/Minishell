@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:57:11 by eelissal          #+#    #+#             */
-/*   Updated: 2025/06/19 15:52:29 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/06/27 16:45:08 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,6 @@ int	is_directory(const char *path)
 		return (0);
 	return (S_ISDIR(buffer.st_mode));
 }
-
-// void	is_directory(char *cmd, t_exec *exec)
-// {
-// 	const char	*path;
-// 	struct stat	buffer;
-
-// 	*path = (const*) cmd;
-// 	if (stat(path, &buffer) == 0)
-// 	{
-// 		strerror(S_ISDIR(buffer.st_mode));
-// 		//printf("%s: is a directory\n", exec->current->command[0]);
-// 		free(cmd);
-// 		close_fds(exec);
-// 		exit (FAIL_EXEC);
-// 	}
-// }
 
 static char	*find_executable_path(char *cmd, char **path_dirs)
 {
