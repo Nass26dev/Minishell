@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:08:50 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/16 12:07:08 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 12:38:30 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static void	handle_pipe_child_process(t_exec *exec, int pipefd[2], int fd)
 	else if (exec-> current && exec->current->tag == PIPE && fd == 0)
 		exec->shell->status = exec_pipe(exec, 0);
 	status = exec->shell->status;
+	free_all_heredocs(&exec->heredoc);
 	free_exec(exec);
 	exit(status);
 }
