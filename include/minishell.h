@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:53:44 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/04 14:43:30 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 11:25:45 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "env.h"
 # include "libft.h"
 # include <errno.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -65,6 +66,12 @@ typedef struct s_ast
 	struct s_ast	*right;
 }					t_ast;
 
+typedef struct s_hd
+{
+	char			*filename;
+	struct s_hd		*next;
+}					t_hd;
+
 // loop.c
 int					minishell_loop(t_shell *shell);
 
@@ -81,6 +88,8 @@ void				setup_heredoc_signals(void);
 /*clean.c*/
 void				free_args(char **args);
 void				free_ast(t_ast *ast);
+void				unlink_heredoc(t_hd *heredoc);
+void				free_all_heredocs(t_hd **heredoc);
 
 /*utils.c*/
 void				write_fd(char *cmd1, char *cmd2, char *msg, int fd);

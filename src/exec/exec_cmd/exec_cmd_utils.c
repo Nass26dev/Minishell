@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:03:03 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/01 18:11:22 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/15 18:29:29 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	close_fds(t_exec *exec)
 		close(exec->infd);
 	if (exec->outfd > 2)
 		close(exec->outfd);
-	if (exec->heredoc)
-		unlink_heredoc(exec->heredoc);
 }
 
 void	dup_fds(t_exec *exec, char *cmd)

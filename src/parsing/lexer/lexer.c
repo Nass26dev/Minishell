@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:05:03 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/01 18:33:33 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/16 11:08:53 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	lexer(t_data *data, char *input)
 			set_space_to_token(&data->tokens);
 			i++;
 		}
+		if (input[i] == 0)
+			break ;
 		if (is_operator(input[i]))
 			i += extract_operator(data, input, i);
 		else if (input[i] == '\'' || input[i] == '"')

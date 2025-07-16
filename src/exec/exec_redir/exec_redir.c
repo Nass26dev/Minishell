@@ -6,7 +6,7 @@
 /*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 17:01:04 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 15:25:51 by eelissal         ###   ########lyon.fr   */
+/*   Updated: 2025/07/15 18:47:23 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,6 @@ int	handle_redir_in(t_exec *exec)
 		close(exec->infd);
 	exec->infd = fd;
 	return (0);
-}
-
-/*Creates random path with prefix \tmp\, then open tmp file.
-Gets delimiter from AST node. Reads heredoc content line
-by line and write content to tmp file.
-Closes file that was in writing to reopen it in reading.
-Deletes file but keeps fd open and set infd and exec cmd*/
-int	handle_heredoc(t_exec *exec)
-{
-	char	*tmp_path;
-	int		fd;
-	int		ret;
-
-	tmp_path = NULL;
-	if (create_heredoc(&exec, &tmp_path, &fd) == 1)
-		return (1);
-	setup_heredoc_signals();
-	rl_event_hook = event_hook;
-	ret = readline_heredoc(exec, fd, tmp_path);
-	rl_event_hook = NULL;
-	setup_interactive_signals();
-	if (ret != 0 && ret != 130)
-		return (exec->shell->status);
-	if (reopen_fd_read(&fd, tmp_path) == false)
-		return (1);
-	free(tmp_path);
-	unlink_one_heredoc(exec);
-	set_new_infd(exec, fd);
-	return (exec->shell->status);
 }
 
 int	handle_redir_out(t_exec *exec)
@@ -94,8 +65,6 @@ int	exec_redir(t_exec *exec)
 {
 	if (exec->current->tag == REDIR_IN)
 		exec->shell->status = handle_redir_in(exec);
-	else if (exec->current->tag == HEREDOC)
-		exec->shell->status = handle_heredoc(exec);
 	else if (exec->current->tag == REDIR_OUT)
 		exec->shell->status = handle_redir_out(exec);
 	else if (exec->current->tag == APPEND)

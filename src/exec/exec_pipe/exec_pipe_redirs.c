@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_redirs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eelissal <eelissal@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:35 by eelissal          #+#    #+#             */
-/*   Updated: 2025/07/04 14:19:12 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/15 18:47:08 by eelissal         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,7 @@ t_exec	*exec_redir_pipe(t_exec *exec)
 		exec->shell->status = handle_append(exec);
 	else if (exec->current->tag == REDIR_IN)
 		exec->shell->status = handle_redir_in(exec);
-	else if (exec->current->tag == HEREDOC)
-		exec->shell->status = handle_heredoc(exec);
-	if (exec->shell->status != 0 && exec->shell->status != 130)
+	if (exec->shell->status != 0)
 	{
 		if (exec->infd > 2)
 			close(exec->infd);

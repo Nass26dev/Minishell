@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 13:53:26 by eelissal          #+#    #+#              #
-#    Updated: 2025/06/24 18:16:25 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/07/03 15:47:41 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,16 @@ CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
 
 SRC_DIR = src
 INC_DIR = includes
-BIN_DIR = bin
-DEPS_DIR = bin/deps
 
+MAKEDIR = make
+OBJDIR = ../make/objs
+SUBOBJDIR = ../make/objs/libft/gnl \
+			../make/objs/libft/printf \
+
+DEPDIR = ../make/deps
+SUBDEPDIR = ../make/deps/libft/gnl \
+			../make/deps/libft/printf \
+			
 SRCS =	ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
@@ -68,8 +75,8 @@ SRCS =	ft_atoi.c \
 
 HEADERS = $(INC_DIR)/libft.h
 
-OBJS = $(SRCS:%.c=$(BIN_DIR)/%.o)
-DEPS = $(SRCS:%.c=$(DEPS_DIR)/%.d)
+OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
+DEPS = $(SRCS:%.c=$(DEPDIR)/%.d)
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m
@@ -85,11 +92,12 @@ all: $(NAME)
 		echo "$(MESSAGE_COLOR_BLUE)libft already up to date 😉$(MESSAGE_RESET)"; \
 	fi
 
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
+$(OBJDIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
-	@mkdir -p $(BIN_DIR) $(DEPS_DIR)
+	
+	@mkdir -p $(OBJDIR) $(DEPDIR) $(SUBOBJDIR) $(SUBDEPDIR)
 	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
-	@mv -f $(BIN_DIR)/$*.d $(DEPS_DIR)/$*.d
+	@mv -f $(OBJDIR)/$*.d $(DEPDIR)/$*.d
 	@$(eval COMPILED := 1)
 	@echo "$(MESSAGE_COLOR_GREEN)Compiled $@ ✅$(MESSAGE_RESET)"
 
@@ -100,8 +108,8 @@ $(NAME): $(OBJS)
 -include $(DEPS)
 
 clean:
-	@if [ -d $(BIN_DIR) ] || [ -f $(NAME) ]; then \
-		rm -rf $(BIN_DIR); \
+	@if [ -d $(MAKEDIR) ] || [ -f $(NAME) ]; then \
+		rm -rf $(MAKEDIR); \
 	fi
 
 fclean: clean
