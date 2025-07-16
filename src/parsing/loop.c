@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:33:45 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/16 08:46:30 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/07/16 09:18:23 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,8 @@ int	minishell_loop(t_shell *shell)
 	}
 	if (mltpl_check(&data, input))
 		return (0);
-	change_heredoc(&data);
-	if (data.shell->status == 130)
-	{
-		free_tokens(&data.tokens);
-		free_all_heredocs(&data.heredoc);
-		return (data.shell->status);
-	}
+	if (change_heredoc(&data))
+		return (0);
 	data.ast = parser(&data, data.tokens, find_last_node(data.tokens));
 	free_tokens(&data.tokens);
 	if (data.ast)

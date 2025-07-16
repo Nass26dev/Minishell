@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:38:12 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 21:45:35 by nass             ###   ########.fr       */
+/*   Updated: 2025/07/16 09:18:46 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ bool	change_node(t_token **current, t_data *data, char *delimiter)
 	return (false);
 }
 
-void	change_heredoc(t_data *data)
+int	change_heredoc(t_data *data)
 {
 	t_token	*current;
 
@@ -113,7 +113,14 @@ void	change_heredoc(t_data *data)
 		{
 			if (change_node(&current, data, current->value))
 				malloc_error(data);
+			if (data->shell->status == 130)
+			{
+				free_tokens(&data->tokens);
+				free_all_heredocs(&data->heredoc);
+				return (1);
+			}
 		}
 		current = current->next;
 	}
+	return (0);
 }

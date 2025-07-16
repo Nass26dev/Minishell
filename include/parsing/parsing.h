@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:49:41 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/15 21:44:08 by nass             ###   ########.fr       */
+/*   Updated: 2025/07/16 09:17:43 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void		create_cmd(t_data *data);
 t_token		*split_tokens(char *content);
 
 /*heredoc.c*/
-void		change_heredoc(t_data *data);
+int	change_heredoc(t_data *data);
 
 /*heredoc_creation.c*/
 char		*create_file(void);
