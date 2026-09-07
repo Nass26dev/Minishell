@@ -1,0 +1,28 @@
+{
+   readline_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,possible
+   ...
+   obj:*/libreadline.so*
+}
+{
+   readline_leaks_add_history
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,possible
+   ...
+   fun:add_history
+}
+{
+   readline_leaks_readline
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,possible
+   ...
+   fun:readline
+}
+{
+   tinfo_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,possible
+   ...
+   obj:*/libtinfo.so*
+}

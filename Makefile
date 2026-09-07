@@ -154,12 +154,6 @@ $(OBJDIR)/%.o: src/%.c $(HEADER)
 valgrind:
 	valgrind --leak-check=yes --show-leak-kinds=all --suppressions=.valgrind_suppress.txt -s ./minishell
 
-valgrind-full:
-	valgrind --suppressions=.valgrind_suppress.txt --leak-check=full --track-fds=yes --trace-children=yes --show-leak-kinds=all --track-origins=yes ./minishell
-
-valgrind-log:
-	valgrind --leak-check=full --track-origins=yes --suppressions=.valgrind_suppress.txt --log-file=valgrind-out.txt ./minishell
-
 clean:
 	@if [ -d $(MAKEDIR) ] || [ -f $(NAME) ]; then \
 		rm -rf $(MAKEDIR); \
